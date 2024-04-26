@@ -14,6 +14,13 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-LizHR-LizHRTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-LizHR-LizHRTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		E2303FE82BDBC28100BA9839 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2303FE12BDBC28100BA9839 /* Roboto-Italic.ttf */; };
+		E2303FE92BDBC28100BA9839 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2303FE22BDBC28100BA9839 /* Roboto-Medium.ttf */; };
+		E2303FEA2BDBC28100BA9839 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2303FE32BDBC28100BA9839 /* Roboto-Bold.ttf */; };
+		E2303FEB2BDBC28100BA9839 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2303FE42BDBC28100BA9839 /* Roboto-Light.ttf */; };
+		E2303FEC2BDBC28100BA9839 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2303FE52BDBC28100BA9839 /* Roboto-Regular.ttf */; };
+		E2303FED2BDBC28100BA9839 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2303FE62BDBC28100BA9839 /* Roboto-Black.ttf */; };
+		E2303FEE2BDBC28100BA9839 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2303FE72BDBC28100BA9839 /* Roboto-Thin.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +43,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = LizHR/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LizHR/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LizHR/main.m; sourceTree = "<group>"; };
-	    13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = LizHR/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = LizHR/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-LizHR-LizHRTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LizHR-LizHRTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-LizHR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LizHR.debug.xcconfig"; path = "Target Support Files/Pods-LizHR/Pods-LizHR.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-LizHR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LizHR.release.xcconfig"; path = "Target Support Files/Pods-LizHR/Pods-LizHR.release.xcconfig"; sourceTree = "<group>"; };
@@ -44,6 +51,13 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-LizHR.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LizHR.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LizHR/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LizHR-LizHRTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LizHR-LizHRTests.release.xcconfig"; path = "Target Support Files/Pods-LizHR-LizHRTests/Pods-LizHR-LizHRTests.release.xcconfig"; sourceTree = "<group>"; };
+		E2303FE12BDBC28100BA9839 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Italic.ttf"; path = "../../Sources/Assets/Fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
+		E2303FE22BDBC28100BA9839 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Medium.ttf"; path = "../../Sources/Assets/Fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		E2303FE32BDBC28100BA9839 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Bold.ttf"; path = "../../Sources/Assets/Fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		E2303FE42BDBC28100BA9839 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Light.ttf"; path = "../../Sources/Assets/Fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
+		E2303FE52BDBC28100BA9839 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "../../Sources/Assets/Fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		E2303FE62BDBC28100BA9839 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Black.ttf"; path = "../../Sources/Assets/Fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
+		E2303FE72BDBC28100BA9839 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "../../Sources/Assets/Fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -118,6 +132,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E2303FE02BDBC26800BA9839 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* LizHR */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* LizHRTests */,
@@ -148,6 +163,20 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-LizHR-LizHRTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E2303FE02BDBC26800BA9839 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E2303FE62BDBC28100BA9839 /* Roboto-Black.ttf */,
+				E2303FE32BDBC28100BA9839 /* Roboto-Bold.ttf */,
+				E2303FE12BDBC28100BA9839 /* Roboto-Italic.ttf */,
+				E2303FE42BDBC28100BA9839 /* Roboto-Light.ttf */,
+				E2303FE22BDBC28100BA9839 /* Roboto-Medium.ttf */,
+				E2303FE52BDBC28100BA9839 /* Roboto-Regular.ttf */,
+				E2303FE72BDBC28100BA9839 /* Roboto-Thin.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,8 +272,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2303FE92BDBC28100BA9839 /* Roboto-Medium.ttf in Resources */,
+				E2303FEC2BDBC28100BA9839 /* Roboto-Regular.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				E2303FED2BDBC28100BA9839 /* Roboto-Black.ttf in Resources */,
+				E2303FEB2BDBC28100BA9839 /* Roboto-Light.ttf in Resources */,
+				E2303FEA2BDBC28100BA9839 /* Roboto-Bold.ttf in Resources */,
+				E2303FE82BDBC28100BA9839 /* Roboto-Italic.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				E2303FEE2BDBC28100BA9839 /* Roboto-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +553,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -544,6 +581,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CXX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
@@ -563,6 +601,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -582,7 +622,13 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -590,6 +636,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -617,6 +664,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CXX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
@@ -629,6 +677,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -647,7 +697,13 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
