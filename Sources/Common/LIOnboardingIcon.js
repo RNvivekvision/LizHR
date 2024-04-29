@@ -20,8 +20,8 @@ const LIOnboardingIcon = () => {
 const circle = wp(40);
 const styles = StyleSheet.create({
   onboarding: {
-    width: wp(80),
-    height: hp(27),
+    width: wp(70),
+    height: wp(52),
     marginVertical: hp(3),
     alignSelf: 'center',
   },
@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
     height: circle,
     position: 'absolute',
     left: -wp(6),
-    bottom: hp(4),
+    bottom: hp(2),
   },
   rightCircle: {
     width: circle - wp(12),
     height: circle - wp(12),
     position: 'absolute',
     right: -wp(4),
-    top: hp(8),
+    top: hp(6),
   },
 });
 

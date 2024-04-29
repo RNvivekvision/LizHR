@@ -61,11 +61,12 @@ const styles = StyleSheet.create({
   input: {
     // flex: 1,
     paddingHorizontal: wp(3),
-    paddingVertical: hp(1),
+    // paddingVertical: hp(1),
     marginVertical: hp(1),
     fontSize: FontSize.font14,
     fontFamily: FontFamily.Regular,
     color: Colors.Black,
+    height: wp(12),
   },
 });
 export default RNInput;

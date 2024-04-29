@@ -3,7 +3,9 @@ const Colors = {
   White: '#ffffff',
   Transparent: 'transparent',
   Primary: '#0173EC',
-  Placeholder: '#9A9A9A',
+  InputTitle: '#7C8899',
+  Placeholder: '#D3D3D3',
+  Error: '#b01313',
 };
 
 export default Colors;
