@@ -8,15 +8,19 @@ import {
   RNKeyboardAvoid,
   RNButton,
 } from '../../Common';
-import { DontHaveAccount, RememberMe } from '../../Components';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
+import { DontHaveAccount, RememberMe } from '../../Components';
 import { NavRoutes } from '../../Navigation';
 import { Images } from '../../Constants';
 
-const Login = ({ navigation }) => {
-  const [State, setState] = useState({ showPassword: false });
+const SignUp = ({ navigation }) => {
+  const [State, setState] = useState({
+    showPassword: false,
+    showRePassword: false,
+  });
   const styles = useStyles();
   const passwordRef = useRef();
+  const rePasswordRef = useRef();
 
   return (
     <RNContainer barStyle={'dark-content'}>
@@ -25,9 +29,9 @@ const Login = ({ navigation }) => {
           <LIOnboardingIcon />
 
           <View style={styles.content}>
-            <RNText style={styles.title}>{'Login'}</RNText>
+            <RNText style={styles.title}>{'Sign UP'}</RNText>
             <RNText style={styles.description}>
-              {'Log In Now To Begin An Amazing Journey.'}
+              {'Sign Up Now To Begin An Amazing Journey.'}
             </RNText>
 
             <LIInput
@@ -40,29 +44,30 @@ const Login = ({ navigation }) => {
               ref={passwordRef}
               title={'Password'}
               placeholder={'Enter your password'}
-              returnKeyType={'done'}
+              onSubmitEditing={() => rePasswordRef.current.focus()}
               icon={State.showPassword ? Images.show : Images.hide}
+              secureTextEntry={!State.showPassword}
               onIconPress={() =>
                 setState(p => ({ ...p, showPassword: !p.showPassword }))
               }
             />
+            <LIInput
+              ref={rePasswordRef}
+              title={'Re-enter Password'}
+              placeholder={'Enter your Re-enter Password'}
+              returnKeyType={'done'}
+              icon={State.showRePassword ? Images.show : Images.hide}
+              secureTextEntry={!State.showRePassword}
+              onIconPress={() =>
+                setState(p => ({ ...p, showRePassword: !p.showRePassword }))
+              }
+            />
 
-            <RememberMe onPress={v => console.log({ v })}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate(NavRoutes.ForgotPassword)}
-                activeOpacity={0.6}>
-                <RNText
-                  size={FontSize.font12}
-                  family={FontFamily.Medium}
-                  color={Colors.Primary}>
-                  {'Forgot Password ?'}
-                </RNText>
-              </TouchableOpacity>
-            </RememberMe>
+            <RememberMe onPress={v => console.log({ v })} />
 
-            <RNButton title={'Log In'} />
+            <RNButton title={'Sign Up'} />
 
-            <DontHaveAccount />
+            <DontHaveAccount isSignup={true} />
           </View>
         </ScrollView>
       </RNKeyboardAvoid>
@@ -88,4 +93,4 @@ const useStyles = () => {
   });
 };
 
-export default Login;
+export default SignUp;

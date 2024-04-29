@@ -38,8 +38,8 @@ const useStyles = ({ error }) => {
       paddingTop: hp(2),
     },
     title: {
-      fontSize: FontSize.font14,
-      color: error ? Colors.Error : Colors.Placeholder,
+      fontSize: FontSize.font12,
+      color: error ? Colors.Error : Colors.InputTitle,
     },
     inputContainer: {
       ...RNStyles.flexRow,
@@ -63,8 +63,8 @@ const useStyles = ({ error }) => {
       marginLeft: wp(1),
     },
     icon: {
-      ...RNStyles.image60,
-      tintColor: error ? Colors.Error : Colors.Primary,
+      ...RNStyles.image70,
+      tintColor: error ? Colors.Error : Colors.InputTitle,
     },
   });
 };

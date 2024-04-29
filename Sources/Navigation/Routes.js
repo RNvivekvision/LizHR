@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavConfigs, NavRoutes } from './index';
-import { Home, Login } from '../Screens';
 import SplashScreen from 'react-native-splash-screen';
+import { NavConfigs, NavRoutes } from './index';
+import { ForgotPassword, Login, SignUp, VerifyCode } from '../Screens';
+import Drawer from './Drawer';
 
 const Stack = createStackNavigator();
 
@@ -17,8 +18,17 @@ const Routes = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={NavConfigs.screenOptions}>
+        {/* App */}
+        <Stack.Screen name={NavRoutes.Home} component={Drawer} />
+
+        {/* Auth */}
         <Stack.Screen name={NavRoutes.Login} component={Login} />
-        <Stack.Screen name={NavRoutes.Home} component={Home} />
+        <Stack.Screen name={NavRoutes.SignUp} component={SignUp} />
+        <Stack.Screen name={NavRoutes.VerifyCode} component={VerifyCode} />
+        <Stack.Screen
+          name={NavRoutes.ForgotPassword}
+          component={ForgotPassword}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

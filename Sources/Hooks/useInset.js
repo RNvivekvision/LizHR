@@ -1,5 +1,5 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-const useInset = () => {
+export default function useInset() {
   const inset = useSafeAreaInsets();
   return {
     top: inset.top,
@@ -7,5 +7,4 @@ const useInset = () => {
     left: inset.left,
     right: inset.right,
   };
-};
-export default useInset;
+}

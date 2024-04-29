@@ -13,9 +13,31 @@ const RNHeader = ({
   children,
   style,
   footer,
+  isDrawer,
 }) => {
   const navigation = useNavigation();
   const styles = useStyles();
+
+  return (
+    <View style={[styles.Container, containerStyle]}>
+      {!isDrawer && (
+        <RNImage
+          source={Images.background}
+          resizeMode={'cover'}
+          style={styles.bgImage}
+        />
+      )}
+      <RNIcon
+        icon={isDrawer ? Images.drawer : Images.back}
+        iconStyle={{ ...RNStyles.image90 }}
+        onPress={() =>
+          isDrawer ? navigation.openDrawer() : navigation.goBack()
+        }
+        containerStyle={styles.icon}
+      />
+      <RNText style={[styles.title, titleStyle]}>{title}</RNText>
+    </View>
+  );
 
   return (
     <View style={RNStyles.container}>
@@ -26,9 +48,11 @@ const RNHeader = ({
           style={styles.bgImage}
         />
         <RNIcon
-          icon={Images.back}
+          icon={isDrawer ? Images.drawer : Images.back}
           iconStyle={RNStyles.image90}
-          onPress={() => navigation.goBack()}
+          onPress={() =>
+            isDrawer ? navigation.openDrawer() : navigation.goBack()
+          }
           containerStyle={styles.icon}
         />
         <RNText style={[styles.title, titleStyle]}>{title}</RNText>
@@ -54,7 +78,6 @@ const useStyles = () => {
     },
     Container: {
       ...RNStyles.flexRow,
-      backgroundColor: Colors.Primary,
       paddingHorizontal: wp(4),
       paddingTop: inset.top + hp(2),
       paddingVertical: hp(2),

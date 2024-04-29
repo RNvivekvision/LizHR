@@ -1,2 +1,3 @@
 import useInset from './useInset';
-export { useInset };
+import useTimer from './useTimer';
+export { useInset, useTimer };

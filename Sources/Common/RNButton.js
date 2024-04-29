@@ -15,6 +15,7 @@ const RNButton = ({
   iconStyle,
   isLoading,
 }) => {
+  const styles = useStyles({ disable });
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -39,26 +40,27 @@ const RNButton = ({
   );
 };
 
-const styles = StyleSheet.create({
-  Container: {
-    ...RNStyles.center,
-    ...RNStyles.flexRow,
-    backgroundColor: Colors.Primary,
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(4),
-    marginHorizontal: wp(4),
-    marginVertical: hp(1),
-    borderRadius: wp(4),
-  },
-  buttonText: {
-    fontSize: FontSize.font18,
-    fontFamily: FontFamily.Bold,
-    color: Colors.White,
-  },
-  icon: {
-    ...RNStyles.icon,
-    marginRight: wp(2),
-  },
-});
+const useStyles = ({ disable }) => {
+  return StyleSheet.create({
+    Container: {
+      ...RNStyles.center,
+      ...RNStyles.flexRow,
+      backgroundColor: disable ? Colors.Black + '40' : Colors.Primary,
+      paddingVertical: hp(2),
+      paddingHorizontal: wp(4),
+      marginVertical: hp(1),
+      borderRadius: wp(4),
+    },
+    buttonText: {
+      fontSize: FontSize.font18,
+      fontFamily: FontFamily.Bold,
+      color: Colors.White,
+    },
+    icon: {
+      ...RNStyles.icon,
+      marginRight: wp(2),
+    },
+  });
+};
 
 export default RNButton;
