@@ -12,7 +12,7 @@ import { useInset } from '../../Hooks';
 import DummyData from '../../Utils/DummyData';
 import { useState } from 'react';
 
-const DrawerContent = () => {
+const DrawerContent = ({ navigation }) => {
   const styles = useStyles();
 
   const onItemPress = item => {
@@ -26,6 +26,7 @@ const DrawerContent = () => {
           icon={Images.back}
           iconStyle={{ tintColor: Colors.Black }}
           containerStyle={styles.backIcon}
+          onPress={() => navigation.closeDrawer()}
         />
         <RNText family={FontFamily.Bold}>{'Settings'}</RNText>
       </View>
@@ -78,7 +79,9 @@ const RenderDrawerItems = ({ item, onPress }) => {
       </TouchableOpacity>
 
       {State.showInner &&
-        item?.data?.map((v, i) => <RenderDrawerItems item={v} key={i} />)}
+        item?.data?.map((v, i) => (
+          <RenderDrawerItems item={v} key={i} onPress={onPress} />
+        ))}
     </View>
   );
 };
@@ -97,7 +100,8 @@ const useStyles = () => {
     backIcon: {
       width: wp(8),
       height: wp(8),
-      marginHorizontal: wp(2),
+      marginLeft: wp(4),
+      marginRight: wp(2),
     },
     renderContainer: {
       ...RNStyles.flexRowBetween,

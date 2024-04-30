@@ -3,8 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from 'react-native-splash-screen';
 import { NavConfigs, NavRoutes } from './index';
-import { ForgotPassword, Login, SignUp, VerifyCode } from '../Screens';
 import Drawer from './Drawer';
+import {
+  ForgotPassword,
+  Login,
+  SignUp,
+  UpcomingLeaves,
+  VerifyCode,
+} from '../Screens';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +26,10 @@ const Routes = () => {
       <Stack.Navigator screenOptions={NavConfigs.screenOptions}>
         {/* App */}
         <Stack.Screen name={NavRoutes.Home} component={Drawer} />
+        <Stack.Screen
+          name={NavRoutes.UpcomingLeaves}
+          component={UpcomingLeaves}
+        />
 
         {/* Auth */}
         <Stack.Screen name={NavRoutes.Login} component={Login} />

@@ -1,2 +1,3 @@
 import Home from './Home';
-export { Home };
+import UpcomingLeaves from './UpcomingLeaves';
+export { Home, UpcomingLeaves };

@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import { Colors, FontFamily, hp, wp } from '../Theme';
+import { Colors, FontFamily, FontSize, hp, wp } from '../Theme';
+import RNStyles from './RNStyles';
 
 const RNDropDown = ({
   data,
@@ -39,9 +40,10 @@ const RNDropDown = ({
           itemContainerStyle={[styles.itemContainerStyle, itemContainerStyle]}
           containerStyle={[styles.containerStyle, dropDownContainerStyle]}
           itemTextStyle={[styles.itemTextStyle, dropDownItemTextStyle]}
-          activeColor={Colors.Button}
+          activeColor={Colors.Primary + '80'}
+          autoScroll={false}
           data={data}
-          maxHeight={maxHeight ?? hp(25)}
+          maxHeight={maxHeight ?? wp(55)}
           labelField="label"
           valueField="value"
           placeholder={placeholder ?? ''}
@@ -64,16 +66,17 @@ const RNDropDown = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: wp(4),
+    paddingHorizontal: wp(1),
   },
   dropdownStyle: {
     borderRadius: wp(3),
     paddingHorizontal: wp(4),
     paddingVertical: hp(0.5),
-    marginTop: hp(1.5),
+    backgroundColor: Colors.White,
   },
   placeholderStyle: {
-    color: Colors.Placeholder,
+    color: Colors.Black,
+    fontFamily: FontFamily.Regular,
   },
   selectedTextStyle: {
     fontFamily: FontFamily.Medium,
@@ -88,17 +91,16 @@ const styles = StyleSheet.create({
     height: wp(8),
     tintColor: Colors.Black,
   },
-  inputSearchStyle: {},
+  inputSearchStyle: {
+    backgroundColor: '#f00',
+  },
   itemContainerStyle: {
     backgroundColor: Colors.White,
   },
   containerStyle: {
+    ...RNStyles.shadow,
     backgroundColor: Colors.White,
-    borderWidth: 1,
-    borderColor: Colors.Black,
-    borderBottomLeftRadius: wp(3),
-    borderBottomRightRadius: wp(3),
-    overflow: 'hidden',
+    borderRadius: wp(3),
   },
 });
 
