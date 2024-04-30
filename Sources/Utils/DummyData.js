@@ -12,23 +12,20 @@ const DummyData = {
     {
       icon: Images.upcomingLeave,
       title: 'Upcoming leave',
-      navigate: NavRoutes.UpcomingLeaves,
+      navigate: NavRoutes.UpcomingLeave,
     },
     {
       icon: Images.reports,
       title: 'Reports',
       data: [
         {
-          icon: Images.fuelApplication,
-          title: 'Inner 1',
+          title: 'In-Out Report',
         },
         {
-          icon: Images.leaveApplication,
-          title: 'Inner 2',
+          title: 'Salary Report',
         },
         {
-          icon: Images.compensationApplication,
-          title: 'Inner 3',
+          title: 'Attendance Report',
         },
       ],
     },
@@ -103,6 +100,52 @@ const DummyData = {
         icon: Images.missThumb,
         title: 'Miss Thumb',
         employee: '02',
+      },
+    ],
+  },
+  upcomingLeaves: {
+    employeeLeaves: [
+      {
+        employee: 'Lillian Leonard (25)',
+        leaveType: 'Unpaid Leave (UP)',
+        approveBy: 'Eric Ryan (12)',
+        fromDate: '19 - Apr - 2024',
+        toDate: '19 - Apr - 2024',
+      },
+      {
+        employee: 'Alan Hopkins (48)',
+        leaveType: 'Unpaid Leave (UP)',
+        approveBy: 'Willie McCormick (24)',
+        fromDate: '19 - Apr - 2024',
+        toDate: '19 - Apr - 2024',
+      },
+      {
+        employee: 'Myra Wright (5)',
+        leaveType: 'Unpaid Leave (UP)',
+        approveBy: 'Beatrice Robertson (36)',
+        fromDate: '19 - Apr - 2024',
+        toDate: '19 - Apr - 2024',
+      },
+      {
+        employee: 'Noah Moss (78)',
+        leaveType: 'Unpaid Leave (UP)',
+        approveBy: 'Elizabeth Brewer (42)',
+        fromDate: '19 - Apr - 2024',
+        toDate: '19 - Apr - 2024',
+      },
+      {
+        employee: 'Vernon McKenzie (125)',
+        leaveType: 'Unpaid Leave (UP)',
+        approveBy: 'Etta Gregory (107)',
+        fromDate: '19 - Apr - 2024',
+        toDate: '19 - Apr - 2024',
+      },
+      {
+        employee: 'Helena Evans (102)',
+        leaveType: 'Unpaid Leave (UP)',
+        approveBy: 'Claudia Wells (145)',
+        fromDate: '19 - Apr - 2024',
+        toDate: '19 - Apr - 2024',
       },
     ],
   },

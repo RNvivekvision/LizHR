@@ -78,6 +78,7 @@ const useStyles = () => {
     },
     Container: {
       ...RNStyles.flexRow,
+      backgroundColor: Colors.Primary,
       paddingHorizontal: wp(4),
       paddingTop: inset.top + hp(2),
       paddingVertical: hp(2),

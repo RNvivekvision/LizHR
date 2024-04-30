@@ -6,7 +6,7 @@ const NavRoutes = {
 
   Drawer: 'Drawer',
   Home: 'Home',
-  UpcomingLeaves: 'Upcoming Leaves',
+  UpcomingLeave: 'Upcoming Leave',
 };
 
 export default NavRoutes;

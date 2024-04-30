@@ -8,7 +8,7 @@ import {
   ForgotPassword,
   Login,
   SignUp,
-  UpcomingLeaves,
+  UpcomingLeave,
   VerifyCode,
 } from '../Screens';
 
@@ -27,8 +27,8 @@ const Routes = () => {
         {/* App */}
         <Stack.Screen name={NavRoutes.Home} component={Drawer} />
         <Stack.Screen
-          name={NavRoutes.UpcomingLeaves}
-          component={UpcomingLeaves}
+          name={NavRoutes.UpcomingLeave}
+          component={UpcomingLeave}
         />
 
         {/* Auth */}

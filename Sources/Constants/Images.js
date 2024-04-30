@@ -22,6 +22,7 @@ const Images = {
   absent: require(ImagePath + 'absent' + png),
   halfLeave: require(ImagePath + 'halfLeave' + png),
   missThumb: require(ImagePath + 'missThumb' + png),
+  approveThumb: require(ImagePath + 'approveThumb' + png),
   overtime: require(ImagePath + 'overtime' + png),
   present: require(ImagePath + 'present' + png),
   upcomingLeaveHome: require(ImagePath + 'upcomingLeaveHome' + png),

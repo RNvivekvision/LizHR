@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   FlatList,
   LayoutAnimation,
@@ -9,14 +10,19 @@ import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { RNIcon, RNImage, RNStyles, RNText } from '../../Common';
 import { Images } from '../../Constants';
 import { useInset } from '../../Hooks';
-import DummyData from '../../Utils/DummyData';
-import { useState } from 'react';
+import { DummyData } from '../../Utils';
 
 const DrawerContent = ({ navigation }) => {
-  const styles = useStyles();
+  const styles = useStyles({});
 
   const onItemPress = item => {
     console.log({ item });
+    if (item.navigate) {
+      navigation.closeDrawer();
+      setTimeout(() => {
+        navigation.navigate(item.navigate);
+      }, 0);
+    }
   };
 
   return (
@@ -45,7 +51,7 @@ const DrawerContent = ({ navigation }) => {
 
 const RenderDrawerItems = ({ item, onPress }) => {
   const [State, setState] = useState({ showInner: false });
-  const styles = useStyles();
+  const styles = useStyles({ isInner: !item.icon });
 
   const onItemPress = () => {
     if (item?.data?.length > 0) {
@@ -57,12 +63,16 @@ const RenderDrawerItems = ({ item, onPress }) => {
   };
 
   return (
-    <View style={{ marginLeft: wp(4) }}>
-      <TouchableOpacity onPress={onItemPress} style={styles.renderContainer}>
+    <View style={styles.renderContainer}>
+      <TouchableOpacity
+        onPress={onItemPress}
+        style={styles.renderContentContainer}>
         <View style={RNStyles.flexRow}>
-          <View style={styles.renderIcon}>
-            <RNImage source={item.icon} style={RNStyles.image50} />
-          </View>
+          {item.icon && (
+            <View style={styles.renderIcon}>
+              <RNImage source={item.icon} style={RNStyles.image50} />
+            </View>
+          )}
           <RNText style={styles.renderTitle}>{item.title}</RNText>
         </View>
         {item?.data?.length > 0 && (
@@ -86,7 +96,7 @@ const RenderDrawerItems = ({ item, onPress }) => {
   );
 };
 
-const useStyles = () => {
+const useStyles = ({ isInner }) => {
   const inset = useInset();
 
   return StyleSheet.create({
@@ -104,10 +114,13 @@ const useStyles = () => {
       marginRight: wp(2),
     },
     renderContainer: {
+      marginLeft: isInner ? wp(8) : wp(4),
+    },
+    renderContentContainer: {
       ...RNStyles.flexRowBetween,
       // marginLeft: wp(4),
       paddingVertical: hp(1.5),
-      borderBottomWidth: 1,
+      borderBottomWidth: isInner ? 0 : 1,
       borderBlockColor: Colors.drawerBorderColor,
       paddingRight: wp(4),
     },
