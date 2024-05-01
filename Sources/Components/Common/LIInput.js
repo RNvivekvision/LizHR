@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { RNInput, RNStyles, RNText, RNIcon } from './index';
-import { Colors, FontSize, hp, wp } from '../Theme';
+import { RNInput, RNStyles, RNText, RNIcon } from '../../Common';
+import { Colors, FontSize, hp, wp } from '../../Theme';
 
 const LIInput = forwardRef(
   ({ title, icon, onIconPress, error, containerStyle, ...rest }, ref) => {

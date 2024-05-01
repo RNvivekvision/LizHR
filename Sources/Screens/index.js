@@ -1,2 +1,2 @@
 export { Login, SignUp, ForgotPassword, VerifyCode } from './Auth';
-export { Home, UpcomingLeave } from './App';
+export { Home, UpcomingLeave, Attendance } from './App';

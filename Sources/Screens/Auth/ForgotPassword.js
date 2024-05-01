@@ -1,14 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
-import {
-  RNText,
-  LIOnboardingIcon,
-  LIInput,
-  RNContainer,
-  RNKeyboardAvoid,
-  RNButton,
-} from '../../Common';
+import { RNText, RNContainer, RNKeyboardAvoid, RNButton } from '../../Common';
+import { DontHaveAccount, LIInput, LIOnboardingIcon } from '../../Components';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
-import { DontHaveAccount } from '../../Components';
 import { NavRoutes } from '../../Navigation';
 
 const ForgotPassword = ({ navigation }) => {

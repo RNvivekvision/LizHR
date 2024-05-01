@@ -3,14 +3,13 @@ import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 import { OtpInput } from 'react-native-otp-entry';
 import {
   RNText,
-  LIOnboardingIcon,
   RNContainer,
   RNKeyboardAvoid,
   RNButton,
   RNStyles,
 } from '../../Common';
 import { Colors, FontFamily, FontSize, hp, otpTheme, wp } from '../../Theme';
-import { DontHaveAccount } from '../../Components';
+import { DontHaveAccount, LIOnboardingIcon } from '../../Components';
 import { useTimer } from '../../Hooks';
 
 const VerifyCode = ({ navigation }) => {

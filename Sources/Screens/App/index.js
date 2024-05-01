@@ -1,3 +1,4 @@
 import Home from './Home';
 import UpcomingLeave from './UpcomingLeave';
-export { Home, UpcomingLeave };
+import Attendance from './Attendance';
+export { Home, UpcomingLeave, Attendance };

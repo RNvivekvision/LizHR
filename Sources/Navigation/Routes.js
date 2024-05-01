@@ -5,6 +5,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { NavConfigs, NavRoutes } from './index';
 import Drawer from './Drawer';
 import {
+  Attendance,
   ForgotPassword,
   Login,
   SignUp,
@@ -30,6 +31,7 @@ const Routes = () => {
           name={NavRoutes.UpcomingLeave}
           component={UpcomingLeave}
         />
+        <Stack.Screen name={NavRoutes.Attendance} component={Attendance} />
 
         {/* Auth */}
         <Stack.Screen name={NavRoutes.Login} component={Login} />

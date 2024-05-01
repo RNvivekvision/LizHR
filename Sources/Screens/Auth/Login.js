@@ -1,14 +1,12 @@
 import { useRef, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { RNText, RNContainer, RNKeyboardAvoid, RNButton } from '../../Common';
 import {
-  RNText,
-  LIOnboardingIcon,
   LIInput,
-  RNContainer,
-  RNKeyboardAvoid,
-  RNButton,
-} from '../../Common';
-import { DontHaveAccount, RememberMe } from '../../Components';
+  RememberMe,
+  DontHaveAccount,
+  LIOnboardingIcon,
+} from '../../Components';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { NavRoutes } from '../../Navigation';
 import { Images } from '../../Constants';

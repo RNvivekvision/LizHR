@@ -1,20 +1,25 @@
 import { useState } from 'react';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNDropDown, RNImage, RNStyles, RNText } from '../../../Common';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../../Theme';
 import { DummyData } from '../../../Utils';
 import { Images } from '../../../Constants';
+import { useNavigation } from '@react-navigation/native';
+import { NavRoutes } from '../../../Navigation';
 
 const { years } = DummyData.Home;
 
 const AttendenceSummary = ({ summary }) => {
+  const navigation = useNavigation();
   const [State, setState] = useState({ year: null });
 
   return (
     <View style={styles.attendanceContainer}>
       <View style={RNStyles.flexRowBetween}>
-        <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(NavRoutes.Attendance)}
+          style={{ flex: 1 }}>
           <RNText size={FontSize.font12}>{'Attendance Summary'}</RNText>
           <RNText
             color={Colors.Black + '99'}
@@ -22,7 +27,7 @@ const AttendenceSummary = ({ summary }) => {
             size={FontSize.font9}>
             {'April 2023 to April 2024'}
           </RNText>
-        </View>
+        </TouchableOpacity>
 
         {/* <View style={{ paddingVertical: 15, width: '35%' }} /> */}
         <RNDropDown
@@ -50,7 +55,7 @@ const AttendenceSummary = ({ summary }) => {
               inActiveStrokeOpacity={0.2}
               activeStrokeWidth={wp(2)}
               inActiveStrokeWidth={wp(2)}
-              duration={2000}
+              duration={1000}
               progressValueStyle={styles.progressValueStyle}
               strokeLinecap={'round'}
               valueSuffix={'%'}

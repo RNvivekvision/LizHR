@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native';
-import { hp, wp } from '../Theme';
-import { Images } from '../Constants';
-import { useInset } from '../Hooks';
-import RNImage from './RNImage';
+import { hp, wp } from '../../Theme';
+import { Images } from '../../Constants';
+import { useInset } from '../../Hooks';
+import { RNImage } from '../../Common';
 
 const LIOnboardingIcon = () => {
   const styles = useStyles();

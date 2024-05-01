@@ -16,6 +16,3 @@ export { default as RNDropDown } from './RNDropDown';
 // export { default as RNSlider } from './RNSlider';
 // export { default as RNGradient } from './RNGradient';
 // export { default as RNBottomSheet } from './RNBottomSheet';
-
-export { default as LIOnboardingIcon } from './LIOnboardingIcon';
-export { default as LIInput } from './LIInput';

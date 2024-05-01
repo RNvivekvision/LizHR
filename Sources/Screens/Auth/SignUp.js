@@ -1,17 +1,15 @@
 import { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { Images } from '../../Constants';
+import { RNText, RNContainer, RNKeyboardAvoid, RNButton } from '../../Common';
+import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import {
-  RNText,
+  DontHaveAccount,
+  RememberMe,
   LIOnboardingIcon,
   LIInput,
-  RNContainer,
-  RNKeyboardAvoid,
-  RNButton,
-} from '../../Common';
-import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
-import { DontHaveAccount, RememberMe } from '../../Components';
+} from '../../Components';
 import { NavRoutes } from '../../Navigation';
-import { Images } from '../../Constants';
 
 const SignUp = ({ navigation }) => {
   const [State, setState] = useState({
