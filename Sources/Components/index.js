@@ -4,6 +4,7 @@ export {
   EmployeeDetails,
   RenderUpcomingLeave,
   RenderInOut,
+  RenderSalaryReport,
 } from './App';
 export {
   LIInput,

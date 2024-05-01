@@ -289,6 +289,34 @@ const DummyData = {
       },
     ],
   },
+  salaryReport: {
+    employeeSalaryReport: [
+      {
+        name: 'Joe Lynch',
+        gross: '61000',
+        absent: '417 (12)',
+        finalSalary: '72570',
+      },
+      {
+        name: 'Robert Ingram',
+        gross: '37000',
+        absent: '657 (12)',
+        finalSalary: '7162',
+      },
+      {
+        name: 'Jack Romero',
+        gross: '60000',
+        absent: '427 (12)',
+        finalSalary: '42355',
+      },
+      {
+        name: 'Willie Cannon',
+        gross: '88000',
+        absent: '783 (12)',
+        finalSalary: '33604',
+      },
+    ],
+  },
 };
 
 export default DummyData;

@@ -31,6 +31,15 @@ const Routes = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={NavConfigs.screenOptions}>
+        {/* Auth */}
+        <Stack.Screen name={NavRoutes.Login} component={Login} />
+        <Stack.Screen name={NavRoutes.SignUp} component={SignUp} />
+        <Stack.Screen name={NavRoutes.VerifyCode} component={VerifyCode} />
+        <Stack.Screen
+          name={NavRoutes.ForgotPassword}
+          component={ForgotPassword}
+        />
+
         {/* App */}
         <Stack.Screen name={NavRoutes.Home} component={Drawer} />
         <Stack.Screen
@@ -55,15 +64,6 @@ const Routes = () => {
         <Stack.Screen
           name={NavRoutes.CompensationApplication}
           component={CompensationApplication}
-        />
-
-        {/* Auth */}
-        <Stack.Screen name={NavRoutes.Login} component={Login} />
-        <Stack.Screen name={NavRoutes.SignUp} component={SignUp} />
-        <Stack.Screen name={NavRoutes.VerifyCode} component={VerifyCode} />
-        <Stack.Screen
-          name={NavRoutes.ForgotPassword}
-          component={ForgotPassword}
         />
       </Stack.Navigator>
     </NavigationContainer>

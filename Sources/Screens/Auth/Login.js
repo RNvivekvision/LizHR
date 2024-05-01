@@ -58,7 +58,10 @@ const Login = ({ navigation }) => {
               </TouchableOpacity>
             </RememberMe>
 
-            <RNButton title={'Log In'} />
+            <RNButton
+              title={'Log In'}
+              onPress={() => navigation.replace(NavRoutes.Home)}
+            />
 
             <DontHaveAccount />
           </View>

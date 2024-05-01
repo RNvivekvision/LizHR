@@ -1,7 +1,10 @@
 import { FlatList } from 'react-native';
+import { LIDatePicker, RenderSalaryReport } from '../../../Components';
 import { RNContainer, RNHeader } from '../../../Common';
-import { LIDatePicker } from '../../../Components';
 import { useFlatlistStyles } from '../../../Hooks';
+import { DummyData } from '../../../Utils';
+
+const { employeeSalaryReport } = DummyData.salaryReport;
 
 const SalaryReport = () => {
   const { contentContainerStyle } = useFlatlistStyles();
@@ -11,11 +14,11 @@ const SalaryReport = () => {
       <RNHeader title={'Salary Report'} />
 
       <FlatList
-        data={[]}
+        data={employeeSalaryReport}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
         ListHeaderComponent={() => <LIDatePicker />}
-        // renderItem={({ item }) => {}}
+        renderItem={({ item }) => <RenderSalaryReport item={item} />}
       />
     </RNContainer>
   );
