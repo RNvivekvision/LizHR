@@ -1,8 +1,10 @@
 import { FlatList } from 'react-native';
 import { RNContainer, RNHeader } from '../../../Common';
-import { LIDatePicker } from '../../../Components';
+import { LIDatePicker, RenderInOut } from '../../../Components';
 import { useFlatlistStyles } from '../../../Hooks';
+import { DummyData } from '../../../Utils';
 
+const { employeeInoutReport } = DummyData.inOutReport;
 const InOutReport = () => {
   const { contentContainerStyle } = useFlatlistStyles();
 
@@ -11,11 +13,11 @@ const InOutReport = () => {
       <RNHeader title={'In-Out Reports'} />
 
       <FlatList
-        data={[]}
+        data={[...employeeInoutReport, ...employeeInoutReport]}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
         ListHeaderComponent={() => <LIDatePicker />}
-        // renderItem={({ item }) => {}}
+        renderItem={({ item }) => <RenderInOut item={item} />}
       />
     </RNContainer>
   );

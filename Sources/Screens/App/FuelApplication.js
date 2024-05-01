@@ -1,7 +1,10 @@
 import { FlatList } from 'react-native';
 import { RNContainer, RNHeader } from '../../Common';
-import { LIDatePicker } from '../../Components';
+import { LIApplication, LIDatePicker } from '../../Components';
 import { useFlatlistStyles } from '../../Hooks';
+import { DummyData } from '../../Utils';
+
+const { employeeLeaves } = DummyData.leaveApplication;
 
 const FuelApplication = () => {
   const { contentContainerStyle } = useFlatlistStyles();
@@ -10,11 +13,11 @@ const FuelApplication = () => {
       <RNHeader title={'Fuel Application'} />
 
       <FlatList
-        data={[]}
+        data={employeeLeaves}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
         ListHeaderComponent={() => <LIDatePicker />}
-        // renderItem={({ item }) => {}}
+        renderItem={({ item }) => <LIApplication item={item} />}
       />
     </RNContainer>
   );

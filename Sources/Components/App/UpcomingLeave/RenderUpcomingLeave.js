@@ -1,30 +1,16 @@
 import { StyleSheet, View } from 'react-native';
-import { Colors, FontSize, hp, wp } from '../../../Theme';
-import { RNText, RNStyles } from '../../../Common';
+import { Colors, hp, wp } from '../../../Theme';
+import { RNStyles } from '../../../Common';
+import { LIRow } from '../../Common';
 
 const RenderUpcomingLeave = ({ item }) => {
   return (
     <View style={styles.container}>
-      <Row title={'Employee  :  '} text={item.employee} isTitle={true} />
-      <Row title={'Leave Type  :  '} text={item.leaveType} />
-      <Row title={'Approve By  :  '} text={item.approveBy} />
-      <Row title={'From Date   :  '} text={item.fromDate} />
-      <Row title={'To Date  :  '} text={item.toDate} />
-    </View>
-  );
-};
-
-const Row = ({ title, text, isTitle }) => {
-  return (
-    <View style={styles.rowContainer}>
-      <RNText size={FontSize.font12} color={Colors.employee}>
-        {title}
-      </RNText>
-      <RNText
-        size={FontSize.font12}
-        color={isTitle ? Colors.Primary : Colors.Black}>
-        {text}
-      </RNText>
+      <LIRow title={'Employee  :  '} text={item.employee} isTitle={true} />
+      <LIRow title={'Leave Type  :  '} text={item.leaveType} />
+      <LIRow title={'Approve By  :  '} text={item.approveBy} />
+      <LIRow title={'From Date   :  '} text={item.fromDate} />
+      <LIRow title={'To Date  :  '} text={item.toDate} />
     </View>
   );
 };
@@ -38,10 +24,6 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     backgroundColor: Colors.White,
     borderRadius: wp(3),
-  },
-  rowContainer: {
-    ...RNStyles.flexRow,
-    paddingVertical: hp(0.3),
   },
 });
 

@@ -1,7 +1,10 @@
 import { FlatList } from 'react-native';
 import { RNContainer, RNHeader } from '../../../Common';
-import { LIDatePicker } from '../../../Components';
+import { LIAttendence, LIDatePicker } from '../../../Components';
 import { useFlatlistStyles } from '../../../Hooks';
+import { DummyData } from '../../../Utils';
+
+const { employeeAttendence } = DummyData.attendence;
 
 const AttendanceReport = () => {
   const { contentContainerStyle } = useFlatlistStyles();
@@ -11,11 +14,11 @@ const AttendanceReport = () => {
       <RNHeader title={'Attendance Report'} />
 
       <FlatList
-        data={[]}
+        data={[...employeeAttendence, ...employeeAttendence]}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
         ListHeaderComponent={() => <LIDatePicker />}
-        // renderItem={({ item }) => {}}
+        renderItem={({ item }) => <LIAttendence item={item} />}
       />
     </RNContainer>
   );

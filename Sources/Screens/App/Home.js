@@ -22,7 +22,7 @@ const Home = () => {
       />
       <RNHeader title={'LizHR'} isDrawer={true} />
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           <RNDropDown
             placeholder={'Select Branch'}

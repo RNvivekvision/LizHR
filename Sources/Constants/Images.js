@@ -28,6 +28,7 @@ const Images = {
   upcomingLeaveHome: require(ImagePath + 'upcomingLeaveHome' + png),
   inTime: require(ImagePath + 'inTime' + png),
   outTime: require(ImagePath + 'outTime' + png),
+  more: require(ImagePath + 'more' + png),
   dummy_user: require(ImagePath + 'dummy_user' + png),
 };
 

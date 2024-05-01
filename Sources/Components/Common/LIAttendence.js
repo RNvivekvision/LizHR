@@ -26,7 +26,7 @@ const LIAttendence = ({ item }) => {
             pTop={hp(0.5)}
             color={
               Colors.employee
-            }>{`${item.companyName} | ${item.position}`}</RNText>
+            }>{`${item.companyName}  |  ${item.position}`}</RNText>
         </View>
       </View>
 
@@ -91,7 +91,7 @@ const useStyles = ({ isPresent }) => {
     },
     rowTextContainer: {
       ...RNStyles.flexRow,
-      width: '50%',
+      width: '45%',
     },
     inOutIcon: {
       width: wp(3),
