@@ -26,6 +26,9 @@ const Images = {
   overtime: require(ImagePath + 'overtime' + png),
   present: require(ImagePath + 'present' + png),
   upcomingLeaveHome: require(ImagePath + 'upcomingLeaveHome' + png),
+  inTime: require(ImagePath + 'inTime' + png),
+  outTime: require(ImagePath + 'outTime' + png),
+  dummy_user: require(ImagePath + 'dummy_user' + png),
 };
 
 export default Images;

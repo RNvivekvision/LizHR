@@ -6,8 +6,14 @@ import { NavConfigs, NavRoutes } from './index';
 import Drawer from './Drawer';
 import {
   Attendance,
+  AttendanceReport,
+  CompensationApplication,
   ForgotPassword,
+  FuelApplication,
+  InOutReport,
+  LeaveApplication,
   Login,
+  SalaryReport,
   SignUp,
   UpcomingLeave,
   VerifyCode,
@@ -32,6 +38,24 @@ const Routes = () => {
           component={UpcomingLeave}
         />
         <Stack.Screen name={NavRoutes.Attendance} component={Attendance} />
+        <Stack.Screen name={NavRoutes.InOutReport} component={InOutReport} />
+        <Stack.Screen
+          name={NavRoutes.AttendanceReport}
+          component={AttendanceReport}
+        />
+        <Stack.Screen name={NavRoutes.SalaryReport} component={SalaryReport} />
+        <Stack.Screen
+          name={NavRoutes.FuelApplication}
+          component={FuelApplication}
+        />
+        <Stack.Screen
+          name={NavRoutes.LeaveApplication}
+          component={LeaveApplication}
+        />
+        <Stack.Screen
+          name={NavRoutes.CompensationApplication}
+          component={CompensationApplication}
+        />
 
         {/* Auth */}
         <Stack.Screen name={NavRoutes.Login} component={Login} />

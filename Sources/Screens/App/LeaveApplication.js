@@ -1,27 +1,26 @@
 import { FlatList } from 'react-native';
 import { RNContainer, RNHeader } from '../../Common';
-import { LIDatePicker, LIAttendence } from '../../Components';
+import { LIDatePicker, LIApplication } from '../../Components';
 import { DummyData } from '../../Utils';
 import { useFlatlistStyles } from '../../Hooks';
 
-const { employeeAttendence } = DummyData.attendence;
+const { employeeLeaves } = DummyData.leaveApplication;
 
-const Attendance = () => {
+const LeaveApplication = () => {
   const { contentContainerStyle } = useFlatlistStyles();
-
   return (
     <RNContainer>
-      <RNHeader title={'Attendance'} />
+      <RNHeader title={'Leave Application'} />
 
       <FlatList
-        data={[...employeeAttendence, ...employeeAttendence]}
+        data={employeeLeaves}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
         ListHeaderComponent={() => <LIDatePicker />}
-        renderItem={({ item }) => <LIAttendence item={item} />}
+        renderItem={({ item }) => <LIApplication item={item} />}
       />
     </RNContainer>
   );
 };
 
-export default Attendance;
+export default LeaveApplication;

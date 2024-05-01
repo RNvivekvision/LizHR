@@ -16,6 +16,8 @@ const Colors = {
   absent: '#EF0204',
   employee: '#878787',
   dropDownYear: '#E9F0FF',
+  present: '#549F01',
+  absent: '#9F0101',
 };
 
 export const otpTheme = {

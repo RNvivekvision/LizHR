@@ -133,7 +133,7 @@ const useStyles = ({ isInner }) => {
     },
     renderTitle: {
       paddingHorizontal: wp(4),
-      fontSize: FontSize.font14,
+      fontSize: isInner ? FontSize.font12 : FontSize.font14,
     },
     dropDownIcon: {
       ...RNStyles.icon,

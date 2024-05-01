@@ -1,3 +1,4 @@
 import useInset from './useInset';
 import useTimer from './useTimer';
-export { useInset, useTimer };
+import useFlatlistStyles from './useFlatlistStyles';
+export { useInset, useTimer, useFlatlistStyles };

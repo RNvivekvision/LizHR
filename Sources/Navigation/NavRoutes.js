@@ -8,6 +8,12 @@ const NavRoutes = {
   Home: 'Home',
   UpcomingLeave: 'Upcoming Leave',
   Attendance: 'Attendance',
+  InOutReport: 'InOut Report',
+  AttendanceReport: 'Attendance Report',
+  SalaryReport: 'Salary Report',
+  FuelApplication: 'Fuel Application',
+  LeaveApplication: 'Leave Application',
+  CompensationApplication: 'Compensation Application',
 };
 
 export default NavRoutes;
