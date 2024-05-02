@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from 'react-native-splash-screen';
 import { NavConfigs, NavRoutes } from './index';
+import { useLocalStorage } from '../Hooks';
 import Drawer from './Drawer';
 import {
   Attendance,
@@ -22,15 +23,21 @@ import {
 const Stack = createStackNavigator();
 
 const Routes = () => {
+  const { appData } = useLocalStorage();
+  const hasUser = appData?.user;
+  // console.log('appData -> ', JSON.stringify(appData, null, 2));
+
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 2000);
   }, []);
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={NavConfigs.screenOptions}>
+  const Screens = useCallback(() => {
+    return (
+      <Stack.Navigator
+        initialRouteName={hasUser ? NavRoutes.Home : NavRoutes.Login}
+        screenOptions={NavConfigs.screenOptions}>
         {/* Auth */}
         <Stack.Screen name={NavRoutes.Login} component={Login} />
         <Stack.Screen name={NavRoutes.SignUp} component={SignUp} />
@@ -66,6 +73,12 @@ const Routes = () => {
           component={CompensationApplication}
         />
       </Stack.Navigator>
+    );
+  }, [hasUser]);
+
+  return (
+    <NavigationContainer>
+      <Screens />
     </NavigationContainer>
   );
 };

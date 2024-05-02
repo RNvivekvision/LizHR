@@ -15,6 +15,7 @@ const SignUp = ({ navigation }) => {
   const [State, setState] = useState({
     showPassword: false,
     showRePassword: false,
+    rememberMe: false,
   });
   const styles = useStyles();
   const passwordRef = useRef();
@@ -61,7 +62,10 @@ const SignUp = ({ navigation }) => {
               }
             />
 
-            <RememberMe onPress={v => console.log({ v })} />
+            <RememberMe
+              value={State.rememberMe}
+              onPress={v => setState(p => ({ ...p, rememberMe: v }))}
+            />
 
             <RNButton title={'Sign Up'} />
 

@@ -1,5 +1,5 @@
-import { Alert, Linking, Share } from 'react-native';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert, Linking } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ALERT = ({ Title, Text, Buttons }) => Alert.alert(Title, Text, Buttons);
 

@@ -1,3 +1,7 @@
+const isUsernameValid = username => {
+  return username.length > 2;
+};
+
 const isEmailValid = Email => {
   const regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
   return regEx.test(Email) && Email.length > 0;
@@ -8,7 +12,7 @@ const isMobileNumberValid = MobileNumber => {
   return regEx.test(MobileNumber) && MobileNumber.length > 9;
 };
 
-const isPasswordValid = Password => Password.length > 7;
+const isPasswordValid = Password => Password.length > 4;
 
 const isSamePasswords = (Password, ConfirmPassword) =>
   Password === ConfirmPassword;
@@ -19,6 +23,7 @@ const isSamePIN = (PIN, ConfirmPIN) =>
   PIN.length === 4 && ConfirmPIN.length === 4 && PIN === ConfirmPIN;
 
 const Validation = {
+  isUsernameValid,
   isEmailValid,
   isMobileNumberValid,
   isPasswordValid,

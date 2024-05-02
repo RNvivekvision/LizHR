@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNImage, RNStyles, RNText } from '../../Common';
 import { Colors, FontSize, wp } from '../../Theme';
 import { Images } from '../../Constants';
 
-const RememberMe = ({ containerStyle, onPress, children }) => {
+const RememberMe = ({ containerStyle, value, onPress, children }) => {
   const [State, setState] = useState({ checked: false });
+
+  useEffect(() => {
+    setState(p => ({ ...p, checked: value }));
+  }, [value]);
 
   const onCheckBoxPress = () => {
     setState(p => ({ ...p, checked: !p.checked }));
@@ -23,6 +27,7 @@ const RememberMe = ({ containerStyle, onPress, children }) => {
             source={State.checked ? Images.checked : Images.uncheck}
             style={styles.icon}
           />
+
           <RNText
             size={FontSize.font12}
             pHorizontal={wp(2)}

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNText, RNContainer, RNKeyboardAvoid, RNButton } from '../../Common';
 import {
@@ -10,14 +10,117 @@ import {
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { NavRoutes } from '../../Navigation';
 import { Images } from '../../Constants';
+import { Functions, Validation } from '../../Utils';
+import { useLocalStorage } from '../../Hooks';
+import { onLogin } from '../../Services';
 
 const Login = ({ navigation }) => {
-  const [State, setState] = useState({ showPassword: false });
+  const { appData } = useLocalStorage();
+  const [State, setState] = useState({
+    username: '',
+    password: '',
+    showPassword: false,
+    loginPressed: false,
+    rememberMe: false,
+    isLoading: false,
+  });
   const styles = useStyles();
   const passwordRef = useRef();
 
+  useEffect(() => {
+    if (appData?.rememberMe) {
+      setState(p => ({
+        ...p,
+        username: appData?.auth?.username,
+        password: appData?.auth?.password,
+        rememberMe: true,
+      }));
+    }
+  }, [appData?.rememberMe]);
+
+  // console.log('appData -> ', JSON.stringify(appData, null, 2));
+
+  const Errors = {
+    username: State.loginPressed && !Validation.isUsernameValid(State.username),
+    password: State.loginPressed && !Validation.isPasswordValid(State.password),
+    noError:
+      Validation.isUsernameValid(State.username) &&
+      Validation.isPasswordValid(State.password),
+  };
+
+  const onLoginPress = async () => {
+    setState(p => ({ ...p, loginPressed: true }));
+    if (!Errors.noError) return;
+
+    setState(p => ({ ...p, isLoading: true }));
+    try {
+      const response = await onLogin({
+        username: State.username,
+        password: State.password,
+      });
+      if (response) {
+        await Functions.setAppData({
+          user: response,
+          auth: { username: State.username, password: State.password },
+          rememberMe: State.rememberMe,
+        });
+        navigation.replace(NavRoutes.Home);
+      }
+    } catch (e) {
+      console.error('Error onLoginPress -> ', e);
+    } finally {
+      setState(p => ({ ...p, isLoading: false }));
+    }
+  };
+
+  // const onLoginPress = async () => {
+  //   setState(p => ({ ...p, loginPressed: true }));
+  //   if (!Errors.noError) return;
+
+  //   setState(p => ({ ...p, isLoading: true }));
+  //   try {
+  //     const result = await getIp();
+  //     const response = await FetchMethod.POST({
+  //       EndPoint: URL.Login,
+  //       NeedToken: false,
+  //       Params: {
+  //         userName: State.username,
+  //         password: State.password,
+  //         fcmToken: null,
+  //         deviceDetails: {
+  //           browser: `${Platform.OS}App`,
+  //           browserVersion: DeviceInfo.getVersion(),
+  //           osType: Platform.OS,
+  //           osVersion: DeviceInfo.getSystemVersion(),
+  //           deviceType: 'mobile',
+  //           ipAddress: result.ipv4,
+  //         },
+  //       },
+  //     });
+  //     if (response?.isSuccess) {
+  //       const token = response?.responseData?.token;
+  //       const data = jwtDecode(token);
+  //       await Functions.setAppData({
+  //         user: { ...data, token: token },
+  //         auth: { username: State.username, password: State.password },
+  //         rememberMe: State.rememberMe,
+  //       });
+  //       console.log(
+  //         'response -> ',
+  //         JSON.stringify({ ...data, token }, null, 2),
+  //       );
+  //     } else {
+  //       alert(response?.errorMessage);
+  //     }
+  //   } catch (e) {
+  //     console.error('Error onLoginPress -> ', e);
+  //   } finally {
+  //     setState(p => ({ ...p, isLoading: false }));
+  //   }
+  // };
+
   return (
-    <RNContainer barStyle={'dark-content'}>
+    <RNContainer isLoading={State.isLoading} barStyle={'dark-content'}>
       <RNKeyboardAvoid>
         <ScrollView showsVerticalScrollIndicator={false}>
           <LIOnboardingIcon />
@@ -33,19 +136,28 @@ const Login = ({ navigation }) => {
               placeholder={'Enter your username'}
               keyboardType={'email-address'}
               onSubmitEditing={() => passwordRef.current.focus()}
+              value={State.username}
+              onChangeText={v => setState(p => ({ ...p, username: v.trim() }))}
+              error={Errors.username}
             />
             <LIInput
               ref={passwordRef}
               title={'Password'}
               placeholder={'Enter your password'}
               returnKeyType={'done'}
-              icon={State.showPassword ? Images.show : Images.hide}
+              value={State.password}
+              onChangeText={v => setState(p => ({ ...p, password: v.trim() }))}
+              error={Errors.password}
+              secureTextEntry={!State.showPassword}
+              icon={State.showPassword ? Images.hide : Images.show}
               onIconPress={() =>
                 setState(p => ({ ...p, showPassword: !p.showPassword }))
               }
             />
 
-            <RememberMe onPress={v => console.log({ v })}>
+            <RememberMe
+              value={State.rememberMe}
+              onPress={v => setState(p => ({ ...p, rememberMe: v }))}>
               <TouchableOpacity
                 onPress={() => navigation.navigate(NavRoutes.ForgotPassword)}
                 activeOpacity={0.6}>
@@ -58,10 +170,7 @@ const Login = ({ navigation }) => {
               </TouchableOpacity>
             </RememberMe>
 
-            <RNButton
-              title={'Log In'}
-              onPress={() => navigation.replace(NavRoutes.Home)}
-            />
+            <RNButton title={'Log In'} onPress={onLoginPress} />
 
             <DontHaveAccount />
           </View>
