@@ -21,26 +21,51 @@ const Colors = {
 };
 
 export const otpTheme = {
-  containerStyle: {
-    paddingVertical: hp(2),
+  theme: {
+    containerStyle: {
+      paddingVertical: hp(2),
+    },
+    pinCodeContainerStyle: {
+      backgroundColor: Colors.White,
+      width: wp(13),
+      height: wp(15),
+      borderRadius: wp(2),
+      borderColor: Colors.Placeholder,
+    },
+    pinCodeTextStyle: {
+      fontSize: FontSize.font24,
+      fontFamily: FontFamily.Bold,
+      color: Colors.Black,
+    },
+    focusStickStyle: {
+      backgroundColor: Colors.Primary,
+    },
+    focusedPinCodeContainerStyle: {
+      borderColor: Colors.Primary,
+    },
   },
-  pinCodeContainerStyle: {
-    backgroundColor: Colors.White,
-    width: wp(13),
-    height: wp(15),
-    borderRadius: wp(2),
-    borderColor: Colors.Placeholder,
-  },
-  pinCodeTextStyle: {
-    fontSize: FontSize.font24,
-    fontFamily: FontFamily.Bold,
-    color: Colors.Black,
-  },
-  focusStickStyle: {
-    backgroundColor: Colors.Primary,
-  },
-  focusedPinCodeContainerStyle: {
-    borderColor: Colors.Primary,
+  errorTheme: {
+    containerStyle: {
+      paddingVertical: hp(2),
+    },
+    pinCodeContainerStyle: {
+      backgroundColor: Colors.White,
+      width: wp(13),
+      height: wp(15),
+      borderRadius: wp(2),
+      borderColor: Colors.Error,
+    },
+    pinCodeTextStyle: {
+      fontSize: FontSize.font24,
+      fontFamily: FontFamily.Bold,
+      color: Colors.Black,
+    },
+    focusStickStyle: {
+      backgroundColor: Colors.Primary,
+    },
+    focusedPinCodeContainerStyle: {
+      borderColor: Colors.Primary,
+    },
   },
 };
 

@@ -3,32 +3,39 @@ import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 import { RNText, RNContainer, RNKeyboardAvoid, RNButton } from '../../Common';
 import { DontHaveAccount, LIInput, LIOnboardingIcon } from '../../Components';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
-import { NavRoutes } from '../../Navigation';
+import { Images } from '../../Constants';
 import { Validation } from '../../Utils';
-import { onForgotPassword } from '../../Services';
+import { onVerifyOtp } from '../../Services';
 
-const ForgotPassword = ({ navigation }) => {
+const NewPassword = ({ navigation, route }) => {
+  const { otp } = route.params;
+  console.log({ otp });
   const [State, setState] = useState({
-    email: '',
-    submitPressed: false,
+    password: '',
+    showPassword: false,
     isLoading: false,
+    submitPressed: false,
   });
-  const errorEmail =
-    State.submitPressed && !Validation.isUsernameValid(State.email);
-  const noErrors = Validation.isUsernameValid(State.email);
 
-  const onGetCodePress = async () => {
+  const errorPassword =
+    State.showPassword && !Validation.isPasswordValid(State.password);
+  const noErrors = Validation.isPasswordValid(State.password);
+
+  const onSubmitPress = async () => {
     setState(p => ({ ...p, submitPressed: true }));
     if (!noErrors) return;
+
     setState(p => ({ ...p, isLoading: true }));
     try {
-      const response = await onForgotPassword(State.email);
-      // if (!response) return;
-      navigation.navigate(NavRoutes.VerifyCode, {
-        username: State.email,
+      const response = await onVerifyOtp({
+        otp: otp,
+        password: State.password,
       });
+      if (!response) return;
+
+      navigation.popToTop();
     } catch (e) {
-      console.log('Error onForgotPassword -> ', e);
+      console.log('Error onSubmitPress -> ', e);
     } finally {
       setState(p => ({ ...p, isLoading: false }));
     }
@@ -41,26 +48,29 @@ const ForgotPassword = ({ navigation }) => {
           <LIOnboardingIcon />
 
           <View style={styles.content}>
-            <RNText style={styles.title}>{'Forgot Password'}</RNText>
+            <RNText style={styles.title}>{'New Password'}</RNText>
             <RNText style={styles.description}>
-              {`Forgot your password let's change it.`}
+              {`Let's change your old password.`}
             </RNText>
 
             <LIInput
-              title={'Email'}
-              placeholder={'Enter your email'}
-              keyboardType={'email-address'}
+              title={'Password'}
+              placeholder={'Enter your password'}
               returnKeyType={'done'}
-              onSubmitEditing={Keyboard.dismiss}
-              value={State.email}
-              onChangeText={v => setState(p => ({ ...p, email: v.trim() }))}
-              error={errorEmail}
+              value={State.password}
+              onChangeText={v => setState(p => ({ ...p, password: v.trim() }))}
+              error={errorPassword}
+              secureTextEntry={!State.showPassword}
+              icon={State.showPassword ? Images.hide : Images.show}
+              onIconPress={() =>
+                setState(p => ({ ...p, showPassword: !p.showPassword }))
+              }
             />
 
             <RNButton
-              title={'Get Code'}
+              title={'Submit'}
               style={styles.button}
-              onPress={onGetCodePress}
+              onPress={onSubmitPress}
             />
 
             <DontHaveAccount />
@@ -91,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgotPassword;
+export default NewPassword;

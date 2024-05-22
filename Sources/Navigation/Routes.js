@@ -14,6 +14,7 @@ import {
   InOutReport,
   LeaveApplication,
   Login,
+  NewPassword,
   SalaryReport,
   SignUp,
   UpcomingLeave,
@@ -36,12 +37,13 @@ const Routes = () => {
   const Screens = useCallback(() => {
     return (
       <Stack.Navigator
-        initialRouteName={hasUser ? NavRoutes.Home : NavRoutes.Login}
+        // initialRouteName={hasUser ? NavRoutes.Home : NavRoutes.Login}
         screenOptions={NavConfigs.screenOptions}>
         {/* Auth */}
         <Stack.Screen name={NavRoutes.Login} component={Login} />
         <Stack.Screen name={NavRoutes.SignUp} component={SignUp} />
         <Stack.Screen name={NavRoutes.VerifyCode} component={VerifyCode} />
+        <Stack.Screen name={NavRoutes.NewPassword} component={NewPassword} />
         <Stack.Screen
           name={NavRoutes.ForgotPassword}
           component={ForgotPassword}

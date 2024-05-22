@@ -1,1 +1,1 @@
-export { onLogin } from './Login';
+export { onLogin, onVerifyOtp, onForgotPassword } from './Auth';

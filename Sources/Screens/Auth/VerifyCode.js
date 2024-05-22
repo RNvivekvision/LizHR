@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 import { OtpInput } from 'react-native-otp-entry';
 import {
@@ -11,22 +11,46 @@ import {
 import { Colors, FontFamily, FontSize, hp, otpTheme, wp } from '../../Theme';
 import { DontHaveAccount, LIOnboardingIcon } from '../../Components';
 import { useTimer } from '../../Hooks';
+import { onForgotPassword, onVerifyOtp } from '../../Services';
+import { NavRoutes } from '../../Navigation';
 
-const VerifyCode = ({ navigation }) => {
+const VerifyCode = ({ navigation, route }) => {
+  const { username } = route.params;
+  console.log({ username });
+  const styles = useStyles();
   const { time, isFinished, resetTimer } = useTimer();
   const [State, setState] = useState({
     otp: '',
-    disableResendButton: true,
-    resendOtp: '',
+    verifyPressed: false,
+    isLoading: false,
   });
-  const styles = useStyles();
 
-  const onVerifyPress = () => {
-    navigation.popToTop();
+  const errorOtp = useMemo(() => {
+    return State.verifyPressed && State.otp.length !== 6;
+  }, [State.otp.length, State.verifyPressed]);
+  console.log({ errorOtp });
+
+  const resendOtp = async () => {
+    setState(p => ({ ...p, isLoading: true }));
+    try {
+      await onForgotPassword(State.email);
+      resetTimer();
+    } catch (e) {
+      console.log('Error resendOtp -> ', e);
+    } finally {
+      setState(p => ({ ...p, isLoading: false }));
+    }
+  };
+
+  const onVerifyPress = async () => {
+    setState(p => ({ ...p, verifyPressed: true }));
+    if (State.otp.length !== 6) return;
+
+    navigation.navigate(NavRoutes.NewPassword, { otp: State.otp });
   };
 
   return (
-    <RNContainer barStyle={'dark-content'}>
+    <RNContainer isLoading={State.isLoading} barStyle={'dark-content'}>
       <RNKeyboardAvoid>
         <ScrollView showsVerticalScrollIndicator={false}>
           <LIOnboardingIcon />
@@ -40,15 +64,17 @@ const VerifyCode = ({ navigation }) => {
             <RNText style={styles.inputOtp}>{'Input Your OTP'}</RNText>
             <OtpInput
               numberOfDigits={6}
-              onTextChange={otp => setState(p => ({ ...p, otp }))}
+              onTextChange={otp =>
+                setState(p => ({ ...p, otp, verifyPressed: false }))
+              }
               autoFocus={false}
-              theme={otpTheme}
+              theme={errorOtp ? otpTheme.errorTheme : otpTheme.theme}
               onFilled={Keyboard.dismiss}
             />
             <RNButton
               title={'Resend OTP'}
               disable={!isFinished}
-              onPress={resetTimer}
+              onPress={resendOtp}
               style={styles.ResendOtp}
               textStyle={{
                 color: !isFinished ? Colors.Black : Colors.White,

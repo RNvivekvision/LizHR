@@ -1,4 +1,4 @@
-export { Login, SignUp, ForgotPassword, VerifyCode } from './Auth';
+export { Login, SignUp, ForgotPassword, VerifyCode, NewPassword } from './Auth';
 export {
   Home,
   UpcomingLeave,

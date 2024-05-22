@@ -1,8 +1,8 @@
 import { Platform } from 'react-native';
 import { getIp } from '@mobeuv/react-native-check-ip';
 import DeviceInfo from 'react-native-device-info';
-import { FetchMethod, URL } from './Api';
 import { jwtDecode } from 'jwt-decode';
+import { FetchMethod, URL } from '../Api';
 
 const onLogin = async ({ username, password }) => {
   const result = await getIp();

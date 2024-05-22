@@ -73,52 +73,6 @@ const Login = ({ navigation }) => {
     }
   };
 
-  // const onLoginPress = async () => {
-  //   setState(p => ({ ...p, loginPressed: true }));
-  //   if (!Errors.noError) return;
-
-  //   setState(p => ({ ...p, isLoading: true }));
-  //   try {
-  //     const result = await getIp();
-  //     const response = await FetchMethod.POST({
-  //       EndPoint: URL.Login,
-  //       NeedToken: false,
-  //       Params: {
-  //         userName: State.username,
-  //         password: State.password,
-  //         fcmToken: null,
-  //         deviceDetails: {
-  //           browser: `${Platform.OS}App`,
-  //           browserVersion: DeviceInfo.getVersion(),
-  //           osType: Platform.OS,
-  //           osVersion: DeviceInfo.getSystemVersion(),
-  //           deviceType: 'mobile',
-  //           ipAddress: result.ipv4,
-  //         },
-  //       },
-  //     });
-  //     if (response?.isSuccess) {
-  //       const token = response?.responseData?.token;
-  //       const data = jwtDecode(token);
-  //       await Functions.setAppData({
-  //         user: { ...data, token: token },
-  //         auth: { username: State.username, password: State.password },
-  //         rememberMe: State.rememberMe,
-  //       });
-  //       console.log(
-  //         'response -> ',
-  //         JSON.stringify({ ...data, token }, null, 2),
-  //       );
-  //     } else {
-  //       alert(response?.errorMessage);
-  //     }
-  //   } catch (e) {
-  //     console.error('Error onLoginPress -> ', e);
-  //   } finally {
-  //     setState(p => ({ ...p, isLoading: false }));
-  //   }
-  // };
-
   return (
     <RNContainer isLoading={State.isLoading} barStyle={'dark-content'}>
       <RNKeyboardAvoid>

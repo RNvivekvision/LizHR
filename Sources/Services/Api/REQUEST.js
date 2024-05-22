@@ -1,5 +1,6 @@
 // import Axios from 'axios';
 // import { Functions } from '../Utils';
+import { Functions } from '../../Utils';
 import URL from './URL';
 
 const REQUEST = async ({
@@ -9,8 +10,9 @@ const REQUEST = async ({
   IsformData = false,
   NeedToken = true,
 }) => {
-  // const appData = await Functions.getAppData();
-  const appData = {};
+  const appData = await Functions.getAppData();
+  console.log({ appData });
+  // const appData = {};
   const Headers = Header(NeedToken, appData?.User?.token, IsformData);
   const options = {
     method: Method,

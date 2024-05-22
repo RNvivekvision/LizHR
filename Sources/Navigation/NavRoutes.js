@@ -3,6 +3,7 @@ const NavRoutes = {
   SignUp: 'Sign Up',
   ForgotPassword: 'Forgot Password',
   VerifyCode: 'Verify Code',
+  NewPassword: 'New Password',
 
   Drawer: 'Drawer',
   Home: 'Home',
