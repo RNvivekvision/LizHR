@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { RNText, RNContainer, RNKeyboardAvoid, RNButton } from '../../Common';
 import {
   LIInput,
@@ -89,9 +95,9 @@ const Login = ({ navigation }) => {
               title={'Username'}
               placeholder={'Enter your username'}
               keyboardType={'email-address'}
-              onSubmitEditing={() => passwordRef.current.focus()}
               value={State.username}
               onChangeText={v => setState(p => ({ ...p, username: v.trim() }))}
+              onSubmitEditing={() => passwordRef.current.focus()}
               error={Errors.username}
             />
             <LIInput
@@ -101,6 +107,7 @@ const Login = ({ navigation }) => {
               returnKeyType={'done'}
               value={State.password}
               onChangeText={v => setState(p => ({ ...p, password: v.trim() }))}
+              onSubmitEditing={Keyboard.dismiss}
               error={Errors.password}
               secureTextEntry={!State.showPassword}
               icon={State.showPassword ? Images.hide : Images.show}

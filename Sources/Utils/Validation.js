@@ -15,7 +15,7 @@ const isMobileNumberValid = MobileNumber => {
 const isPasswordValid = Password => Password.length > 4;
 
 const isSamePasswords = (Password, ConfirmPassword) =>
-  Password === ConfirmPassword;
+  Password === ConfirmPassword && ConfirmPassword.length > 4;
 
 const isPINValid = PIN => PIN.length === 4;
 

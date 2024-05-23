@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 import { RNText, RNContainer, RNKeyboardAvoid, RNButton } from '../../Common';
 import { DontHaveAccount, LIInput, LIOnboardingIcon } from '../../Components';
@@ -9,17 +9,24 @@ import { onVerifyOtp } from '../../Services';
 
 const NewPassword = ({ navigation, route }) => {
   const { otp } = route.params;
-  console.log({ otp });
+  const confirmPassRef = useRef();
   const [State, setState] = useState({
     password: '',
     showPassword: false,
+    confirmPassword: '',
+    showConfirmPassword: false,
     isLoading: false,
     submitPressed: false,
   });
 
   const errorPassword =
-    State.showPassword && !Validation.isPasswordValid(State.password);
-  const noErrors = Validation.isPasswordValid(State.password);
+    State.submitPressed && !Validation.isPasswordValid(State.password);
+  const errorConfirmPassword =
+    State.submitPressed &&
+    !Validation.isSamePasswords(State.password, State.confirmPassword);
+  const noErrors =
+    Validation.isPasswordValid(State.password) &&
+    Validation.isSamePasswords(State.password, State.confirmPassword);
 
   const onSubmitPress = async () => {
     setState(p => ({ ...p, submitPressed: true }));
@@ -56,14 +63,35 @@ const NewPassword = ({ navigation, route }) => {
             <LIInput
               title={'Password'}
               placeholder={'Enter your password'}
-              returnKeyType={'done'}
               value={State.password}
               onChangeText={v => setState(p => ({ ...p, password: v.trim() }))}
+              onSubmitEditing={() => confirmPassRef.current.focus()}
               error={errorPassword}
               secureTextEntry={!State.showPassword}
               icon={State.showPassword ? Images.hide : Images.show}
               onIconPress={() =>
                 setState(p => ({ ...p, showPassword: !p.showPassword }))
+              }
+            />
+
+            <LIInput
+              ref={confirmPassRef}
+              title={'Confirm Password'}
+              placeholder={'Enter your confirm password'}
+              returnKeyType={'done'}
+              value={State.confirmPassword}
+              onChangeText={v =>
+                setState(p => ({ ...p, confirmPassword: v.trim() }))
+              }
+              onSubmitEditing={Keyboard.dismiss}
+              error={errorConfirmPassword}
+              secureTextEntry={!State.showConfirmPassword}
+              icon={State.showConfirmPassword ? Images.hide : Images.show}
+              onIconPress={() =>
+                setState(p => ({
+                  ...p,
+                  showConfirmPassword: !p.showConfirmPassword,
+                }))
               }
             />
 

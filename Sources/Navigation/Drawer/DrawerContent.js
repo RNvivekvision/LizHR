@@ -16,7 +16,6 @@ const DrawerContent = ({ navigation }) => {
   const styles = useStyles({});
 
   const onItemPress = item => {
-    console.log({ item });
     if (item.navigate) {
       navigation.closeDrawer();
       setTimeout(() => {

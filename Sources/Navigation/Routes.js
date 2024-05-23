@@ -31,13 +31,13 @@ const Routes = () => {
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
-    }, 2000);
+    }, 1000);
   }, []);
 
   const Screens = useCallback(() => {
     return (
       <Stack.Navigator
-        // initialRouteName={hasUser ? NavRoutes.Home : NavRoutes.Login}
+        initialRouteName={hasUser ? NavRoutes.Home : NavRoutes.Login}
         screenOptions={NavConfigs.screenOptions}>
         {/* Auth */}
         <Stack.Screen name={NavRoutes.Login} component={Login} />

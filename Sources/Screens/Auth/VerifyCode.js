@@ -16,7 +16,6 @@ import { NavRoutes } from '../../Navigation';
 
 const VerifyCode = ({ navigation, route }) => {
   const { username } = route.params;
-  console.log({ username });
   const styles = useStyles();
   const { time, isFinished, resetTimer } = useTimer();
   const [State, setState] = useState({
@@ -28,7 +27,6 @@ const VerifyCode = ({ navigation, route }) => {
   const errorOtp = useMemo(() => {
     return State.verifyPressed && State.otp.length !== 6;
   }, [State.otp.length, State.verifyPressed]);
-  console.log({ errorOtp });
 
   const resendOtp = async () => {
     setState(p => ({ ...p, isLoading: true }));

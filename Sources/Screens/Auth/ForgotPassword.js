@@ -23,7 +23,8 @@ const ForgotPassword = ({ navigation }) => {
     setState(p => ({ ...p, isLoading: true }));
     try {
       const response = await onForgotPassword(State.email);
-      // if (!response) return;
+      if (!response) return;
+
       navigation.navigate(NavRoutes.VerifyCode, {
         username: State.email,
       });
