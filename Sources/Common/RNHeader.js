@@ -5,16 +5,7 @@ import { RNIcon, RNStyles, RNText, RNScrollView, RNImage } from './index';
 import { Images } from '../Constants';
 import { useInset } from '../Hooks';
 
-const RNHeader = ({
-  title,
-  scrollProps,
-  containerStyle,
-  titleStyle,
-  children,
-  style,
-  footer,
-  isDrawer,
-}) => {
+const RNHeader = ({ title, containerStyle, titleStyle, isDrawer }) => {
   const navigation = useNavigation();
   const styles = useStyles();
 
@@ -38,36 +29,9 @@ const RNHeader = ({
       <RNText style={[styles.title, titleStyle]}>{title}</RNText>
     </View>
   );
-
-  return (
-    <View style={RNStyles.container}>
-      <View style={[styles.Container, containerStyle]}>
-        <RNImage
-          source={Images.background}
-          resizeMode={'cover'}
-          style={styles.bgImage}
-        />
-        <RNIcon
-          icon={isDrawer ? Images.drawer : Images.back}
-          iconStyle={RNStyles.image90}
-          onPress={() =>
-            isDrawer ? navigation.openDrawer() : navigation.goBack()
-          }
-          containerStyle={styles.icon}
-        />
-        <RNText style={[styles.title, titleStyle]}>{title}</RNText>
-      </View>
-
-      <RNScrollView style={style} scrollProps={scrollProps}>
-        {children}
-      </RNScrollView>
-
-      {footer && <View style={styles.footer}>{footer}</View>}
-    </View>
-  );
 };
 
-const iconSize = wp(7);
+const iconSize = wp(8);
 const radius = wp(4);
 const useStyles = () => {
   const inset = useInset();

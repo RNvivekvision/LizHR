@@ -20,13 +20,14 @@ import {
   UpcomingLeave,
   VerifyCode,
 } from '../Screens';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const Routes = () => {
-  const { appData } = useLocalStorage();
-  const hasUser = appData?.user;
-  // console.log('appData -> ', JSON.stringify(appData, null, 2));
+  const {} = useLocalStorage();
+  const { userData } = useSelector(({ UserReducer }) => UserReducer);
+  const hasUser = userData?.user ? true : false;
 
   useEffect(() => {
     setTimeout(() => {
@@ -41,7 +42,7 @@ const Routes = () => {
         screenOptions={NavConfigs.screenOptions}>
         {/* Auth */}
         <Stack.Screen name={NavRoutes.Login} component={Login} />
-        <Stack.Screen name={NavRoutes.SignUp} component={SignUp} />
+        {/* <Stack.Screen name={NavRoutes.SignUp} component={SignUp} /> */}
         <Stack.Screen name={NavRoutes.VerifyCode} component={VerifyCode} />
         <Stack.Screen name={NavRoutes.NewPassword} component={NewPassword} />
         <Stack.Screen

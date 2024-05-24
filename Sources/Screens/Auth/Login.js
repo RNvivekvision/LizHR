@@ -19,6 +19,8 @@ import { Images } from '../../Constants';
 import { Functions, Validation } from '../../Utils';
 import { useLocalStorage } from '../../Hooks';
 import { onLogin } from '../../Services';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../Redux/Actions';
 
 const Login = ({ navigation }) => {
   const { appData } = useLocalStorage();
@@ -27,9 +29,10 @@ const Login = ({ navigation }) => {
     password: '',
     showPassword: false,
     loginPressed: false,
-    rememberMe: false,
+    rememberMe: true,
     isLoading: false,
   });
+  const dispatch = useDispatch();
   const styles = useStyles();
   const passwordRef = useRef();
 
@@ -65,11 +68,16 @@ const Login = ({ navigation }) => {
         password: State.password,
       });
       if (response) {
-        await Functions.setAppData({
-          user: response,
+        const { status } = await fetch(response?.ProfileImageUri);
+        const ProfileImageUri =
+          status === 200 ? response?.ProfileImageUri : null;
+        const user = {
+          user: { ...response, ProfileImageUri },
           auth: { username: State.username, password: State.password },
           rememberMe: State.rememberMe,
-        });
+        };
+        await Functions.setAppData(user);
+        dispatch(setUser(user));
         navigation.replace(NavRoutes.Home);
       }
     } catch (e) {

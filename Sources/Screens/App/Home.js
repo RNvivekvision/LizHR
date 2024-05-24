@@ -10,7 +10,7 @@ import { useInset } from '../../Hooks';
 const { attendenceSummary, branches, employeeData } = DummyData.Home;
 
 const Home = () => {
-  const [State, setState] = useState({ branch: null });
+  const [State, setState] = useState({ branch: null, profilePic: null });
   const styles = useStyles();
 
   return (
@@ -20,6 +20,7 @@ const Home = () => {
         resizeMode={'cover'}
         style={styles.bgImage}
       />
+
       <RNHeader title={'LizHR'} isDrawer={true} />
 
       <ScrollView showsVerticalScrollIndicator={false}>

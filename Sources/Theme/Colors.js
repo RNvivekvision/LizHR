@@ -13,7 +13,6 @@ const Colors = {
   drawerIconBgColor: '#f3f3f3',
   attendence: '#2464E7',
   present: '#62BA02',
-  absent: '#EF0204',
   employee: '#878787',
   dropDownYear: '#E9F0FF',
   present: '#549F01',

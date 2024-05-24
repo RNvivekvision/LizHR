@@ -4,13 +4,17 @@ import { Colors, wp } from '../Theme';
 import RNStyles from './RNStyles';
 import RNImage from './RNImage';
 
-const RNIcon = ({ icon, onPress, containerStyle, iconStyle }) => {
+const RNIcon = ({ icon, onPress, containerStyle, resizeMode, iconStyle }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.6}
       onPress={onPress}
       style={[styles.container, containerStyle]}>
-      <RNImage source={icon} style={[styles.icon, iconStyle]} />
+      <RNImage
+        source={icon}
+        resizeMode={resizeMode}
+        style={[styles.icon, iconStyle]}
+      />
     </TouchableOpacity>
   );
 };

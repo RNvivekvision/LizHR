@@ -1,19 +1,28 @@
 import { useState } from 'react';
 import {
+  Button,
   FlatList,
+  Image,
   LayoutAnimation,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
-import { RNIcon, RNImage, RNStyles, RNText } from '../../Common';
+import { RNButton, RNIcon, RNImage, RNStyles, RNText } from '../../Common';
 import { Images } from '../../Constants';
 import { useInset } from '../../Hooks';
-import { DummyData } from '../../Utils';
+import { DummyData, Functions } from '../../Utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../Redux/Actions';
+import NavRoutes from '../NavRoutes';
 
 const DrawerContent = ({ navigation }) => {
+  const { userData } = useSelector(({ UserReducer }) => UserReducer);
   const styles = useStyles({});
+  const dispatch = useDispatch();
+  const username = userData?.user?.UserName;
+  const profilePic = userData?.user?.ProfileImageUri || Images.defaultUser;
 
   const onItemPress = item => {
     if (item.navigate) {
@@ -24,16 +33,46 @@ const DrawerContent = ({ navigation }) => {
     }
   };
 
+  const onLogoutPress = () => {
+    Functions.ALERT({
+      Title: 'Logout',
+      Text: 'Are you sure you want to logout?',
+      Buttons: [
+        { text: 'Yes', onPress: logout },
+        { text: 'No', onPress: () => null },
+      ],
+    });
+  };
+
+  const logout = async () => {
+    try {
+      await Functions.setAppData({ user: null });
+      dispatch(setUser({}));
+      navigation.replace(NavRoutes.Login);
+    } catch (e) {
+      console.log('Error onLogoutPress -> ', e);
+    }
+  };
+
   return (
     <View style={RNStyles.container}>
       <View style={styles.headerContainer}>
-        <RNIcon
-          icon={Images.back}
-          iconStyle={{ tintColor: Colors.Black }}
-          containerStyle={styles.backIcon}
-          onPress={() => navigation.closeDrawer()}
+        <View style={{ ...RNStyles.flexRow, flex: 1 }}>
+          <RNIcon
+            icon={Images.back}
+            iconStyle={{ tintColor: Colors.Black }}
+            containerStyle={styles.backIcon}
+            onPress={() => navigation.closeDrawer()}
+          />
+          <RNText pLeft={wp(2)} family={FontFamily.Bold}>
+            {username}
+          </RNText>
+        </View>
+        <Image
+          source={profilePic}
+          resizeMode={'cover'}
+          style={styles.profilePic}
         />
-        <RNText family={FontFamily.Bold}>{'Settings'}</RNText>
       </View>
 
       <FlatList
@@ -44,6 +83,16 @@ const DrawerContent = ({ navigation }) => {
           <RenderDrawerItems item={item} onPress={onItemPress} />
         )}
       />
+
+      {/* <Button title="Logout" onPress={onLogoutPress} /> */}
+      <TouchableOpacity
+        onPress={onLogoutPress}
+        activeOpacity={0.6}
+        style={styles.logout}>
+        <RNText family={FontFamily.Bold} color={Colors.White}>
+          {'Logout'}
+        </RNText>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -95,6 +144,7 @@ const RenderDrawerItems = ({ item, onPress }) => {
   );
 };
 
+const profilePicSize = wp(10);
 const useStyles = ({ isInner }) => {
   const inset = useInset();
 
@@ -105,12 +155,11 @@ const useStyles = ({ isInner }) => {
       paddingVertical: hp(2),
       borderBottomWidth: 1,
       borderBlockColor: Colors.drawerBorderColor,
+      paddingHorizontal: wp(4),
     },
     backIcon: {
       width: wp(8),
       height: wp(8),
-      marginLeft: wp(4),
-      marginRight: wp(2),
     },
     renderContainer: {
       marginLeft: isInner ? wp(8) : wp(4),
@@ -138,6 +187,20 @@ const useStyles = ({ isInner }) => {
       ...RNStyles.icon,
       tintColor: Colors.Black,
       transform: [{ rotate: '-90deg' }],
+    },
+    logout: {
+      ...RNStyles.center,
+      paddingVertical: hp(1.2),
+      marginBottom: inset.bottom + hp(1),
+      marginHorizontal: wp(2),
+      borderRadius: wp(2),
+      backgroundColor: Colors.Error,
+    },
+    profilePic: {
+      ...RNStyles.center,
+      width: profilePicSize,
+      height: profilePicSize,
+      borderRadius: 100,
     },
   });
 };
