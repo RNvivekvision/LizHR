@@ -1,23 +1,79 @@
-import { FlatList } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { FlatList, RefreshControl } from 'react-native';
 import { RNContainer, RNHeader } from '../../Common';
 import { LIApplication, LIDatePicker } from '../../Components';
 import { useFlatlistStyles } from '../../Hooks';
-import { DummyData } from '../../Utils';
-
-const { employeeLeaves } = DummyData.leaveApplication;
+import { Functions } from '../../Utils';
+import { onFuelApplication } from '../../Services';
+import { Colors } from '../../Theme';
 
 const FuelApplication = () => {
   const { contentContainerStyle } = useFlatlistStyles();
+  const { start, end } = Functions.getStartEndDates();
+
+  const [State, setState] = useState({
+    isLoading: false,
+    refreshing: false,
+    start: start,
+    end: end,
+    fuels: [],
+  });
+
+  useEffect(() => {
+    getAllFuelApplications();
+  }, [State.start, State.end]);
+
+  // console.log('State -> ', JSON.stringify(State, null, 2));
+  const getAllFuelApplications = async isRefreshing => {
+    !isRefreshing && setState(p => ({ ...p, isLoading: true }));
+    try {
+      const response = await onFuelApplication({
+        fromDate: State.start,
+        toDate: State.end,
+      });
+      setState(p => ({ ...p, fuels: response.responseData }));
+    } catch (e) {
+      console.log('Error getAllFuelApplications -> ', e);
+    } finally {
+      setState(p => ({ ...p, isLoading: false }));
+    }
+  };
+
+  const onRefresh = async () => {
+    setState(p => ({ ...p, refreshing: true }));
+    await getAllFuelApplications(true);
+    setTimeout(() => {
+      setState(p => ({ ...p, refreshing: false }));
+    }, 1000);
+  };
+
+  const onDateChange = useCallback(d => {
+    setState(p => ({ ...p, start: d.start, end: d.end }));
+  }, []);
+
+  const Header = useCallback(() => {
+    return <LIDatePicker onDateChange={onDateChange} />;
+  }, []);
+
   return (
     <RNContainer>
       <RNHeader title={'Fuel Application'} />
 
       <FlatList
-        data={employeeLeaves}
+        // data={employeeLeaves}
+        data={State.fuels}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
-        ListHeaderComponent={() => <LIDatePicker />}
-        renderItem={({ item }) => <LIApplication item={item} />}
+        ListHeaderComponent={<Header />}
+        renderItem={({ item }) => <LIApplication item={item} type={0} />}
+        refreshControl={
+          <RefreshControl
+            refreshing={State.refreshing}
+            onRefresh={onRefresh}
+            tintColor={Colors.Primary}
+            colors={[Colors.Primary]}
+          />
+        }
       />
     </RNContainer>
   );

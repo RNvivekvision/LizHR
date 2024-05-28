@@ -1,1 +1,5 @@
-export { onLeaveApplication } from './LeaveApplication';
+export {
+  onLeaveApplication,
+  onCompansationApplication,
+  onFuelApplication,
+} from './Applications';

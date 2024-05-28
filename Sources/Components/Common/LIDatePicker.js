@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNCalendar, RNImage, RNStyles, RNText } from '../../Common';
 import { Colors, FontSize, hp, wp } from '../../Theme';
@@ -6,24 +6,12 @@ import { Images } from '../../Constants';
 import { Functions } from '../../Utils';
 
 const LIDatePicker = ({ onDateChange }) => {
+  const { start, end } = Functions.getStartEndDates();
   const [State, setState] = useState({
     openDatePicker: false,
-    startDate: null,
-    endDate: null,
+    startDate: start,
+    endDate: end,
   });
-
-  useEffect(() => {
-    const d = new Date();
-    const start = new Date(d.getFullYear(), d.getMonth(), 1);
-    const end = new Date(d.getFullYear(), d.getMonth() + 1, 1);
-
-    setState(p => ({
-      ...p,
-      startDate: start,
-      endDate: end,
-    }));
-    onDateChange?.({ start, end });
-  }, []);
 
   const onPress = () => {
     setState(p => ({ ...p, openDatePicker: true }));

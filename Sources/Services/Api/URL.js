@@ -7,6 +7,8 @@ const URL = {
   forgotPassword: '/User/SendResetPasswordOTP',
   verifyOtp: '/User/ResetPasswordWithOTP',
   leaveApplication: '/LeaveApplication/GetAllLeaveApplications',
+  compensation: '/CompensationApplication/GetAllCompensationApplications',
+  fuelApplication: '/FuelAllowanceApplication/GetAllFuelAllowanceApplications',
 };
 
 export default URL;

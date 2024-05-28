@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { Colors } from '../Theme';
 import { Calendar } from 'react-native-calendars';
 import {
   Modal,
@@ -7,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { Colors } from '../Theme';
 import RNStyles from './RNStyles';
 
 const RNCalendar = ({ visible, onClose, onDateSelect }) => {
@@ -20,8 +20,14 @@ const RNCalendar = ({ visible, onClose, onDateSelect }) => {
     if (!range.start || (range.start && range.end)) {
       setRange({ start: dateString, end: null });
     } else {
-      setRange(prev => ({ ...prev, end: dateString }));
-      onDateSelect?.({ start: range.start, end: dateString });
+      let start = new Date(range.start);
+      let end = new Date(dateString);
+      if (end < start) {
+        [start, end] = [end, start];
+      }
+      console.log({ dateString });
+      setRange(prev => ({ ...prev, end, start }));
+      onDateSelect?.({ start, end });
     }
   };
 

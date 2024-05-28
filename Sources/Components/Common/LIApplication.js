@@ -3,13 +3,26 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNStyles, RNText, RNPopup, RNImage } from '../../Common';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { Images } from '../../Constants';
-import LIRow from './LIRow';
 import { Functions } from '../../Utils';
+import LIRow from './LIRow';
 
-const LIApplication = ({ item }) => {
+/* 
+  type = {
+    fuel: 0,
+    leave: 1,
+    compensation: 2,
+  }
+*/
+
+const LIApplication = ({ item, type }) => {
   const [State, setState] = useState({ showPopup: false, isApproved: null });
   const empName = item?.employee?.displayName;
-  const leaveType = item?.leaveType?.leaveName;
+  // const leaveType = item?.leaveType?.leaveName;
+  const types = {
+    0: { key: 'Fuel', value: item?.fuelAllowanceStatusType },
+    1: { key: 'Leave', value: item?.leaveType?.leaveName },
+    2: { key: 'Compansation', value: item?.compensationType?.compensationName },
+  };
   const fromDate = Functions.formatDate(item?.fromDateTime);
   const toDate = Functions.formatDate(item?.toDateTime);
 
@@ -36,7 +49,10 @@ const LIApplication = ({ item }) => {
           text={empName ?? item.name}
           isTitle={true}
         />
-        <LIRow title={'Leave Type  :  '} text={leaveType ?? item.type} />
+        <LIRow
+          title={`${types[type].key} Type  :  `}
+          text={types[type].value ?? item.type}
+        />
         <LIRow title={'From Date  :  '} text={fromDate ?? item.fromDate} />
         <LIRow title={'To Date  :  '} text={toDate ?? item.toDate} />
       </View>

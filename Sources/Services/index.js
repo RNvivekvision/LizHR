@@ -1,2 +1,6 @@
 export { onLogin, onVerifyOtp, onForgotPassword } from './Auth';
-export { onLeaveApplication } from './App';
+export {
+  onLeaveApplication,
+  onCompansationApplication,
+  onFuelApplication,
+} from './App';

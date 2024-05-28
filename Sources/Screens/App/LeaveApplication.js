@@ -2,20 +2,19 @@ import { useCallback, useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { RNContainer, RNHeader } from '../../Common';
 import { LIDatePicker, LIApplication } from '../../Components';
-import { DummyData } from '../../Utils';
+import { Functions } from '../../Utils';
 import { useFlatlistStyles } from '../../Hooks';
 import { onLeaveApplication } from '../../Services';
 import { Colors } from '../../Theme';
 
-const { employeeLeaves } = DummyData.leaveApplication;
-
 const LeaveApplication = () => {
   const { contentContainerStyle } = useFlatlistStyles();
+  const { start, end } = Functions.getStartEndDates();
   const [State, setState] = useState({
     isLoading: false,
     refreshing: false,
-    start: null,
-    end: null,
+    start: start,
+    end: end,
     leaves: [],
   });
 
@@ -28,7 +27,6 @@ const LeaveApplication = () => {
     !isRefreshing && setState(p => ({ ...p, isLoading: true }));
     try {
       const response = await onLeaveApplication({
-        appStatus: 0,
         fromDate: State.start,
         toDate: State.end,
       });
@@ -48,10 +46,9 @@ const LeaveApplication = () => {
     }, 1000);
   };
 
-  const onDateChange = useCallback(
-    d => setState(p => ({ ...p, start: d.start, end: d.end })),
-    [],
-  );
+  const onDateChange = useCallback(d => {
+    setState(p => ({ ...p, start: d.start, end: d.end }));
+  }, []);
 
   const Header = useCallback(() => {
     return <LIDatePicker onDateChange={onDateChange} />;
@@ -66,7 +63,7 @@ const LeaveApplication = () => {
         keyExtractor={(v, i) => String(i)}
         ListHeaderComponent={<Header />}
         contentContainerStyle={contentContainerStyle}
-        renderItem={({ item }) => <LIApplication item={item} />}
+        renderItem={({ item }) => <LIApplication item={item} type={1} />}
         refreshControl={
           <RefreshControl
             refreshing={State.refreshing}
