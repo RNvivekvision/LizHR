@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { RNContainer, RNHeader } from '../../Common';
 import { LIApplication, LIDatePicker } from '../../Components';
@@ -23,7 +23,6 @@ const FuelApplication = () => {
     getAllFuelApplications();
   }, [State.start, State.end]);
 
-  // console.log('State -> ', JSON.stringify(State, null, 2));
   const getAllFuelApplications = async isRefreshing => {
     !isRefreshing && setState(p => ({ ...p, isLoading: true }));
     try {
@@ -31,7 +30,7 @@ const FuelApplication = () => {
         fromDate: State.start,
         toDate: State.end,
       });
-      setState(p => ({ ...p, fuels: response.responseData }));
+      setState(p => ({ ...p, fuels: response?.responseData }));
     } catch (e) {
       console.log('Error getAllFuelApplications -> ', e);
     } finally {
@@ -47,24 +46,21 @@ const FuelApplication = () => {
     }, 1000);
   };
 
-  const onDateChange = useCallback(d => {
-    setState(p => ({ ...p, start: d.start, end: d.end }));
-  }, []);
-
-  const Header = useCallback(() => {
-    return <LIDatePicker onDateChange={onDateChange} />;
-  }, []);
-
   return (
     <RNContainer>
       <RNHeader title={'Fuel Application'} />
 
       <FlatList
-        // data={employeeLeaves}
         data={State.fuels}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
-        ListHeaderComponent={<Header />}
+        ListHeaderComponent={
+          <LIDatePicker
+            onDateChange={d =>
+              setState(p => ({ ...p, start: d.start, end: d.end }))
+            }
+          />
+        }
         renderItem={({ item }) => <LIApplication item={item} type={0} />}
         refreshControl={
           <RefreshControl

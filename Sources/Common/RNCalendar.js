@@ -25,7 +25,6 @@ const RNCalendar = ({ visible, onClose, onDateSelect }) => {
       if (end < start) {
         [start, end] = [end, start];
       }
-      console.log({ dateString });
       setRange(prev => ({ ...prev, end, start }));
       onDateSelect?.({ start, end });
     }

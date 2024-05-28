@@ -17,7 +17,7 @@ const REQUEST = async ({
     data: Params,
     url: URL.UserUrl + EndPoint,
   };
-  // console.log('payload -> ', JSON.stringify(options, null, 2));
+  console.log('payload -> ', JSON.stringify(options, null, 2));
   // const response = await Axios(options);
   // return response.data;
 

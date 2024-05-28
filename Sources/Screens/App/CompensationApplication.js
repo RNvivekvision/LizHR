@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { LIApplication, LIDatePicker } from '../../Components';
 import { onCompansationApplication } from '../../Services';
@@ -22,7 +22,6 @@ const CompensationApplication = () => {
     getAllComApplications();
   }, [State.start, State.end]);
 
-  // console.log('State -> ', JSON.stringify(State, null, 2));
   const getAllComApplications = async isRefreshing => {
     !isRefreshing && setState(p => ({ ...p, isLoading: true }));
     try {
@@ -30,7 +29,8 @@ const CompensationApplication = () => {
         fromDate: State.start,
         toDate: State.end,
       });
-      setState(p => ({ ...p, compansations: response.responseData }));
+      console.log('compansation -> ', JSON.stringify(response, null, 2));
+      setState(p => ({ ...p, compansations: response?.responseData }));
     } catch (e) {
       console.log('Error getAllComApplications -> ', e);
     } finally {
@@ -46,14 +46,6 @@ const CompensationApplication = () => {
     }, 1000);
   };
 
-  const onDateChange = useCallback(d => {
-    setState(p => ({ ...p, start: d.start, end: d.end }));
-  }, []);
-
-  const Header = useCallback(() => {
-    return <LIDatePicker onDateChange={onDateChange} />;
-  }, []);
-
   return (
     <RNContainer isLoading={State.isLoading}>
       <RNHeader title={'Compensation Application'} />
@@ -62,7 +54,13 @@ const CompensationApplication = () => {
         // data={employeeLeaves}
         data={State.compansations}
         keyExtractor={(v, i) => String(i)}
-        ListHeaderComponent={<Header />}
+        ListHeaderComponent={
+          <LIDatePicker
+            onDateChange={d =>
+              setState(p => ({ ...p, start: d.start, end: d.end }))
+            }
+          />
+        }
         contentContainerStyle={contentContainerStyle}
         renderItem={({ item }) => <LIApplication item={item} type={2} />}
         refreshControl={

@@ -5,6 +5,11 @@ import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { Images } from '../../Constants';
 import { Functions } from '../../Utils';
 import LIRow from './LIRow';
+import {
+  onUpdateCompansation,
+  onUpdateFuel,
+  onUpdateLeave,
+} from '../../Services';
 
 /* 
   type = {
@@ -17,28 +22,56 @@ import LIRow from './LIRow';
 const LIApplication = ({ item, type }) => {
   const [State, setState] = useState({ showPopup: false, isApproved: null });
   const empName = item?.employee?.displayName;
-  // const leaveType = item?.leaveType?.leaveName;
-  const types = {
-    0: { key: 'Fuel', value: item?.fuelAllowanceStatusType },
-    1: { key: 'Leave', value: item?.leaveType?.leaveName },
-    2: { key: 'Compansation', value: item?.compensationType?.compensationName },
-  };
   const fromDate = Functions.formatDate(item?.fromDateTime);
   const toDate = Functions.formatDate(item?.toDateTime);
+  const types = {
+    0: {
+      key: 'Fuel',
+      value: item?.fuelAllowanceStatusType,
+      func: onUpdateFuel,
+    },
+    1: { key: 'Leave', value: item?.leaveType?.leaveName, func: onUpdateLeave },
+    2: {
+      key: 'Compansation',
+      value: item?.compensationType?.compensationName,
+      func: onUpdateCompansation,
+    },
+  };
 
   const closePopUp = () => setState(p => ({ ...p, showPopup: false }));
 
   const onApprovedPress = async () => {
-    closePopUp();
-    setTimeout(() => {
-      setState(p => ({ ...p, isApproved: true }));
-    }, 400);
+    try {
+      const response = await types[type].func({
+        ids: [item.id],
+        status: 1,
+      });
+      if (!response?.ResponseData) return;
+      setTimeout(() => {
+        setState(p => ({ ...p, isApproved: true }));
+      }, 400);
+    } catch (e) {
+      console.log('Error onDisapprovedPress -> ', e);
+    } finally {
+      closePopUp();
+    }
   };
+
   const onDisapprovedPress = async () => {
-    closePopUp();
-    setTimeout(() => {
-      setState(p => ({ ...p, isApproved: false }));
-    }, 400);
+    try {
+      const response = await onUpdateCompansation({
+        ids: [item.id],
+        status: 2,
+      });
+      if (!response?.ResponseData) return;
+      setTimeout(() => {
+        setState(p => ({ ...p, isApproved: false }));
+      }, 400);
+    } catch (e) {
+      console.log('Error onDisapprovedPress -> ', e);
+    } finally {
+      closePopUp();
+    }
   };
 
   return (

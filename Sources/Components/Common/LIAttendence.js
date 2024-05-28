@@ -1,32 +1,52 @@
+import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { RNImage, RNStyles, RNText } from '../../Common';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { Images } from '../../Constants';
+import { Functions } from '../../Utils';
 
 const LIAttendence = ({ item }) => {
-  const styles = useStyles({ ...item });
+  const [State, setState] = useState({ profilePic: Images.defaultUser });
+  const regular = {
+    A: { key: 'A', color: Colors.absent },
+    P: { key: 'P', color: Colors.present },
+  };
+  const styles = useStyles({ color: regular[item?.dayFlag].color });
+  const inTime = Functions.formatDate(item?.thumbInTime, 'hh:mm A');
+  const outTime = Functions.formatDate(item?.thumbOutTime, 'hh:mm A');
+
+  useEffect(() => {
+    getProfilePic();
+  }, []);
+
+  const getProfilePic = useCallback(async () => {
+    try {
+      const { status } = await fetch(item?.profileImageUrl);
+      const pic = status === 200 ? item?.profileImageUrl : Images.defaultUser;
+      setState(p => ({ ...p, profilePic: pic }));
+    } catch (e) {
+      console.log('Error profile pic -> ', e);
+      setState(p => ({ ...p, profilePic: Images.defaultUser }));
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContentContainer}>
-        <RNImage source={item.image} style={styles.userImage} />
+        <RNImage source={State.profilePic} style={styles.userImage} />
         <View style={styles.content}>
           <RNText pBottom={hp(1)} size={FontSize.font12} color={Colors.Primary}>
-            {item.name}
+            {item?.employee?.displayName}
           </RNText>
-          <Row title={'In Time : '} text={item.inTime} icon={Images.inTime} />
-          <Row
-            title={'Out Time : '}
-            text={item.outTime}
-            icon={Images.outTime}
-          />
-          <Row title={'Shift : '} text={item.shift} />
+          <Row title={'In Time : '} text={inTime} icon={Images.inTime} />
+          <Row title={'Out Time : '} text={outTime} icon={Images.outTime} />
+          <Row title={'Shift : '} text={item?.shiftName} />
           <RNText
             size={FontSize.font10}
             pTop={hp(0.5)}
             color={
               Colors.employee
-            }>{`${item.companyName}  |  ${item.position}`}</RNText>
+            }>{`${item?.departmentName}  |  ${item?.designation}`}</RNText>
         </View>
       </View>
 
@@ -34,8 +54,8 @@ const LIAttendence = ({ item }) => {
         <RNText
           family={FontFamily.Medium}
           size={FontSize.font14}
-          color={item.isPresent ? Colors.present : Colors.absent}>
-          {item.isPresent ? 'P' : 'A'}
+          color={regular[item.dayFlag].color}>
+          {regular[item.dayFlag].key}
         </RNText>
       </View>
     </View>
@@ -60,7 +80,7 @@ const Row = ({ title, text, icon }) => {
 
 const imgSize = wp(15);
 const presendSize = wp(8);
-const useStyles = ({ isPresent }) => {
+const useStyles = ({ color }) => {
   return StyleSheet.create({
     container: {
       ...RNStyles.shadow,
@@ -104,8 +124,8 @@ const useStyles = ({ isPresent }) => {
       height: presendSize,
       borderWidth: 1,
       borderRadius: wp(2),
-      borderColor: isPresent ? Colors.present : Colors.absent,
-      backgroundColor: `${isPresent ? Colors.present : Colors.absent}` + '10',
+      borderColor: color,
+      backgroundColor: `${color}` + '10',
     },
   });
 };

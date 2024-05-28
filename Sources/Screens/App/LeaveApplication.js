@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { RNContainer, RNHeader } from '../../Common';
 import { LIDatePicker, LIApplication } from '../../Components';
@@ -30,7 +30,8 @@ const LeaveApplication = () => {
         fromDate: State.start,
         toDate: State.end,
       });
-      setState(p => ({ ...p, leaves: response.responseData }));
+      console.log(JSON.stringify({ response }, null, 2));
+      setState(p => ({ ...p, leaves: response?.responseData }));
     } catch (e) {
       console.log('Error getAllLeaveApplications -> ', e);
     } finally {
@@ -46,22 +47,19 @@ const LeaveApplication = () => {
     }, 1000);
   };
 
-  const onDateChange = useCallback(d => {
-    setState(p => ({ ...p, start: d.start, end: d.end }));
-  }, []);
-
-  const Header = useCallback(() => {
-    return <LIDatePicker onDateChange={onDateChange} />;
-  }, []);
-
   return (
     <RNContainer isLoading={State.isLoading}>
       <RNHeader title={'Leave Application'} />
       <FlatList
-        // data={employeeLeaves}
         data={State.leaves}
         keyExtractor={(v, i) => String(i)}
-        ListHeaderComponent={<Header />}
+        ListHeaderComponent={
+          <LIDatePicker
+            onDateChange={d =>
+              setState(p => ({ ...p, start: d.start, end: d.end }))
+            }
+          />
+        }
         contentContainerStyle={contentContainerStyle}
         renderItem={({ item }) => <LIApplication item={item} type={1} />}
         refreshControl={

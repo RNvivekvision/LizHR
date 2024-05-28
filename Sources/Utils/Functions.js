@@ -24,7 +24,7 @@ const getAppData = async () => {
 };
 
 const formatDate = (date, format) => {
-  return dayjs(date).format(format ?? 'DD-MMM-YYYY');
+  return dayjs(date ?? new Date()).format(format ?? 'DD-MMM-YYYY');
 };
 
 const getStartEndDates = () => {
@@ -36,6 +36,20 @@ const getStartEndDates = () => {
   return { start, end };
 };
 
+const handleResponse = response => {
+  // console.log('response -> ', JSON.stringify(response, null, 2));
+  if (response?.isSuccess) {
+    return response;
+  } else {
+    alert(
+      response?.errorMessage ??
+        response?.ErrorMessage ??
+        'Something went wrong. Please try again.',
+    );
+    return { responseData: [] };
+  }
+};
+
 const Functions = {
   ALERT,
   OpenUrl,
@@ -43,6 +57,7 @@ const Functions = {
   getAppData,
   formatDate,
   getStartEndDates,
+  handleResponse,
 };
 
 export default Functions;

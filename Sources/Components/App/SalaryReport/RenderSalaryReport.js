@@ -10,11 +10,14 @@ const RenderSalaryReport = ({ item }) => {
       <RNImage source={Images.dummy_user} style={styles.userImage} />
       <View style={{ flex: 1 }}>
         <RNText pBottom={hp(0.5)} size={FontSize.font12} color={Colors.Primary}>
-          {item.name}
+          {item?.displayName}
         </RNText>
-        <LIRow title={'Gross : '} text={item.gross} />
-        <LIRow title={'Absent : '} text={item.absent} />
-        <LIRow title={'Final Salary : '} text={item.finalSalary} />
+        <LIRow title={'Gross : '} text={item?.finalSalary} />
+        <LIRow
+          title={'Absent : '}
+          text={`${item?.absentSalary} (${item?.absentDays})`}
+        />
+        <LIRow title={'Final Salary : '} text={item?.netSalary} />
       </View>
     </View>
   );

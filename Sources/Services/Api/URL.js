@@ -6,9 +6,16 @@ const URL = {
   Login: '/User/LoginAuthenticate',
   forgotPassword: '/User/SendResetPasswordOTP',
   verifyOtp: '/User/ResetPasswordWithOTP',
-  leaveApplication: '/LeaveApplication/GetAllLeaveApplications',
-  compensation: '/CompensationApplication/GetAllCompensationApplications',
   fuelApplication: '/FuelAllowanceApplication/GetAllFuelAllowanceApplications',
+  updateFuel: '/FuelAllowanceApplication/UpdateFuelAllowanceApplicationStatus',
+  leaveApplication: '/LeaveApplication/GetAllLeaveApplications',
+  updateLeave: '/LeaveApplication/UpdateLeaveApplicationStatus',
+  compensation: '/CompensationApplication/GetAllCompensationApplications',
+  updateCompansation:
+    '/CompensationApplication/UpdateCompensationApplicationStatus',
+  inOutReport: '/Report/GetThumbInOutDetails',
+  salaryReport: '/Report/GetEmployeeMonthlySalary',
+  attendenceReport: '/AdminDashboard/getDailyAttendance',
 };
 
 export default URL;

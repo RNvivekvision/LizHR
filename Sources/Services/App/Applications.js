@@ -1,3 +1,4 @@
+import { Functions } from '../../Utils';
 import { FetchMethod, URL } from '../Api';
 
 const onLeaveApplication = async ({ appStatus, fromDate, toDate }) => {
@@ -9,13 +10,7 @@ const onLeaveApplication = async ({ appStatus, fromDate, toDate }) => {
       toDate: toDate,
     },
   });
-  // console.log('onLeaveApplication -> ', JSON.stringify(response, null, 2));
-  if (response?.isSuccess) {
-    return response;
-  } else {
-    alert(response?.errorMessage);
-    return null;
-  }
+  return Functions.handleResponse(response);
 };
 
 const onCompansationApplication = async ({
@@ -35,13 +30,7 @@ const onCompansationApplication = async ({
       toDate: toDate,
     },
   });
-  // console.log('Compansation -> ', JSON.stringify(response, null, 2));
-  if (response?.isSuccess) {
-    return response;
-  } else {
-    alert(response?.errorMessage);
-    return null;
-  }
+  return Functions.handleResponse(response);
 };
 
 const onFuelApplication = async ({
@@ -61,13 +50,7 @@ const onFuelApplication = async ({
       toDate: toDate,
     },
   });
-  // console.log('onFuelApplication -> ', JSON.stringify(response, null, 2));
-  if (response?.isSuccess) {
-    return response;
-  } else {
-    alert(response?.errorMessage);
-    return null;
-  }
+  return Functions.handleResponse(response);
 };
 
 export { onLeaveApplication, onCompansationApplication, onFuelApplication };
