@@ -14,6 +14,7 @@ export { default as RNInput } from './RNInput';
 export { default as RNStyles } from './RNStyles';
 export { default as RNDropDown } from './RNDropDown';
 export { default as RNPopup } from './RNPopup';
+export { default as RNCalendar } from './RNCalendar';
 // export { default as RNSlider } from './RNSlider';
 // export { default as RNGradient } from './RNGradient';
 // export { default as RNBottomSheet } from './RNBottomSheet';

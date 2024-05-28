@@ -46,7 +46,6 @@ const ForgotPassword = ({ navigation }) => {
             <RNText style={styles.description}>
               {`Forgot your password let's change it.`}
             </RNText>
-
             <LIInput
               title={'Email'}
               placeholder={'Enter your email'}
@@ -57,14 +56,12 @@ const ForgotPassword = ({ navigation }) => {
               onChangeText={v => setState(p => ({ ...p, email: v.trim() }))}
               error={errorEmail}
             />
-
             <RNButton
               title={'Get Code'}
               style={styles.button}
               onPress={onGetCodePress}
             />
-
-            <DontHaveAccount />
+            {/* <DontHaveAccount /> */}
           </View>
         </ScrollView>
       </RNKeyboardAvoid>

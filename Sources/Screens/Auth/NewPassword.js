@@ -59,7 +59,6 @@ const NewPassword = ({ navigation, route }) => {
             <RNText style={styles.description}>
               {`Let's change your old password.`}
             </RNText>
-
             <LIInput
               title={'Password'}
               placeholder={'Enter your password'}
@@ -73,7 +72,6 @@ const NewPassword = ({ navigation, route }) => {
                 setState(p => ({ ...p, showPassword: !p.showPassword }))
               }
             />
-
             <LIInput
               ref={confirmPassRef}
               title={'Confirm Password'}
@@ -94,14 +92,12 @@ const NewPassword = ({ navigation, route }) => {
                 }))
               }
             />
-
             <RNButton
               title={'Submit'}
               style={styles.button}
               onPress={onSubmitPress}
             />
-
-            <DontHaveAccount />
+            {/* <DontHaveAccount /> */}
           </View>
         </ScrollView>
       </RNKeyboardAvoid>

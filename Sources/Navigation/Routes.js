@@ -38,7 +38,7 @@ const Routes = () => {
   const Screens = useCallback(() => {
     return (
       <Stack.Navigator
-        initialRouteName={hasUser ? NavRoutes.Home : NavRoutes.Login}
+        initialRouteName={userData?.user ? NavRoutes.Home : NavRoutes.Login}
         screenOptions={NavConfigs.screenOptions}>
         {/* Auth */}
         <Stack.Screen name={NavRoutes.Login} component={Login} />

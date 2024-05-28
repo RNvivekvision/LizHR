@@ -58,7 +58,6 @@ const VerifyCode = ({ navigation, route }) => {
             <RNText style={styles.description}>
               {`Enter your code that we sent through your Mail ID.`}
             </RNText>
-
             <RNText style={styles.inputOtp}>{'Input Your OTP'}</RNText>
             <OtpInput
               numberOfDigits={6}
@@ -79,7 +78,6 @@ const VerifyCode = ({ navigation, route }) => {
                 fontFamily: FontFamily.Medium,
               }}
             />
-
             <View style={styles.requestingOtp}>
               <RNText size={FontSize.font14} color={Colors.InputTitle}>
                 {'You can request OTP after '}
@@ -88,14 +86,12 @@ const VerifyCode = ({ navigation, route }) => {
                 {time}
               </RNText>
             </View>
-
             <RNButton
               title={'Verify'}
               style={styles.button}
               onPress={onVerifyPress}
             />
-
-            <DontHaveAccount />
+            {/* <DontHaveAccount /> */}
           </View>
         </ScrollView>
       </RNKeyboardAvoid>

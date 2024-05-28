@@ -1,20 +1,67 @@
-import { StyleSheet, View } from 'react-native';
-import { RNImage, RNStyles, RNText } from '../../Common';
-import { Images } from '../../Constants';
+import { useEffect, useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { RNCalendar, RNImage, RNStyles, RNText } from '../../Common';
 import { Colors, FontSize, hp, wp } from '../../Theme';
+import { Images } from '../../Constants';
+import { Functions } from '../../Utils';
 
-const LIDatePicker = () => {
+const LIDatePicker = ({ onDateChange }) => {
+  const [State, setState] = useState({
+    openDatePicker: false,
+    startDate: null,
+    endDate: null,
+  });
+
+  useEffect(() => {
+    const d = new Date();
+    const start = new Date(d.getFullYear(), d.getMonth(), 1);
+    const end = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+
+    setState(p => ({
+      ...p,
+      startDate: start,
+      endDate: end,
+    }));
+    onDateChange?.({ start, end });
+  }, []);
+
+  const onPress = () => {
+    setState(p => ({ ...p, openDatePicker: true }));
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={RNStyles.flexRow}>
-        <RNText size={FontSize.font12}>{'Today : '}</RNText>
-        <RNText size={FontSize.font12}>{'18-Apr-2024'}</RNText>
-      </View>
+    <>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={onPress}
+        style={styles.container}>
+        <View style={RNStyles.flexRow}>
+          <RNText size={FontSize.font12}>{'Today : '}</RNText>
+          <RNText size={FontSize.font12}>
+            {Functions.formatDate(State.startDate) +
+              ' - ' +
+              Functions.formatDate(State.endDate)}
+          </RNText>
+        </View>
 
-      <View style={styles.iconContainer}>
-        <RNImage source={Images.calendar} style={RNStyles.image60} />
-      </View>
-    </View>
+        <View style={styles.iconContainer}>
+          <RNImage source={Images.calendar} style={RNStyles.image60} />
+        </View>
+      </TouchableOpacity>
+      <RNCalendar
+        visible={State.openDatePicker}
+        onDateSelect={d => {
+          setState(p => ({
+            ...p,
+            openDatePicker: false,
+            startDate: d.start,
+            endDate: d.end,
+          }));
+          onDateChange?.(d);
+        }}
+        onClose={() => setState(p => ({ ...p, openDatePicker: false }))}
+      />
+    </>
   );
 };
 

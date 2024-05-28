@@ -78,7 +78,11 @@ const Login = ({ navigation }) => {
         };
         await Functions.setAppData(user);
         dispatch(setUser(user));
-        navigation.replace(NavRoutes.Home);
+        // navigation.replace(NavRoutes.Home);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: NavRoutes.Home }],
+        });
       }
     } catch (e) {
       console.error('Error onLoginPress -> ', e);
@@ -98,7 +102,6 @@ const Login = ({ navigation }) => {
             <RNText style={styles.description}>
               {'Log In Now To Begin An Amazing Journey.'}
             </RNText>
-
             <LIInput
               title={'Username'}
               placeholder={'Enter your username'}
@@ -123,7 +126,6 @@ const Login = ({ navigation }) => {
                 setState(p => ({ ...p, showPassword: !p.showPassword }))
               }
             />
-
             <RememberMe
               value={State.rememberMe}
               onPress={v => setState(p => ({ ...p, rememberMe: v }))}>
@@ -138,10 +140,8 @@ const Login = ({ navigation }) => {
                 </RNText>
               </TouchableOpacity>
             </RememberMe>
-
             <RNButton title={'Log In'} onPress={onLoginPress} />
-
-            <DontHaveAccount />
+            {/* <DontHaveAccount /> */}
           </View>
         </ScrollView>
       </RNKeyboardAvoid>

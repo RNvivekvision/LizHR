@@ -4,9 +4,14 @@ import { RNStyles, RNText, RNPopup, RNImage } from '../../Common';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { Images } from '../../Constants';
 import LIRow from './LIRow';
+import { Functions } from '../../Utils';
 
 const LIApplication = ({ item }) => {
   const [State, setState] = useState({ showPopup: false, isApproved: null });
+  const empName = item?.employee?.displayName;
+  const leaveType = item?.leaveType?.leaveName;
+  const fromDate = Functions.formatDate(item?.fromDateTime);
+  const toDate = Functions.formatDate(item?.toDateTime);
 
   const closePopUp = () => setState(p => ({ ...p, showPopup: false }));
 
@@ -26,10 +31,14 @@ const LIApplication = ({ item }) => {
   return (
     <View style={styles.container}>
       <View style={RNStyles.container}>
-        <LIRow title={'Employee  :  '} text={item.name} isTitle={true} />
-        <LIRow title={'Leave Type  :  '} text={item.type} />
-        <LIRow title={'From Date  :  '} text={item.fromDate} />
-        <LIRow title={'To Date  :  '} text={item.toDate} />
+        <LIRow
+          title={'Employee  :  '}
+          text={empName ?? item.name}
+          isTitle={true}
+        />
+        <LIRow title={'Leave Type  :  '} text={leaveType ?? item.type} />
+        <LIRow title={'From Date  :  '} text={fromDate ?? item.fromDate} />
+        <LIRow title={'To Date  :  '} text={toDate ?? item.toDate} />
       </View>
 
       {State.isApproved === null && (

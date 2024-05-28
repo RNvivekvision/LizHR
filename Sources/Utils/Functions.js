@@ -1,5 +1,6 @@
 import { Alert, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import dayjs from 'dayjs';
 
 const ALERT = ({ Title, Text, Buttons }) => Alert.alert(Title, Text, Buttons);
 
@@ -22,11 +23,16 @@ const getAppData = async () => {
   return JSON.parse(value);
 };
 
+const formatDate = (date, format) => {
+  return dayjs(date).format(format ?? 'DD-MMM-YYYY');
+};
+
 const Functions = {
   ALERT,
   OpenUrl,
   setAppData,
   getAppData,
+  formatDate,
 };
 
 export default Functions;
