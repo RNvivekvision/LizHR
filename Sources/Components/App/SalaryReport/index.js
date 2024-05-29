@@ -1,2 +1,3 @@
 import RenderSalaryReport from './RenderSalaryReport';
-export { RenderSalaryReport };
+import SalaryDetail from './SalaryDetail';
+export { RenderSalaryReport, SalaryDetail };

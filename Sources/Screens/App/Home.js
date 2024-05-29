@@ -1,17 +1,53 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { RNContainer, RNDropDown, RNHeader, RNImage } from '../../Common';
-import { AttendenceSummary, EmployeeDetails } from '../../Components';
+import { PresentAbsent, LocationWise, LateEarly } from '../../Components';
 import { Colors, hp, wp } from '../../Theme';
 import { Images } from '../../Constants';
-import { DummyData } from '../../Utils';
 import { useInset } from '../../Hooks';
-
-const { attendenceSummary, branches, employeeData } = DummyData.Home;
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getAllBranches,
+  getAllLateEarly,
+  getAllLocationWise,
+  getAllPresentAbsent,
+} from '../../Redux/ExtraReducers';
 
 const Home = () => {
-  const [State, setState] = useState({ branch: null, profilePic: null });
+  const { branches } = useSelector(({ UserReducer }) => UserReducer);
+  const dispatch = useDispatch();
   const styles = useStyles();
+  const [State, setState] = useState({
+    branches: [],
+    branch: null,
+    profilePic: null,
+  });
+
+  useEffect(() => {
+    dispatch(getAllBranches());
+    init();
+  }, []);
+
+  const init = () => {
+    dispatch(getAllPresentAbsent({ toDate: new Date() }));
+    dispatch(getAllLocationWise({ toDate: new Date() }));
+    dispatch(getAllLateEarly({ toDate: new Date() }));
+  };
+
+  useEffect(() => {
+    if (!branches?.length > 0) return;
+    const b = branches?.map(v => ({
+      ...v,
+      label: v?.companyName,
+      value: v?.id,
+    }));
+    setState(p => ({ ...p, branches: b, branch: b[0]?.value }));
+  }, [branches]);
+
+  const onBranchChange = ({ value }) => {
+    setState(p => ({ ...p, branch: value }));
+    init();
+  };
 
   return (
     <RNContainer>
@@ -27,15 +63,19 @@ const Home = () => {
         <View style={styles.content}>
           <RNDropDown
             placeholder={'Select Branch'}
-            data={branches}
+            data={State.branches}
             dropdownStyle={styles.searchDropDown}
             value={State.branch}
-            onChange={({ value }) => setState(p => ({ ...p, branch: value }))}
+            onChange={onBranchChange}
           />
 
-          <AttendenceSummary summary={attendenceSummary} />
+          <PresentAbsent />
 
-          <EmployeeDetails details={employeeData} />
+          <LocationWise />
+
+          <LateEarly />
+
+          {/* <EmployeeDetails details={employeeData} /> */}
         </View>
       </ScrollView>
     </RNContainer>

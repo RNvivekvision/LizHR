@@ -1,39 +1,122 @@
-import { FlatList, StyleSheet, View } from 'react-native';
-import { RNContainer, RNHeader, RNImage, RNStyles, RNText } from '../../Common';
-import { RenderUpcomingLeave } from '../../Components';
-import { DummyData } from '../../Utils';
-import { Images } from '../../Constants';
+import { useEffect, useState } from 'react';
+import {
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  RNCalendar,
+  RNContainer,
+  RNHeader,
+  RNImage,
+  RNStyles,
+  RNText,
+} from '../../Common';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
+import { RenderUpcomingLeave } from '../../Components';
+import { onUpcomingLeave } from '../../Services';
+import { DummyData, Functions } from '../../Utils';
+import { Images } from '../../Constants';
 import { useInset } from '../../Hooks';
 
 const { employeeLeaves } = DummyData.upcomingLeaves;
+
 const UpcomingLeave = () => {
   const styles = useStyles();
+  const [State, setState] = useState({
+    isLoading: false,
+    refreshing: false,
+    date: new Date(),
+    openDatePicker: false,
+    upcomingLeaves: [],
+  });
+
+  useEffect(() => {
+    getUpcomingleaves();
+  }, [State.date]);
+
+  // console.log('State -> ', JSON.stringify(State, null, 2));
+  const getUpcomingleaves = async isRefreshing => {
+    !isRefreshing && setState(p => ({ ...p, isLoading: true }));
+    try {
+      const response = await onUpcomingLeave({
+        toDate: State.date,
+      });
+      console.log(JSON.stringify({ response }, null, 2));
+      setState(p => ({ ...p, upcomingLeaves: response?.responseData }));
+    } catch (e) {
+      console.log('Error getUpcomingleaves -> ', e);
+    } finally {
+      setState(p => ({ ...p, isLoading: false }));
+    }
+  };
+
+  const onRefresh = async () => {
+    setState(p => ({ ...p, refreshing: true }));
+    await getUpcomingleaves(true);
+    setTimeout(() => {
+      setState(p => ({ ...p, refreshing: false }));
+    }, 1000);
+  };
+
+  const onDateSelect = d => {
+    setState(p => ({ ...p, date: d, openDatePicker: false }));
+  };
 
   return (
-    <RNContainer>
+    <RNContainer isLoading={State.isLoading}>
       <RNHeader title={'Upcoming Leave'} />
 
       <FlatList
-        data={employeeLeaves}
+        data={State.upcomingLeaves}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={styles.contentContainerStyle}
-        ListHeaderComponent={() => <ListHeaderComponent />}
+        ListHeaderComponent={() => (
+          <ListHeaderComponent
+            item={{
+              date: State.date,
+              employees: State.upcomingLeaves.length,
+            }}
+            onPress={() => setState(p => ({ ...p, openDatePicker: true }))}
+          />
+        )}
         renderItem={({ item }) => <RenderUpcomingLeave item={item} />}
+        refreshControl={
+          <RefreshControl
+            refreshing={State.refreshing}
+            onRefresh={onRefresh}
+            tintColor={Colors.Primary}
+            colors={[Colors.Primary]}
+          />
+        }
+      />
+
+      <RNCalendar
+        visible={State.openDatePicker}
+        isSingle={true}
+        onDateSelect={onDateSelect}
+        onClose={() => setState(p => ({ ...p, openDatePicker: false }))}
       />
     </RNContainer>
   );
 };
 
-const ListHeaderComponent = () => {
+const ListHeaderComponent = ({ item, onPress }) => {
   const styles = useStyles();
+  const date = Functions.formatDate(item?.date);
+
   return (
-    <View style={styles.totalContainer}>
+    <TouchableOpacity
+      activeOpacity={0.6}
+      onPress={onPress}
+      style={styles.totalContainer}>
       <View style={RNStyles.flexRowBetween}>
         <View style={{ flex: 1 }}>
           <RNText size={FontSize.font12}>{'Total Upcoming Leave'}</RNText>
           <RNText size={FontSize.font10} color={Colors.employee}>
-            {'19 - Apr - 2024'}
+            {date}
           </RNText>
         </View>
         <View style={styles.iconContainer}>
@@ -46,12 +129,12 @@ const ListHeaderComponent = () => {
         pTop={hp(1)}
         family={FontFamily.Bold}
         color={Colors.Primary}>
-        {'12'}
+        {item?.employees}
       </RNText>
       <RNText size={FontSize.font12} color={Colors.employee}>
         {'Employee On Leave'}
       </RNText>
-    </View>
+    </TouchableOpacity>
   );
 };
 

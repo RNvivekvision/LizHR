@@ -1,12 +1,15 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Colors, FontSize, hp, wp } from '../../../Theme';
 import { RNImage, RNStyles, RNText } from '../../../Common';
 import { Images } from '../../../Constants';
 import { LIRow } from '../../Common';
 
-const RenderSalaryReport = ({ item }) => {
+const RenderSalaryReport = ({ item, onPress }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.6}
+      onPress={() => onPress?.(item)}
+      style={styles.container}>
       <RNImage source={Images.dummy_user} style={styles.userImage} />
       <View style={{ flex: 1 }}>
         <RNText pBottom={hp(0.5)} size={FontSize.font12} color={Colors.Primary}>
@@ -19,7 +22,7 @@ const RenderSalaryReport = ({ item }) => {
         />
         <LIRow title={'Final Salary : '} text={item?.netSalary} />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -16,6 +16,11 @@ const URL = {
   inOutReport: '/Report/GetThumbInOutDetails',
   salaryReport: '/Report/GetEmployeeMonthlySalary',
   attendenceReport: '/AdminDashboard/getDailyAttendance',
+  upcomingLeave: '/AdminDashboard/getDailyLeaveApplication',
+  branches: '/User/getUserCompany',
+  totalPresentAbsent: '/AdminDashboard/getDailyPresentAbsent',
+  LocationWise: '/AdminDashboard/getDailyPresentAbsentLocationWise',
+  LateEarly: '/AdminDashboard/getMonthlyLateEarly',
 };
 
 export default URL;

@@ -46,7 +46,7 @@ const InOutReport = () => {
   };
 
   return (
-    <RNContainer>
+    <RNContainer isLoading={State.isLoading}>
       <RNHeader title={'In-Out Reports'} />
 
       <FlatList

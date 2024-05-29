@@ -9,4 +9,9 @@ export {
   onUpdateFuel,
   onUpdateLeave,
   getAttendence,
+  onUpcomingLeave,
+  onGetBranches,
+  getTotalPresentAbsent,
+  getAllLocationWiseData,
+  getAllLateEarlyData,
 } from './App';

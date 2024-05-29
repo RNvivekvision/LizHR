@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
-import { LIDatePicker, RenderSalaryReport } from '../../../Components';
+import {
+  LIDatePicker,
+  RenderSalaryReport,
+  SalaryDetail,
+} from '../../../Components';
 import { RNContainer, RNHeader } from '../../../Common';
 import { useFlatlistStyles } from '../../../Hooks';
 import { Functions } from '../../../Utils';
@@ -16,6 +20,8 @@ const SalaryReport = () => {
     start: start,
     end: end,
     salary: [],
+    showDetails: false,
+    selectedItem: null,
   });
 
   useEffect(() => {
@@ -46,14 +52,21 @@ const SalaryReport = () => {
   };
 
   return (
-    <RNContainer>
+    <RNContainer isLoading={State.isLoading}>
       <RNHeader title={'Salary Report'} />
 
       <FlatList
         data={State.salary}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
-        renderItem={({ item }) => <RenderSalaryReport item={item} />}
+        renderItem={({ item }) => (
+          <RenderSalaryReport
+            item={item}
+            onPress={v =>
+              setState(p => ({ ...p, showDetails: true, selectedItem: v }))
+            }
+          />
+        )}
         ListHeaderComponent={
           <LIDatePicker
             onDateChange={d =>
@@ -68,6 +81,14 @@ const SalaryReport = () => {
             tintColor={Colors.Primary}
             colors={[Colors.Primary]}
           />
+        }
+      />
+
+      <SalaryDetail
+        visible={State.showDetails}
+        data={State.selectedItem}
+        onClose={() =>
+          setState(p => ({ ...p, showDetails: false, selectedItem: {} }))
         }
       />
     </RNContainer>

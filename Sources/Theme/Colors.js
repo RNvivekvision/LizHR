@@ -17,6 +17,12 @@ const Colors = {
   dropDownYear: '#E9F0FF',
   present: '#549F01',
   absent: '#9F0101',
+  chart: {
+    present: '#2c73e6',
+    absent: '#de663e',
+    leave: '#f4b812',
+    total: '#dbd9d1',
+  },
 };
 
 export const otpTheme = {

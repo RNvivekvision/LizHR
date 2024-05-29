@@ -9,14 +9,22 @@ import {
 import { Colors } from '../Theme';
 import RNStyles from './RNStyles';
 
-const RNCalendar = ({ visible, onClose, onDateSelect }) => {
+const RNCalendar = ({ visible, onClose, onDateSelect, isSingle }) => {
   const [range, setRange] = useState({
     start: null,
     end: null,
+    singleDate: null,
   });
 
   const onDayPress = day => {
     const { dateString } = day;
+
+    if (isSingle) {
+      setRange(p => ({ ...p, singleDate: dateString }));
+      onDateSelect?.(new Date(dateString));
+      return;
+    }
+
     if (!range.start || (range.start && range.end)) {
       setRange({ start: dateString, end: null });
     } else {
@@ -42,6 +50,24 @@ const RNCalendar = ({ visible, onClose, onDateSelect }) => {
   };
 
   const markedDates = useMemo(() => {
+    if (isSingle) {
+      return {
+        [range.singleDate]: {
+          selected: true,
+          selectedColor: Colors.Primary,
+          textColor: Colors.White,
+          customStyles: {
+            container: {
+              backgroundColor: Colors.Primary,
+              borderRadius: 16,
+            },
+            text: {
+              color: Colors.White,
+            },
+          },
+        },
+      };
+    }
     if (!range.start) return {};
     if (!range.end) {
       return {
@@ -76,7 +102,7 @@ const RNCalendar = ({ visible, onClose, onDateSelect }) => {
             <Calendar
               onDayPress={onDayPress}
               markedDates={markedDates}
-              markingType={'period'}
+              markingType={isSingle ? 'custom' : 'period'}
             />
           </View>
         </View>

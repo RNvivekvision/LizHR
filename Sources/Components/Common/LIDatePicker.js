@@ -5,16 +5,33 @@ import { Colors, FontSize, hp, wp } from '../../Theme';
 import { Images } from '../../Constants';
 import { Functions } from '../../Utils';
 
-const LIDatePicker = ({ onDateChange }) => {
+const LIDatePicker = ({ onDateChange, isSingle }) => {
   const { start, end } = Functions.getStartEndDates();
   const [State, setState] = useState({
     openDatePicker: false,
     startDate: start,
     endDate: end,
+    singleDate: new Date(),
   });
 
   const onPress = () => {
     setState(p => ({ ...p, openDatePicker: true }));
+  };
+
+  const onDateSelect = d => {
+    if (isSingle) {
+      setState(p => ({ ...p, openDatePicker: false, singleDate: d }));
+      onDateChange?.(d);
+      return;
+    }
+
+    setState(p => ({
+      ...p,
+      openDatePicker: false,
+      startDate: d.start,
+      endDate: d.end,
+    }));
+    onDateChange?.(d);
   };
 
   return (
@@ -25,11 +42,17 @@ const LIDatePicker = ({ onDateChange }) => {
         style={styles.container}>
         <View style={RNStyles.flexRow}>
           <RNText size={FontSize.font12}>{'Today : '}</RNText>
-          <RNText size={FontSize.font12}>
-            {Functions.formatDate(State.startDate) +
-              ' - ' +
-              Functions.formatDate(State.endDate)}
-          </RNText>
+          {isSingle ? (
+            <RNText size={FontSize.font12}>
+              {Functions.formatDate(State.singleDate)}
+            </RNText>
+          ) : (
+            <RNText size={FontSize.font12}>
+              {Functions.formatDate(State.startDate) +
+                ' - ' +
+                Functions.formatDate(State.endDate)}
+            </RNText>
+          )}
         </View>
 
         <View style={styles.iconContainer}>
@@ -38,15 +61,8 @@ const LIDatePicker = ({ onDateChange }) => {
       </TouchableOpacity>
       <RNCalendar
         visible={State.openDatePicker}
-        onDateSelect={d => {
-          setState(p => ({
-            ...p,
-            openDatePicker: false,
-            startDate: d.start,
-            endDate: d.end,
-          }));
-          onDateChange?.(d);
-        }}
+        isSingle={isSingle}
+        onDateSelect={onDateSelect}
         onClose={() => setState(p => ({ ...p, openDatePicker: false }))}
       />
     </>

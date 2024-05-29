@@ -17,7 +17,7 @@ const Attendance = () => {
         data={[...employeeAttendence, ...employeeAttendence]}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
-        ListHeaderComponent={() => <LIDatePicker />}
+        ListHeaderComponent={() => <LIDatePicker isSingle={true} />}
         renderItem={({ item }) => <LIAttendence item={item} />}
       />
     </RNContainer>

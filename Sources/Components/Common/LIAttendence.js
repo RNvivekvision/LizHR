@@ -11,7 +11,7 @@ const LIAttendence = ({ item }) => {
     A: { key: 'A', color: Colors.absent },
     P: { key: 'P', color: Colors.present },
   };
-  const styles = useStyles({ color: regular[item?.dayFlag].color });
+  const styles = useStyles({ color: regular[item?.dayFlag]?.color });
   const inTime = Functions.formatDate(item?.thumbInTime, 'hh:mm A');
   const outTime = Functions.formatDate(item?.thumbOutTime, 'hh:mm A');
 
@@ -54,8 +54,8 @@ const LIAttendence = ({ item }) => {
         <RNText
           family={FontFamily.Medium}
           size={FontSize.font14}
-          color={regular[item.dayFlag].color}>
-          {regular[item.dayFlag].key}
+          color={regular[item.dayFlag]?.color}>
+          {regular[item.dayFlag]?.key}
         </RNText>
       </View>
     </View>

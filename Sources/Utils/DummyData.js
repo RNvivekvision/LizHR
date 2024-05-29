@@ -49,10 +49,37 @@ const DummyData = {
     },
   ],
   Home: {
-    attendenceSummary: [
-      { pecentage: 80, title: 'Total Attendance', color: Colors.attendence },
-      { pecentage: 70, title: 'Total Present', color: Colors.present },
-      { pecentage: 50, title: 'Total Absent', color: Colors.absent },
+    pieChartData: [
+      {
+        name: 'Present',
+        employees: 0,
+        key: 'totalPresent',
+        color: Colors.chart.present,
+      },
+      {
+        name: 'Absent',
+        employees: 0,
+        key: 'totalAbsent',
+        color: Colors.chart.absent,
+      },
+      {
+        name: 'Leave',
+        employees: 0,
+        key: 'totalLeave',
+        color: Colors.chart.leave,
+      },
+      {
+        name: 'Total',
+        employees: 0,
+        key: 'totalEmployee',
+        color: Colors.chart.total,
+      },
+      {
+        name: 'WFH',
+        employees: 0,
+        key: 'totalWorkFromHome',
+        color: Colors.Black,
+      },
     ],
     branches: [
       { label: 'Digital Vally Branch', value: 'Digital Vally Branch' },

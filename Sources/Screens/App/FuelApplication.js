@@ -47,7 +47,7 @@ const FuelApplication = () => {
   };
 
   return (
-    <RNContainer>
+    <RNContainer isLoading={State.isLoading}>
       <RNHeader title={'Fuel Application'} />
 
       <FlatList

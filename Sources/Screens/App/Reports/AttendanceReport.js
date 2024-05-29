@@ -1,32 +1,32 @@
+import { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { RNContainer, RNHeader } from '../../../Common';
 import { LIAttendence, LIDatePicker } from '../../../Components';
 import { useFlatlistStyles } from '../../../Hooks';
-import { Functions } from '../../../Utils';
+import { getAttendence } from '../../../Services';
 import { Colors } from '../../../Theme';
-import { useEffect, useState } from 'react';
-import { getAttendence, onAttendence } from '../../../Services';
 
 const AttendanceReport = () => {
   const { contentContainerStyle } = useFlatlistStyles();
-  const { start, end } = Functions.getStartEndDates();
   const [State, setState] = useState({
     isLoading: false,
     refreshing: false,
-    start: start,
-    end: end,
+    date: new Date(),
     attendence: [],
   });
 
   useEffect(() => {
     getAllAttendenceReport();
-  }, [State.start, State.end]);
+  }, [State.date]);
 
   const getAllAttendenceReport = async isRefreshing => {
     !isRefreshing && setState(p => ({ ...p, isLoading: true }));
     try {
-      const response = await getAttendence({ toDate: State.end });
-      // console.log('Attendence -> ', JSON.stringify(response, null, 2));
+      const response = await getAttendence({ toDate: State.date });
+      console.log(
+        'Attendence -> ',
+        JSON.stringify(response.responseData.length, null, 2),
+      );
       setState(p => ({ ...p, attendence: response.responseData }));
     } catch (e) {
       console.log('Error getAllAttendenceReport -> ', e);
@@ -44,7 +44,7 @@ const AttendanceReport = () => {
   };
 
   return (
-    <RNContainer>
+    <RNContainer isLoading={State.isLoading}>
       <RNHeader title={'Attendance Report'} />
 
       <FlatList
@@ -54,9 +54,8 @@ const AttendanceReport = () => {
         renderItem={({ item }) => <LIAttendence item={item} />}
         ListHeaderComponent={
           <LIDatePicker
-            onDateChange={d =>
-              setState(p => ({ ...p, start: d.start, end: d.end }))
-            }
+            isSingle={true}
+            onDateChange={d => setState(p => ({ ...p, date: d }))}
           />
         }
         refreshControl={

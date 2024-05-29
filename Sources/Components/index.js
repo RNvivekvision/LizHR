@@ -1,10 +1,13 @@
 export { RememberMe, DontHaveAccount } from './Auth';
 export {
-  AttendenceSummary,
+  PresentAbsent,
   EmployeeDetails,
   RenderUpcomingLeave,
   RenderInOut,
   RenderSalaryReport,
+  SalaryDetail,
+  LocationWise,
+  LateEarly,
 } from './App';
 export {
   LIInput,
