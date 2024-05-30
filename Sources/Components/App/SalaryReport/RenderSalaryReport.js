@@ -10,7 +10,7 @@ const RenderSalaryReport = ({ item, onPress }) => {
       activeOpacity={0.6}
       onPress={() => onPress?.(item)}
       style={styles.container}>
-      <RNImage source={Images.dummy_user} style={styles.userImage} />
+      <RNImage source={Images.defaultUser} style={styles.userImage} />
       <View style={{ flex: 1 }}>
         <RNText pBottom={hp(0.5)} size={FontSize.font12} color={Colors.Primary}>
           {item?.displayName}
