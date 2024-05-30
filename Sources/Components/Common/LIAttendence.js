@@ -22,7 +22,8 @@ const LIAttendence = ({ item }) => {
   const getProfilePic = useCallback(async () => {
     try {
       const { status } = await fetch(item?.profileImageUrl);
-      const pic = status === 200 ? item?.profileImageUrl : Images.defaultUser;
+      const pic =
+        status === 200 ? { uri: item?.profileImageUrl } : Images.defaultUser;
       setState(p => ({ ...p, profilePic: pic }));
     } catch (e) {
       console.log('Error profile pic -> ', e);
@@ -55,7 +56,7 @@ const LIAttendence = ({ item }) => {
           family={FontFamily.Medium}
           size={FontSize.font14}
           color={regular[item.dayFlag]?.color}>
-          {regular[item.dayFlag]?.key}
+          {regular['P']?.key}
         </RNText>
       </View>
     </View>
