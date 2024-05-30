@@ -3,7 +3,11 @@ import { onFuelApplication } from '../../../Services';
 
 const FuelApplication = () => {
   return (
-    <LIApplication title={'Fuel Application'} apiCallFunc={onFuelApplication} />
+    <LIApplication
+      title={'Fuel Application'}
+      apiCallFunc={onFuelApplication}
+      type={0}
+    />
   );
 };
 

@@ -6,7 +6,7 @@ import { Functions } from '../../Utils';
 import { useFlatlistStyles } from '../../Hooks';
 import { Colors } from '../../Theme';
 
-const LIApplication = ({ title, apiCallFunc }) => {
+const LIApplication = ({ title, apiCallFunc, type }) => {
   const { contentContainerStyle } = useFlatlistStyles();
   const { start, end } = Functions.getStartEndDates();
   const [State, setState] = useState({
@@ -51,7 +51,7 @@ const LIApplication = ({ title, apiCallFunc }) => {
         data={State.data}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
-        renderItem={({ item }) => <RenderApplication item={item} type={1} />}
+        renderItem={({ item }) => <RenderApplication item={item} type={type} />}
         ListHeaderComponent={
           <LIDatePicker
             onDateChange={d =>

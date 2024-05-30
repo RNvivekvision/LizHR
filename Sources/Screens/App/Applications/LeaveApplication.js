@@ -6,6 +6,7 @@ const LeaveApplication = () => {
     <LIApplication
       title={'Leave Application'}
       apiCallFunc={onLeaveApplication}
+      type={1}
     />
   );
 };

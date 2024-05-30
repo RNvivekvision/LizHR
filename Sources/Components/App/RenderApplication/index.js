@@ -59,7 +59,7 @@ const LIApplication = ({ item, type }) => {
 
   const onDisapprovedPress = async () => {
     try {
-      const response = await onUpdateCompansation({
+      const response = await types[type].func({
         ids: [item.id],
         status: 2,
       });

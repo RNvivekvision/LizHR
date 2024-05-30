@@ -6,6 +6,7 @@ const CompensationApplication = () => {
     <LIApplication
       title={'Compensation Application'}
       apiCallFunc={onCompansationApplication}
+      type={2}
     />
   );
 };
