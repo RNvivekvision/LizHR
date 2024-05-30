@@ -1,169 +1,75 @@
-import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { RNStyles, RNText, RNPopup, RNImage } from '../../Common';
-import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
-import { Images } from '../../Constants';
+import { useEffect, useState } from 'react';
+import { FlatList, RefreshControl } from 'react-native';
+import { RNContainer, RNHeader } from '../../Common';
+import { LIDatePicker, RenderApplication } from '../../Components';
 import { Functions } from '../../Utils';
-import LIRow from './LIRow';
-import {
-  onUpdateCompansation,
-  onUpdateFuel,
-  onUpdateLeave,
-} from '../../Services';
+import { useFlatlistStyles } from '../../Hooks';
+import { Colors } from '../../Theme';
 
-/* 
-  type = {
-    fuel: 0,
-    leave: 1,
-    compensation: 2,
-  }
-*/
+const LIApplication = ({ title, apiCallFunc }) => {
+  const { contentContainerStyle } = useFlatlistStyles();
+  const { start, end } = Functions.getStartEndDates();
+  const [State, setState] = useState({
+    isLoading: false,
+    refreshing: false,
+    start: start,
+    end: end,
+    data: [],
+  });
 
-const LIApplication = ({ item, type }) => {
-  const [State, setState] = useState({ showPopup: false, isApproved: null });
-  const empName = item?.employee?.displayName;
-  const fromDate = Functions.formatDate(item?.fromDateTime);
-  const toDate = Functions.formatDate(item?.toDateTime);
-  const types = {
-    0: {
-      key: 'Fuel',
-      value: item?.fuelAllowanceStatusType,
-      func: onUpdateFuel,
-    },
-    1: { key: 'Leave', value: item?.leaveType?.leaveName, func: onUpdateLeave },
-    2: {
-      key: 'Compansation',
-      value: item?.compensationType?.compensationName,
-      func: onUpdateCompansation,
-    },
-  };
+  useEffect(() => {
+    getData();
+  }, [State.start, State.end]);
 
-  const closePopUp = () => setState(p => ({ ...p, showPopup: false }));
-
-  const onApprovedPress = async () => {
+  const getData = async isRefreshing => {
+    !isRefreshing && setState(p => ({ ...p, isLoading: true }));
     try {
-      const response = await types[type].func({
-        ids: [item.id],
-        status: 1,
+      const response = await apiCallFunc({
+        fromDate: State.start,
+        toDate: State.end,
       });
-      if (!response?.ResponseData) return;
-      setTimeout(() => {
-        setState(p => ({ ...p, isApproved: true }));
-      }, 400);
+      setState(p => ({ ...p, data: response?.responseData }));
     } catch (e) {
-      console.log('Error onDisapprovedPress -> ', e);
+      console.log('Error getData LIApplication -> ', e);
     } finally {
-      closePopUp();
+      setState(p => ({ ...p, isLoading: false }));
     }
   };
 
-  const onDisapprovedPress = async () => {
-    try {
-      const response = await onUpdateCompansation({
-        ids: [item.id],
-        status: 2,
-      });
-      if (!response?.ResponseData) return;
-      setTimeout(() => {
-        setState(p => ({ ...p, isApproved: false }));
-      }, 400);
-    } catch (e) {
-      console.log('Error onDisapprovedPress -> ', e);
-    } finally {
-      closePopUp();
-    }
+  const onRefresh = async () => {
+    setState(p => ({ ...p, refreshing: true }));
+    await getData(true);
+    setTimeout(() => {
+      setState(p => ({ ...p, refreshing: false }));
+    }, 1000);
   };
 
   return (
-    <View style={styles.container}>
-      <View style={RNStyles.container}>
-        <LIRow
-          title={'Employee  :  '}
-          text={empName ?? item.name}
-          isTitle={true}
-        />
-        <LIRow
-          title={`${types[type].key} Type  :  `}
-          text={types[type].value ?? item.type}
-        />
-        <LIRow title={'From Date  :  '} text={fromDate ?? item.fromDate} />
-        <LIRow title={'To Date  :  '} text={toDate ?? item.toDate} />
-      </View>
-
-      {State.isApproved === null && (
-        <RNPopup
-          visible={State.showPopup}
-          position={'left'}
-          onClose={closePopUp}
-          from={
-            <TouchableOpacity
-              onPress={() => setState(p => ({ ...p, showPopup: true }))}
-              style={styles.iconContainer}>
-              <RNImage source={Images.more} style={RNStyles.image60} />
-            </TouchableOpacity>
-          }>
-          <View style={styles.popContent}>
-            <PopupButton title={'Approved'} onPress={onApprovedPress} />
-            <PopupButton title={'Disapproved'} onPress={onDisapprovedPress} />
-          </View>
-        </RNPopup>
-      )}
-
-      {typeof State.isApproved === 'boolean' && (
-        <TouchableOpacity
-          onPress={() => setState(p => ({ ...p, showPopup: true }))}
-          style={styles.iconContainer}>
-          <RNImage
-            source={State.isApproved ? Images.approveThumb : Images.missThumb}
-            style={RNStyles.image60}
+    <RNContainer isLoading={State.isLoading}>
+      <RNHeader title={title} />
+      <FlatList
+        data={State.data}
+        keyExtractor={(v, i) => String(i)}
+        contentContainerStyle={contentContainerStyle}
+        renderItem={({ item }) => <RenderApplication item={item} type={1} />}
+        ListHeaderComponent={
+          <LIDatePicker
+            onDateChange={d =>
+              setState(p => ({ ...p, start: d.start, end: d.end }))
+            }
           />
-        </TouchableOpacity>
-      )}
-    </View>
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={State.refreshing}
+            onRefresh={onRefresh}
+            tintColor={Colors.Primary}
+            colors={[Colors.Primary]}
+          />
+        }
+      />
+    </RNContainer>
   );
 };
-
-const PopupButton = ({ title, onPress }) => {
-  return (
-    <TouchableOpacity
-      activeOpacity={0.6}
-      onPress={onPress}
-      style={styles.buttonContainer}>
-      <RNText style={styles.buttonText}>{title}</RNText>
-    </TouchableOpacity>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    ...RNStyles.shadow,
-    flexDirection: 'row',
-    backgroundColor: Colors.White,
-    marginHorizontal: wp(4),
-    marginBottom: hp(2),
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
-    borderRadius: wp(3),
-  },
-  iconContainer: {
-    ...RNStyles.center,
-    backgroundColor: Colors.drawerIconBgColor,
-    borderRadius: wp(2),
-    width: wp(8),
-    height: wp(8),
-  },
-  popContent: {
-    paddingHorizontal: wp(2),
-    paddingVertical: hp(1),
-  },
-  buttonContainer: {
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(1),
-  },
-  buttonText: {
-    fontSize: FontSize.font12,
-    fontFamily: FontFamily.Medium,
-  },
-});
 
 export default LIApplication;

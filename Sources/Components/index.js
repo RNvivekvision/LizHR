@@ -8,6 +8,7 @@ export {
   SalaryDetail,
   LocationWise,
   LateEarly,
+  RenderApplication,
 } from './App';
 export {
   LIInput,

@@ -15,7 +15,6 @@ import {
 
 const Home = () => {
   const { branches, userData } = useSelector(({ UserReducer }) => UserReducer);
-  console.log('userData -> ', JSON.stringify(userData, null, 2));
   const dispatch = useDispatch();
   const styles = useStyles();
   const [State, setState] = useState({
