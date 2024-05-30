@@ -47,7 +47,7 @@ const Home = () => {
 
   const onBranchChange = ({ value }) => {
     setState(p => ({ ...p, branch: value }));
-    init();
+    setTimeout(init, 500);
   };
 
   return (
