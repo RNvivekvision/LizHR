@@ -14,13 +14,13 @@ const SalaryDetail = ({ visible, onClose, data }) => {
   const styles = useStyles();
 
   const values = {
-    Gross: data?.netSalary,
+    Gross: data?.basicSalary,
     Absent: `${data?.absentSalary} (${data?.absentDays})`,
-    Earn: data?.pfNo,
+    Earn: data?.netSalary,
     'Paid Leave': `${data?.paidLeaveAmount} (${data?.paidLeaveCount})`,
     'OT (Over Time)': data?.overtimeSalary,
     'Extra Pay': data?.extraPay,
-    'PT (Professional Tex)': data?.professionalTax,
+    'PT (Professional Tax)': data?.professionalTax,
     TDS: data?.totalTDSAmount,
   };
 
@@ -40,7 +40,13 @@ const SalaryDetail = ({ visible, onClose, data }) => {
               style={{ marginBottom: hp(0.5) }}
             />
 
-            <Row />
+            {Object.entries(values).map(([key, value]) => (
+              <Row key={key} title={`${key}`} text={value} />
+            ))}
+
+            <View style={styles.devider} />
+
+            <Row title={'Final Salary'} text={data?.payableSalary} />
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -53,7 +59,10 @@ const Row = ({ title, text }) => {
 
   return (
     <View style={styles.rowContainer}>
-      <RNText style={styles.title}>{title}</RNText>
+      <View style={{ ...RNStyles.flexRowBetween, flex: 1 }}>
+        <RNText style={styles.title}>{title}</RNText>
+        <RNText style={styles.title}>{':'}</RNText>
+      </View>
       <RNText style={styles.text}>{text}</RNText>
     </View>
   );
@@ -68,8 +77,8 @@ const useStyles = () => {
       backgroundColor: Colors.Black + '40',
     },
     content: {
-      width: '92%',
-      height: '50%',
+      width: wp(92),
+      height: hp(40),
       backgroundColor: Colors.White,
       alignSelf: 'center',
       marginBottom: inset.bottom + hp(2),
@@ -78,16 +87,24 @@ const useStyles = () => {
       paddingHorizontal: wp(4),
     },
     rowContainer: {
-      ...RNStyles.flexRow,
+      ...RNStyles.flexRowBetween,
       paddingVertical: hp(0.3),
+      paddingVertical: hp(0.5),
     },
     title: {
-      fontSize: FontSize.font10,
+      fontSize: FontSize.font11,
       color: Colors.employee,
     },
     text: {
-      fontSize: FontSize.font10,
+      flex: 1,
+      fontSize: FontSize.font11,
       color: Colors.Black,
+      textAlign: 'right',
+    },
+    devider: {
+      ...RNStyles.devider,
+      marginVertical: hp(2),
+      backgroundColor: Colors.drawerBorderColor,
     },
   });
 };

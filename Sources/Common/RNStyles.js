@@ -98,7 +98,7 @@ const RNStyles = StyleSheet.create({
   devider: {
     width: '100%',
     height: 1,
-    backgroundColor: Colors.Black,
+    backgroundColor: Colors.Black + '50',
   },
 });
 export default RNStyles;
