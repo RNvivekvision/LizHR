@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { RNCalendar, RNImage, RNStyles, RNText } from '../../../Common';
-import { Colors, FontFamily, FontSize, hp, wp } from '../../../Theme';
 import { Functions } from '../../../Utils';
-import { Images } from '../../../Constants';
-import { BarChart, ChartLoader } from '../Charts';
+import { BarChart } from '../Charts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllLateEarly } from '../../../Redux/ExtraReducers';
+import { LIChart } from '../../Common';
 
 const LateEarly = () => {
   const { lateEarlyLoading, lateEarly } = useSelector(
@@ -14,9 +11,7 @@ const LateEarly = () => {
   );
   const dispatch = useDispatch();
   const [State, setState] = useState({
-    width: 100,
     data: [],
-    openDatePicker: false,
     date: new Date(),
   });
 
@@ -29,73 +24,30 @@ const LateEarly = () => {
     });
     setState(p => ({
       ...p,
-      data: [obj?.lateCount, obj?.earlyCount, obj?.missingThumbCount],
+      data: [
+        obj?.lateCount ?? null,
+        obj?.earlyCount ?? null,
+        obj?.missingThumbCount ?? null,
+      ],
     }));
   }, [lateEarly]);
 
   return (
-    <View style={styles.Container}>
-      <View style={RNStyles.flexRowBetween}>
-        <RNText family={FontFamily.Medium} size={FontSize.font18}>
-          {'Late/Early'}
-        </RNText>
-
-        <TouchableOpacity
-          onPress={() => setState(p => ({ ...p, openDatePicker: true }))}
-          activeOpacity={0.6}
-          style={styles.dateContainer}>
-          <RNImage source={Images.calendar} style={RNStyles.icon} />
-          <RNText color={Colors.Black} pLeft={wp(2)} size={FontSize.font12}>
-            {Functions.formatDate(State.date)}
-          </RNText>
-        </TouchableOpacity>
-      </View>
-
-      <View
-        onLayout={({ nativeEvent }) =>
-          setState(p => ({
-            ...p,
-            width: nativeEvent.layout.width,
-          }))
-        }>
-        <ChartLoader visible={lateEarlyLoading}>
-          <BarChart
-            labels={['Late In', 'Early Out', 'Missing Thumb']}
-            data={State.data}
-            width={State.width}
-          />
-        </ChartLoader>
-      </View>
-
-      <RNCalendar
-        isSingle={true}
-        visible={State.openDatePicker}
-        onClose={() => setState(p => ({ ...p, openDatePicker: false }))}
-        onDateSelect={d => {
-          dispatch(getAllLateEarly({ toDate: d }));
-          setState(p => ({ ...p, openDatePicker: false, date: d }));
-        }}
-      />
-    </View>
+    <LIChart
+      title={'Late/Early'}
+      isLoading={lateEarlyLoading}
+      onDateChange={d => {
+        setState(p => ({ ...p, date: d }));
+        dispatch(getAllLateEarly({ toDate: d }));
+      }}
+      chart={
+        <BarChart
+          labels={['Late In', 'Early Out', 'Missing Thumb']}
+          data={State.data}
+        />
+      }
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  Container: {
-    ...RNStyles.shadow,
-    backgroundColor: Colors.White,
-    borderRadius: wp(5),
-    paddingTop: hp(2),
-    paddingHorizontal: wp(4),
-    marginVertical: hp(1),
-  },
-  dateContainer: {
-    ...RNStyles.flexRow,
-    backgroundColor: Colors.dropDownYear,
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(3),
-    borderRadius: wp(3),
-  },
-});
 
 export default LateEarly;

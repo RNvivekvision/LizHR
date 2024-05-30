@@ -5,7 +5,7 @@ const onForgotPassword = async username => {
     EndPoint: `${URL.forgotPassword}?userName=${username}`,
     NeedToken: false,
   });
-  console.log('onForgotPasswordPress -> ', JSON.stringify(response, null, 2));
+  // console.log('onForgotPasswordPress -> ', JSON.stringify(response, null, 2));
   if (response?.isSuccess) {
     return response;
   } else {

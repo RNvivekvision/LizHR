@@ -34,7 +34,6 @@ const DrawerContent = ({ navigation }) => {
   };
 
   const onLogoutPress = () => {
-    navigation.closeDrawer();
     Functions.ALERT({
       Title: 'Logout',
       Text: 'Are you sure you want to logout?',
@@ -49,11 +48,12 @@ const DrawerContent = ({ navigation }) => {
     try {
       await Functions.setAppData({ user: null });
       dispatch(setUser({}));
-      // navigation.replace(NavRoutes.Login);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: NavRoutes.Login }],
-      });
+      await navigation.closeDrawer();
+      navigation.replace(NavRoutes.Login);
+      // navigation.reset({
+      //   index: 0,
+      //   routes: [{ name: NavRoutes.Login }],
+      // });
     } catch (e) {
       console.log('Error onLogoutPress -> ', e);
     }

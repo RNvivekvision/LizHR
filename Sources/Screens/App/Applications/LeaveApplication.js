@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
-import { RNContainer, RNHeader } from '../../Common';
-import { LIDatePicker, LIApplication } from '../../Components';
-import { Functions } from '../../Utils';
-import { useFlatlistStyles } from '../../Hooks';
-import { onLeaveApplication } from '../../Services';
-import { Colors } from '../../Theme';
+import { RNContainer, RNHeader } from '../../../Common';
+import { LIDatePicker, LIApplication } from '../../../Components';
+import { Functions } from '../../../Utils';
+import { useFlatlistStyles } from '../../../Hooks';
+import { onLeaveApplication } from '../../../Services';
+import { Colors } from '../../../Theme';
 
 const LeaveApplication = () => {
   const { contentContainerStyle } = useFlatlistStyles();
@@ -22,7 +22,6 @@ const LeaveApplication = () => {
     getAllLeaveApplications();
   }, [State.start, State.end]);
 
-  // console.log('State -> ', JSON.stringify(State, null, 2));
   const getAllLeaveApplications = async isRefreshing => {
     !isRefreshing && setState(p => ({ ...p, isLoading: true }));
     try {
@@ -30,7 +29,6 @@ const LeaveApplication = () => {
         fromDate: State.start,
         toDate: State.end,
       });
-      console.log(JSON.stringify({ response }, null, 2));
       setState(p => ({ ...p, leaves: response?.responseData }));
     } catch (e) {
       console.log('Error getAllLeaveApplications -> ', e);

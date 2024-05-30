@@ -11,7 +11,6 @@ import { useInset } from '../../../Hooks';
 import { LIRow } from '../../Common';
 
 const SalaryDetail = ({ visible, onClose, data }) => {
-  console.log(JSON.stringify({ data }, null, 2));
   const styles = useStyles();
 
   const values = {

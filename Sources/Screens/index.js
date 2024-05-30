@@ -2,7 +2,6 @@ export { Login, SignUp, ForgotPassword, VerifyCode, NewPassword } from './Auth';
 export {
   Home,
   UpcomingLeave,
-  Attendance,
   InOutReport,
   AttendanceReport,
   SalaryReport,

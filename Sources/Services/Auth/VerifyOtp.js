@@ -9,7 +9,7 @@ const onVerifyOtp = async ({ otp, password }) => {
       password: password,
     },
   });
-  console.log('onVerifyOtp -> ', JSON.stringify(response, null, 2));
+  // console.log('onVerifyOtp -> ', JSON.stringify(response, null, 2));
   if (response?.isSuccess) {
     return response;
   } else {

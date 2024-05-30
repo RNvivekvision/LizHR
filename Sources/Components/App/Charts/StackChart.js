@@ -3,20 +3,8 @@ import Reanimated, { FadeIn } from 'react-native-reanimated';
 import { StackedBarChart } from 'react-native-chart-kit';
 import { Colors, hp, wp } from '../../../Theme';
 
-const StackChart = ({
-  labels,
-  legend,
-  data,
-  barColors,
-  width,
-  height,
-  chartConfig,
-}) => {
-  const hasEvery = data?.flat()?.every(v => v === null);
-  const chart = {
-    width: width ?? wp(50),
-    height: height ?? hp(25),
-  };
+const StackChart = ({ labels, legend, data, barColors, chartConfig }) => {
+  const isEveryNull = data?.flat()?.every(v => v === null);
 
   const Comp = useCallback(() => {
     return (
@@ -26,11 +14,11 @@ const StackChart = ({
             data={{
               labels: labels,
               legend: legend,
-              data: hasEvery ? [] : data,
+              data: isEveryNull ? [] : data,
               barColors: barColors,
             }}
-            width={chart.width}
-            height={chart.height}
+            width={wp(85)}
+            height={hp(25)}
             decimalPlaces={0}
             fromZero={true}
             chartConfig={{

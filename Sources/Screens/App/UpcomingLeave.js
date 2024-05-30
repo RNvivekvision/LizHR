@@ -37,14 +37,12 @@ const UpcomingLeave = () => {
     getUpcomingleaves();
   }, [State.date]);
 
-  // console.log('State -> ', JSON.stringify(State, null, 2));
   const getUpcomingleaves = async isRefreshing => {
     !isRefreshing && setState(p => ({ ...p, isLoading: true }));
     try {
       const response = await onUpcomingLeave({
         toDate: State.date,
       });
-      console.log(JSON.stringify({ response }, null, 2));
       setState(p => ({ ...p, upcomingLeaves: response?.responseData }));
     } catch (e) {
       console.log('Error getUpcomingleaves -> ', e);

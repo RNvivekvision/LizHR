@@ -6,7 +6,6 @@ import { NavConfigs, NavRoutes } from './index';
 import { useLocalStorage } from '../Hooks';
 import Drawer from './Drawer';
 import {
-  Attendance,
   AttendanceReport,
   CompensationApplication,
   ForgotPassword,
@@ -56,7 +55,6 @@ const Routes = () => {
           name={NavRoutes.UpcomingLeave}
           component={UpcomingLeave}
         />
-        <Stack.Screen name={NavRoutes.Attendance} component={Attendance} />
         <Stack.Screen name={NavRoutes.InOutReport} component={InOutReport} />
         <Stack.Screen
           name={NavRoutes.AttendanceReport}

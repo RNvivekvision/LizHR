@@ -23,10 +23,6 @@ const AttendanceReport = () => {
     !isRefreshing && setState(p => ({ ...p, isLoading: true }));
     try {
       const response = await getAttendence({ toDate: State.date });
-      console.log(
-        'Attendence -> ',
-        JSON.stringify(response.responseData.length, null, 2),
-      );
       setState(p => ({ ...p, attendence: response.responseData }));
     } catch (e) {
       console.log('Error getAllAttendenceReport -> ', e);

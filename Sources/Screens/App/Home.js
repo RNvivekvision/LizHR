@@ -14,7 +14,8 @@ import {
 } from '../../Redux/ExtraReducers';
 
 const Home = () => {
-  const { branches } = useSelector(({ UserReducer }) => UserReducer);
+  const { branches, userData } = useSelector(({ UserReducer }) => UserReducer);
+  console.log('userData -> ', JSON.stringify(userData, null, 2));
   const dispatch = useDispatch();
   const styles = useStyles();
   const [State, setState] = useState({
@@ -24,6 +25,7 @@ const Home = () => {
   });
 
   useEffect(() => {
+    if (!userData?.user) return;
     dispatch(getAllBranches());
     init();
   }, []);

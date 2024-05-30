@@ -3,11 +3,8 @@ import Reanimated, { FadeIn } from 'react-native-reanimated';
 import { BarChart as Chart } from 'react-native-chart-kit';
 import { Colors, hp, wp } from '../../../Theme';
 
-const BarChart = ({ labels, data, width, height }) => {
-  const chart = {
-    width: width ?? wp(50),
-    height: height ?? hp(25),
-  };
+const BarChart = ({ labels, data }) => {
+  const isEveryNull = data?.every(v => v === null);
 
   const Comp = useCallback(() => {
     return (
@@ -16,10 +13,10 @@ const BarChart = ({ labels, data, width, height }) => {
           <Chart
             data={{
               labels: labels,
-              datasets: [{ data: data }],
+              datasets: [{ data: isEveryNull ? [] : data }],
             }}
-            width={chart.width}
-            height={chart.height}
+            width={wp(85)}
+            height={hp(25)}
             chartConfig={{
               backgroundGradientFrom: Colors.White,
               backgroundGradientTo: Colors.White,

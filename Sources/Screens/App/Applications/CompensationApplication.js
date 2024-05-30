@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
-import { LIApplication, LIDatePicker } from '../../Components';
-import { onCompansationApplication } from '../../Services';
-import { RNContainer, RNHeader } from '../../Common';
-import { useFlatlistStyles } from '../../Hooks';
-import { Functions } from '../../Utils';
-import { Colors } from '../../Theme';
+import { LIApplication, LIDatePicker } from '../../../Components';
+import { onCompansationApplication } from '../../../Services';
+import { RNContainer, RNHeader } from '../../../Common';
+import { useFlatlistStyles } from '../../../Hooks';
+import { Functions } from '../../../Utils';
+import { Colors } from '../../../Theme';
 
 const CompensationApplication = () => {
   const { contentContainerStyle } = useFlatlistStyles();
@@ -29,7 +29,6 @@ const CompensationApplication = () => {
         fromDate: State.start,
         toDate: State.end,
       });
-      console.log('compansation -> ', JSON.stringify(response, null, 2));
       setState(p => ({ ...p, compansations: response?.responseData }));
     } catch (e) {
       console.log('Error getAllComApplications -> ', e);

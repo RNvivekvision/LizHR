@@ -47,8 +47,6 @@ const Login = ({ navigation }) => {
     }
   }, [appData?.rememberMe]);
 
-  // console.log('appData -> ', JSON.stringify(appData, null, 2));
-
   const Errors = {
     username: State.loginPressed && !Validation.isUsernameValid(State.username),
     password: State.loginPressed && !Validation.isPasswordValid(State.password),
