@@ -75,8 +75,6 @@ const Home = () => {
           <LocationWise />
 
           <LateEarly />
-
-          {/* <EmployeeDetails details={employeeData} /> */}
         </View>
       </ScrollView>
     </RNContainer>

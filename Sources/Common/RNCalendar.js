@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { Colors } from '../Theme';
+import { Colors, wp } from '../Theme';
 import RNStyles from './RNStyles';
 
 const RNCalendar = ({ visible, onClose, onDateSelect, isSingle }) => {
@@ -39,8 +39,8 @@ const RNCalendar = ({ visible, onClose, onDateSelect, isSingle }) => {
   };
 
   const getDatesInRange = (start, end) => {
-    let dates = [];
-    let currentDate = new Date(start);
+    const dates = [];
+    const currentDate = new Date(start);
     const endDate = new Date(end);
     while (currentDate <= endDate) {
       dates.push(currentDate.toISOString().split('T')[0]);
@@ -103,6 +103,7 @@ const RNCalendar = ({ visible, onClose, onDateSelect, isSingle }) => {
               onDayPress={onDayPress}
               markedDates={markedDates}
               markingType={isSingle ? 'custom' : 'period'}
+              style={styles.calendar}
             />
           </View>
         </View>
@@ -118,6 +119,10 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '80%',
+  },
+  calendar: {
+    borderRadius: wp(4),
+    overflow: 'hidden',
   },
 });
 

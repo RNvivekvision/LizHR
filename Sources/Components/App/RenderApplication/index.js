@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNStyles, RNText, RNPopup, RNImage } from '../../../Common';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../../Theme';
@@ -19,7 +19,7 @@ import {
   }
 */
 
-const LIApplication = ({ item, type }) => {
+const LIApplication = ({ item, type, refresh }) => {
   const [State, setState] = useState({ showPopup: false, isApproved: null });
   const empName = item?.employee?.displayName;
   const fromDate = Functions.formatDate(item?.fromDateTime);
@@ -38,6 +38,10 @@ const LIApplication = ({ item, type }) => {
     },
   };
 
+  useEffect(() => {
+    refresh && setState(p => ({ ...p, showPopup: false, isApproved: null }));
+  }, [refresh]);
+
   const closePopUp = () => setState(p => ({ ...p, showPopup: false }));
 
   const onApprovedPress = async () => {
@@ -46,10 +50,14 @@ const LIApplication = ({ item, type }) => {
         ids: [item.id],
         status: 1,
       });
-      if (!response?.ResponseData) return;
-      setTimeout(() => {
-        setState(p => ({ ...p, isApproved: true }));
-      }, 400);
+      if (
+        typeof response.responseData === 'boolean' &&
+        response?.responseData
+      ) {
+        setTimeout(() => {
+          setState(p => ({ ...p, isApproved: true }));
+        }, 400);
+      }
     } catch (e) {
       console.log('Error onDisapprovedPress -> ', e);
     } finally {
@@ -63,10 +71,14 @@ const LIApplication = ({ item, type }) => {
         ids: [item.id],
         status: 2,
       });
-      if (!response?.ResponseData) return;
-      setTimeout(() => {
-        setState(p => ({ ...p, isApproved: false }));
-      }, 400);
+      if (
+        typeof response.responseData === 'boolean' &&
+        response?.responseData
+      ) {
+        setTimeout(() => {
+          setState(p => ({ ...p, isApproved: false }));
+        }, 400);
+      }
     } catch (e) {
       console.log('Error onDisapprovedPress -> ', e);
     } finally {

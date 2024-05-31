@@ -49,11 +49,9 @@ const DrawerContent = ({ navigation }) => {
       await Functions.setAppData({ user: null });
       dispatch(setUser({}));
       await navigation.closeDrawer();
-      navigation.replace(NavRoutes.Login);
-      // navigation.reset({
-      //   index: 0,
-      //   routes: [{ name: NavRoutes.Login }],
-      // });
+      setTimeout(() => {
+        navigation.replace(NavRoutes.Login);
+      }, 500);
     } catch (e) {
       console.log('Error onLogoutPress -> ', e);
     }

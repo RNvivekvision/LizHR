@@ -1,7 +1,6 @@
 export { RememberMe, DontHaveAccount } from './Auth';
 export {
   PresentAbsent,
-  EmployeeDetails,
   RenderUpcomingLeave,
   RenderInOut,
   RenderSalaryReport,

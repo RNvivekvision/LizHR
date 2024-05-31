@@ -77,7 +77,7 @@ const RNStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowColor: Colors.Black,
     shadowOpacity: 0.2,
-    shadowRadius: 5,
+    shadowRadius: 7,
     elevation: 7,
   },
   imageLoading: {

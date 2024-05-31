@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { RNContainer, RNHeader } from '../../Common';
 import { LIDatePicker, RenderApplication } from '../../Components';
@@ -51,7 +51,13 @@ const LIApplication = ({ title, apiCallFunc, type }) => {
         data={State.data}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={contentContainerStyle}
-        renderItem={({ item }) => <RenderApplication item={item} type={type} />}
+        renderItem={({ item }) => (
+          <RenderApplication
+            item={item}
+            type={type}
+            refresh={State.refreshing}
+          />
+        )}
         ListHeaderComponent={
           <LIDatePicker
             onDateChange={d =>

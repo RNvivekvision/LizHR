@@ -55,8 +55,8 @@ const LIAttendence = ({ item }) => {
         <RNText
           family={FontFamily.Medium}
           size={FontSize.font14}
-          color={regular[item.dayFlag]?.color}>
-          {regular['P']?.key}
+          color={regular[item?.dayFlag]?.color}>
+          {regular[item?.dayFlag]?.key}
         </RNText>
       </View>
     </View>
