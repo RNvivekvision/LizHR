@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { memo, useCallback, useEffect, useState } from 'react';
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { RNContainer, RNDropDown, RNHeader, RNImage } from '../../Common';
 import { PresentAbsent, LocationWise, LateEarly } from '../../Components';
 import { Colors, hp, wp } from '../../Theme';
@@ -21,6 +21,7 @@ const Home = () => {
     branches: [],
     branch: null,
     profilePic: null,
+    refreshing: false,
   });
 
   useEffect(() => {
@@ -29,11 +30,11 @@ const Home = () => {
     init();
   }, []);
 
-  const init = () => {
+  const init = useCallback(() => {
     dispatch(getAllPresentAbsent({ toDate: new Date() }));
     dispatch(getAllLocationWise({ toDate: new Date() }));
     dispatch(getAllLateEarly({ toDate: new Date() }));
-  };
+  }, []);
 
   useEffect(() => {
     if (!branches?.length > 0) return;
@@ -50,6 +51,14 @@ const Home = () => {
     setTimeout(init, 500);
   };
 
+  const onRefresh = useCallback(() => {
+    setState(p => ({ ...p, refreshing: true }));
+    init();
+    setTimeout(() => {
+      setState(p => ({ ...p, refreshing: false }));
+    }, 1000);
+  }, []);
+
   return (
     <RNContainer>
       <RNImage
@@ -60,7 +69,16 @@ const Home = () => {
 
       <RNHeader title={'LizHR'} isDrawer={true} />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={State.refreshing}
+            onRefresh={onRefresh}
+            tintColor={Colors.White}
+            colors={[Colors.Primary]}
+          />
+        }>
         <View style={styles.content}>
           <RNDropDown
             placeholder={'Select Branch'}
@@ -69,11 +87,8 @@ const Home = () => {
             value={State.branch}
             onChange={onBranchChange}
           />
-
           <PresentAbsent />
-
           <LocationWise />
-
           <LateEarly />
         </View>
       </ScrollView>
@@ -103,4 +118,4 @@ const useStyles = () => {
   });
 };
 
-export default Home;
+export default memo(Home);

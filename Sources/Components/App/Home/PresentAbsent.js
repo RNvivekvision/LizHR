@@ -8,17 +8,11 @@ import { LIChart } from '../../Common';
 const { pieChartData } = DummyData.Home;
 
 const PresentAbsent = () => {
+  const [State, setState] = useState({ data: pieChartData });
   const { presentAbsent, presentAbsentLoading } = useSelector(
     ({ UserReducer }) => UserReducer,
   );
   const dispatch = useDispatch();
-  const [State, setState] = useState({
-    width: 100,
-    height: 100,
-    date: new Date(),
-    openDatePicker: false,
-    data: pieChartData,
-  });
 
   useEffect(() => {
     const update = State.data.map(v => {

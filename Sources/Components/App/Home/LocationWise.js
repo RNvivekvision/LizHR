@@ -6,14 +6,11 @@ import { getAllLocationWise } from '../../../Redux/ExtraReducers';
 import { LIChart } from '../../Common';
 
 const LocationWise = () => {
+  const [State, setState] = useState({ labels: [], data: [[], []] });
   const { locationWiseLoading, locationWise } = useSelector(
     ({ UserReducer }) => UserReducer,
   );
   const dispatch = useDispatch();
-  const [State, setState] = useState({
-    labels: [],
-    data: [[], []],
-  });
 
   useEffect(() => {
     const labels = locationWise?.map(v => v?.locationName);

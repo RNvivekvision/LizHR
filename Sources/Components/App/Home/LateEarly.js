@@ -6,14 +6,11 @@ import { getAllLateEarly } from '../../../Redux/ExtraReducers';
 import { LIChart } from '../../Common';
 
 const LateEarly = () => {
+  const [State, setState] = useState({ data: [], date: new Date() });
   const { lateEarlyLoading, lateEarly } = useSelector(
     ({ UserReducer }) => UserReducer,
   );
   const dispatch = useDispatch();
-  const [State, setState] = useState({
-    data: [],
-    date: new Date(),
-  });
 
   useEffect(() => {
     if (!lateEarly?.length > 0) return;
