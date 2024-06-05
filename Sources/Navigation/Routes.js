@@ -1,9 +1,12 @@
 import { useCallback, useEffect } from 'react';
+import SplashScreen from 'react-native-splash-screen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SplashScreen from 'react-native-splash-screen';
 import { NavConfigs, NavRoutes } from './index';
 import { useLocalStorage } from '../Hooks';
+import { useSelector } from 'react-redux';
+import { RNNoInternet } from '../Common';
 import Drawer from './Drawer';
 import {
   AttendanceReport,
@@ -19,7 +22,6 @@ import {
   UpcomingLeave,
   VerifyCode,
 } from '../Screens';
-import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
@@ -78,9 +80,12 @@ const Routes = () => {
   }, [hasUser]);
 
   return (
-    <NavigationContainer>
-      <Screens />
-    </NavigationContainer>
+    <SafeAreaProvider style={{ flex: 1 }}>
+      <RNNoInternet />
+      <NavigationContainer>
+        <Screens />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 

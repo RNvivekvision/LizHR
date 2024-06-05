@@ -2,12 +2,12 @@ import { StyleSheet, View } from 'react-native';
 import { hp, wp } from '../../Theme';
 import { Images } from '../../Constants';
 import { useInset } from '../../Hooks';
-import { RNImage } from '../../Common';
+import { RNImage, RNStyles } from '../../Common';
 
 const LIOnboardingIcon = () => {
   const styles = useStyles();
   return (
-    <View>
+    <View style={RNStyles.container}>
       <RNImage source={Images.appIcon} style={styles.appIcon} />
 
       <View style={styles.onboardingContainer}>

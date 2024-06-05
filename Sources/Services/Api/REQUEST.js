@@ -11,20 +11,19 @@ const REQUEST = async ({
 }) => {
   const appData = await Functions.getAppData();
   const Headers = Header(NeedToken, appData?.user?.token, IsformData);
-  const options = {
+  const payload = {
     method: Method,
     headers: Headers,
     data: Params,
     url: URL.UserUrl + EndPoint,
   };
-  // console.log('payload -> ', JSON.stringify(options, null, 2));
-  // const response = await Axios(options);
+  // console.log('payload -> ', JSON.stringify(payload, null, 2));
+  // const response = await Axios(payload);
   // return response.data;
 
   // fetch method......
-  const wait = timeout => new Promise(r => setTimeout(r, timeout));
   const responseJson = await Promise.race([
-    fetch(options.url, {
+    fetch(payload.url, {
       method: Method,
       body: JSON.stringify(Params),
       headers: Headers,

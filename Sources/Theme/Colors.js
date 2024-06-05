@@ -16,6 +16,7 @@ const Colors = {
   dropDownYear: '#E9F0FF',
   present: '#549F01',
   absent: '#9F0101',
+  nointernet: '#f43e35',
   chart: {
     present: '#2c73e6',
     absent: '#de663e',
