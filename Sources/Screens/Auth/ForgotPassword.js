@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 import { RNText, RNContainer, RNKeyboardAvoid, RNButton } from '../../Common';
-import { DontHaveAccount, LIInput, LIOnboardingIcon } from '../../Components';
+import { LIInput, LIOnboardingIcon } from '../../Components';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { NavRoutes } from '../../Navigation';
 import { Validation } from '../../Utils';
@@ -24,7 +24,6 @@ const ForgotPassword = ({ navigation }) => {
     try {
       const response = await onForgotPassword(State.email);
       if (!response) return;
-
       navigation.navigate(NavRoutes.VerifyCode, {
         username: State.email,
       });

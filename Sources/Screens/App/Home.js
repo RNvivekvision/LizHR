@@ -13,7 +13,7 @@ import {
   getAllPresentAbsent,
 } from '../../Redux/ExtraReducers';
 
-const Home = () => {
+const Home = memo(() => {
   const { branches, userData } = useSelector(({ UserReducer }) => UserReducer);
   const dispatch = useDispatch();
   const styles = useStyles();
@@ -94,7 +94,7 @@ const Home = () => {
       </ScrollView>
     </RNContainer>
   );
-};
+});
 
 const useStyles = () => {
   const inset = useInset();
@@ -118,4 +118,4 @@ const useStyles = () => {
   });
 };
 
-export default memo(Home);
+export default Home;

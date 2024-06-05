@@ -9,9 +9,9 @@ import {
   RNStyles,
 } from '../../Common';
 import { Colors, FontFamily, FontSize, hp, otpTheme, wp } from '../../Theme';
-import { DontHaveAccount, LIOnboardingIcon } from '../../Components';
+import { LIOnboardingIcon } from '../../Components';
 import { useTimer } from '../../Hooks';
-import { onForgotPassword, onVerifyOtp } from '../../Services';
+import { onForgotPassword } from '../../Services';
 import { NavRoutes } from '../../Navigation';
 
 const VerifyCode = ({ navigation, route }) => {
@@ -31,7 +31,7 @@ const VerifyCode = ({ navigation, route }) => {
   const resendOtp = async () => {
     setState(p => ({ ...p, isLoading: true }));
     try {
-      await onForgotPassword(State.email);
+      await onForgotPassword(username);
       resetTimer();
     } catch (e) {
       console.log('Error resendOtp -> ', e);

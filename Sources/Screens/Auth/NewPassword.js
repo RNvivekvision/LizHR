@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 import { RNText, RNContainer, RNKeyboardAvoid, RNButton } from '../../Common';
-import { DontHaveAccount, LIInput, LIOnboardingIcon } from '../../Components';
+import { LIInput, LIOnboardingIcon } from '../../Components';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { Images } from '../../Constants';
 import { Validation } from '../../Utils';

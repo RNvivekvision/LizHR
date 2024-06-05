@@ -22,11 +22,15 @@ const REQUEST = async ({
   // return response.data;
 
   // fetch method......
-  const responseJson = await fetch(options.url, {
-    method: Method,
-    body: JSON.stringify(Params),
-    headers: Headers,
-  });
+  const wait = timeout => new Promise(r => setTimeout(r, timeout));
+  const responseJson = await Promise.race([
+    fetch(options.url, {
+      method: Method,
+      body: JSON.stringify(Params),
+      headers: Headers,
+    }),
+    new Promise(res => setTimeout(() => res(resolving), 10000)),
+  ]);
   const response = await responseJson?.json();
   // console.log('response -> ', JSON.stringify(response, null, 2));
   return response;
@@ -40,5 +44,13 @@ const Header = (NeedToken, Token, IsformData) => {
     apiHeaders = { ...apiHeaders, Authorization: `Bearer ${Token}` };
   }
   return apiHeaders;
+};
+const resolving = { json: () => errorResponse };
+const errorResponse = {
+  isSuccess: false,
+  responseData: {},
+  errorCode: 0,
+  errorMessage: 'Something went wrong. Please try again.',
+  errorTitle: '',
 };
 export default REQUEST;
