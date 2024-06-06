@@ -1,7 +1,6 @@
-import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import { Colors, FontFamily, FontSize, hp, wp } from '../Theme';
+import { Colors, FontFamily, hp, wp } from '../Theme';
 import RNStyles from './RNStyles';
 
 const RNDropDown = ({

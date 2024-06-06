@@ -6,6 +6,15 @@ import {
   onGetBranches,
 } from '../../Services';
 
+const getAllBranches = createAsyncThunk('getAllBranches', async () => {
+  try {
+    const response = await onGetBranches();
+    return response?.responseData;
+  } catch (e) {
+    console.log('Error getAllBranches -> ', e);
+  }
+});
+
 const getAllPresentAbsent = createAsyncThunk(
   'getAllPresentAbsent',
   async ({ toDate }) => {
@@ -18,15 +27,6 @@ const getAllPresentAbsent = createAsyncThunk(
     }
   },
 );
-
-const getAllBranches = createAsyncThunk('getAllBranches', async () => {
-  try {
-    const response = await onGetBranches();
-    return response?.responseData;
-  } catch (e) {
-    console.log('Error getAllBranches -> ', e);
-  }
-});
 
 const getAllLocationWise = createAsyncThunk(
   'getAllLocationWise',

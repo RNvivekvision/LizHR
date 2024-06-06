@@ -78,18 +78,16 @@ const useStyles = () => {
     },
     content: {
       width: wp(92),
-      height: hp(40),
       backgroundColor: Colors.White,
       alignSelf: 'center',
       marginBottom: inset.bottom + hp(2),
       borderRadius: wp(5),
-      paddingVertical: hp(2),
-      paddingHorizontal: wp(4),
+      paddingVertical: hp(3),
+      paddingHorizontal: wp(5),
     },
     rowContainer: {
       ...RNStyles.flexRowBetween,
-      paddingVertical: hp(0.3),
-      paddingVertical: hp(0.5),
+      paddingVertical: hp(0.7),
     },
     title: {
       fontSize: FontSize.font11,

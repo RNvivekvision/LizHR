@@ -1,25 +1,23 @@
-import { useState } from 'react';
 import {
-  Button,
   FlatList,
   Image,
-  LayoutAnimation,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
-import { RNButton, RNIcon, RNImage, RNStyles, RNText } from '../../Common';
+import { Colors, FontFamily, hp, wp } from '../../Theme';
+import { RNIcon, RNStyles, RNText } from '../../Common';
 import { Images } from '../../Constants';
 import { useInset } from '../../Hooks';
 import { DummyData, Functions } from '../../Utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../Redux/Actions';
 import NavRoutes from '../NavRoutes';
+import RenderDrawer from './RenderDrawer';
 
 const DrawerContent = ({ navigation }) => {
   const { userData } = useSelector(({ UserReducer }) => UserReducer);
-  const styles = useStyles({});
+  const styles = useStyles();
   const dispatch = useDispatch();
   const username = userData?.user?.UserName;
   const profilePic = userData?.user?.ProfileImageUri || Images.defaultUser;
@@ -82,12 +80,11 @@ const DrawerContent = ({ navigation }) => {
         data={DummyData.drawerScreens}
         keyExtractor={(v, i) => String(i)}
         contentContainerStyle={{ paddingVertical: hp(1) }}
-        renderItem={({ item }) => (
-          <RenderDrawerItems item={item} onPress={onItemPress} />
+        renderItem={({ item, index }) => (
+          <RenderDrawer item={item} index={index} onPress={onItemPress} />
         )}
       />
 
-      {/* <Button title="Logout" onPress={onLogoutPress} /> */}
       <TouchableOpacity
         onPress={onLogoutPress}
         activeOpacity={0.6}
@@ -100,57 +97,9 @@ const DrawerContent = ({ navigation }) => {
   );
 };
 
-const RenderDrawerItems = ({ item, onPress }) => {
-  const [State, setState] = useState({ showInner: false });
-  const styles = useStyles({ isInner: !item.icon });
-
-  const onItemPress = () => {
-    if (item?.data?.length > 0) {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setState(p => ({ ...p, showInner: !p.showInner }));
-    } else {
-      onPress?.(item);
-    }
-  };
-
-  return (
-    <View style={styles.renderContainer}>
-      <TouchableOpacity
-        onPress={onItemPress}
-        style={styles.renderContentContainer}>
-        <View style={RNStyles.flexRow}>
-          {item.icon && (
-            <View style={styles.renderIcon}>
-              <RNImage source={item.icon} style={RNStyles.image50} />
-            </View>
-          )}
-          <RNText style={styles.renderTitle}>{item.title}</RNText>
-        </View>
-        {item?.data?.length > 0 && (
-          <RNImage
-            source={Images.back}
-            style={[
-              styles.dropDownIcon,
-              {
-                transform: [{ rotate: State.showInner ? '90deg' : '-90deg' }],
-              },
-            ]}
-          />
-        )}
-      </TouchableOpacity>
-
-      {State.showInner &&
-        item?.data?.map((v, i) => (
-          <RenderDrawerItems item={v} key={i} onPress={onPress} />
-        ))}
-    </View>
-  );
-};
-
 const profilePicSize = wp(10);
-const useStyles = ({ isInner }) => {
+const useStyles = () => {
   const inset = useInset();
-
   return StyleSheet.create({
     headerContainer: {
       ...RNStyles.flexRow,
@@ -163,33 +112,6 @@ const useStyles = ({ isInner }) => {
     backIcon: {
       width: wp(8),
       height: wp(8),
-    },
-    renderContainer: {
-      marginLeft: isInner ? wp(8) : wp(4),
-    },
-    renderContentContainer: {
-      ...RNStyles.flexRowBetween,
-      // marginLeft: wp(4),
-      paddingVertical: hp(1.5),
-      borderBottomWidth: isInner ? 0 : 1,
-      borderBlockColor: Colors.drawerBorderColor,
-      paddingRight: wp(4),
-    },
-    renderIcon: {
-      ...RNStyles.center,
-      width: wp(8),
-      height: wp(8),
-      borderRadius: 100,
-      backgroundColor: Colors.drawerIconBgColor,
-    },
-    renderTitle: {
-      paddingHorizontal: wp(4),
-      fontSize: isInner ? FontSize.font12 : FontSize.font14,
-    },
-    dropDownIcon: {
-      ...RNStyles.icon,
-      tintColor: Colors.Black,
-      transform: [{ rotate: '-90deg' }],
     },
     logout: {
       ...RNStyles.center,

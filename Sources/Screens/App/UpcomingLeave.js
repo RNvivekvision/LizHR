@@ -17,11 +17,9 @@ import {
 import { Colors, FontFamily, FontSize, hp, wp } from '../../Theme';
 import { RenderUpcomingLeave } from '../../Components';
 import { onUpcomingLeave } from '../../Services';
-import { DummyData, Functions } from '../../Utils';
+import { Functions } from '../../Utils';
 import { Images } from '../../Constants';
 import { useInset } from '../../Hooks';
-
-const { employeeLeaves } = DummyData.upcomingLeaves;
 
 const UpcomingLeave = () => {
   const styles = useStyles();

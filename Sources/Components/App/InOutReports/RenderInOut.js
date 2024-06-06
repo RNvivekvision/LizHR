@@ -7,6 +7,7 @@ import { Functions } from '../../../Utils';
 
 const format = 'hh:mm A';
 const RenderInOut = ({ item }) => {
+  const styles = useStyles({});
   const empName = item?.employee?.displayName;
   const inTime = Functions.formatDate(item?.inDateTime, format);
   const outTime = Functions.formatDate(item?.outDateTime, format);
@@ -21,68 +22,83 @@ const RenderInOut = ({ item }) => {
         isTitle={true}
         style={{ marginBottom: hp(0.5) }}
       />
-      <Row
-        title1={'Date : '}
-        title2={'In Time : '}
-        text1={date}
-        text2={inTime}
-        icon={Images.inTime}
-      />
-      <Row
-        title1={'Present Hour : '}
-        title2={'Out Time : '}
-        text1={presentHours}
-        text2={outTime}
-        icon={Images.outTime}
-      />
+      <View style={RNStyles.flexRow}>
+        <Column
+          title1={'Date'}
+          title2={'Present Hour'}
+          text1={date}
+          text2={presentHours + ' Hours'}
+        />
+        <Column
+          title1={'In Time'}
+          text1={inTime}
+          title2={'Out Time'}
+          text2={outTime}
+          icon1={Images.inTime}
+          icon2={Images.outTime}
+          last={true}
+        />
+      </View>
     </View>
   );
 };
 
-const Row = ({ title1, title2, text1, text2, icon }) => {
+const Column = ({ title1, title2, text1, text2, icon1, icon2, last }) => {
+  const styles = useStyles({ last });
   return (
-    <View style={styles.rowContainer}>
-      <View style={styles.rowTextContainer}>
-        <RNText size={FontSize.font10} color={Colors.employee}>
+    <View style={styles.columnContainer}>
+      <View style={styles.contentContainer}>
+        {icon1 && <RNImage source={icon1} style={styles.inOutIcon} />}
+        <RNText
+          size={FontSize.font10}
+          style={{ flex: 1 }}
+          color={Colors.employee}>
           {title1}
         </RNText>
-        <RNText size={FontSize.font10}>{text1}</RNText>
+        <RNText size={FontSize.font10}>{':    ' + text1}</RNText>
       </View>
-      {icon && <RNImage source={icon} style={styles.inOutIcon} />}
-      <View style={styles.rowTextContainer}>
-        <RNText size={FontSize.font10} color={Colors.employee}>
-          {title2}
-        </RNText>
-        <RNText size={FontSize.font10}>{text2}</RNText>
+      <View style={styles.contentContainer}>
+        <View style={RNStyles.flexRow}>
+          {icon2 && <RNImage source={icon2} style={styles.inOutIcon} />}
+          <RNText size={FontSize.font10} color={Colors.employee}>
+            {title2}
+          </RNText>
+        </View>
+        <RNText size={FontSize.font10}>{':    ' + text2}</RNText>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    ...RNStyles.shadow,
-    backgroundColor: Colors.White,
-    marginHorizontal: wp(4),
-    marginBottom: hp(2),
-    paddingVertical: hp(1.5),
-    paddingHorizontal: wp(4),
-    borderRadius: wp(4),
-  },
-  rowContainer: {
-    ...RNStyles.flexRow,
-    paddingVertical: hp(0.5),
-    flex: 1,
-  },
-  rowTextContainer: {
-    ...RNStyles.flexRow,
-    width: '30%',
-  },
-  inOutIcon: {
-    width: wp(3),
-    height: wp(3),
-    marginHorizontal: wp(2),
-  },
-});
+const useStyles = ({ last }) => {
+  return StyleSheet.create({
+    container: {
+      ...RNStyles.shadow,
+      backgroundColor: Colors.White,
+      marginHorizontal: wp(4),
+      marginBottom: hp(2),
+      paddingVertical: hp(1.5),
+      paddingHorizontal: wp(4),
+      borderRadius: wp(4),
+    },
+    columnContainer: {
+      flex: 1,
+      borderRightWidth: last ? 0 : 1,
+      borderRightColor: Colors.Placeholder,
+      paddingRight: wp(2),
+      paddingVertical: wp(1),
+    },
+    contentContainer: {
+      ...RNStyles.flexRowBetween,
+      paddingVertical: wp(0.5),
+      paddingRight: wp(2),
+    },
+    inOutIcon: {
+      width: wp(3),
+      height: wp(3),
+      marginHorizontal: wp(2),
+    },
+  });
+};
 
 export default RenderInOut;

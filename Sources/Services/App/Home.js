@@ -14,7 +14,8 @@ const getTotalPresentAbsent = async ({ toDate }) => {
   const response = await FetchMethod.GET({
     EndPoint: `${URL.totalPresentAbsent}?ToDate=` + formattedDate,
   });
-  return Functions.handleResponse(response);
+  return response;
+  // return Functions.handleResponse(response);
 };
 
 const getAllLocationWiseData = async ({ toDate }) => {
@@ -22,7 +23,8 @@ const getAllLocationWiseData = async ({ toDate }) => {
   const response = await FetchMethod.GET({
     EndPoint: `${URL.LocationWise}?ToDate=` + formattedDate,
   });
-  return Functions.handleResponse(response);
+  return response;
+  // return Functions.handleResponse(response);
 };
 
 const getAllLateEarlyData = async ({ toDate }) => {
@@ -30,7 +32,8 @@ const getAllLateEarlyData = async ({ toDate }) => {
   const response = await FetchMethod.GET({
     EndPoint: `${URL.LateEarly}?ToDate=` + formattedDate,
   });
-  return Functions.handleResponse(response);
+  return response;
+  // return Functions.handleResponse(response);
 };
 
 export {
