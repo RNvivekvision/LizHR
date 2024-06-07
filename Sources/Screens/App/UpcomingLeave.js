@@ -102,15 +102,18 @@ const UpcomingLeave = () => {
 const ListHeaderComponent = ({ item, onPress }) => {
   const styles = useStyles();
   const date = Functions.formatDate(item?.date);
+  const dateMonth = Functions.formatDate(item?.date, 'DD MMMM');
 
   return (
     <TouchableOpacity
       activeOpacity={0.6}
       onPress={onPress}
       style={styles.totalContainer}>
-      <View style={RNStyles.flexRowBetween}>
+      <View style={styles.dateContainer}>
         <View style={{ flex: 1 }}>
-          <RNText size={FontSize.font12}>{'Total Upcoming Leave'}</RNText>
+          <RNText pBottom={hp(0.5)} size={FontSize.font12}>
+            {'Total Upcoming Leave'}
+          </RNText>
           <RNText size={FontSize.font10} color={Colors.employee}>
             {date}
           </RNText>
@@ -120,16 +123,17 @@ const ListHeaderComponent = ({ item, onPress }) => {
         </View>
       </View>
 
-      <RNText
-        size={FontSize.font18}
-        pTop={hp(1)}
-        family={FontFamily.Bold}
-        color={Colors.Primary}>
-        {item?.employees}
-      </RNText>
-      <RNText size={FontSize.font12} color={Colors.employee}>
-        {'Employee On Leave'}
-      </RNText>
+      <View style={RNStyles.flexRow}>
+        <RNText
+          size={FontSize.font18}
+          family={FontFamily.Bold}
+          color={Colors.Primary}>
+          {item?.employees}
+        </RNText>
+        <RNText pLeft={wp(2)} size={FontSize.font12} color={Colors.employee}>
+          {`Employee On Leave - ${dateMonth}`}
+        </RNText>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -156,6 +160,13 @@ const useStyles = () => {
     },
     contentContainerStyle: {
       paddingBottom: inset.bottom + hp(1),
+    },
+    dateContainer: {
+      ...RNStyles.flexRowBetween,
+      borderBottomWidth: 1,
+      borderBlockColor: Colors.Placeholder + '90',
+      paddingBottom: hp(1),
+      marginBottom: hp(1),
     },
   });
 };

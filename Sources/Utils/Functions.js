@@ -24,7 +24,7 @@ const getAppData = async () => {
 };
 
 const formatDate = (date, format) => {
-  return dayjs(date ?? new Date()).format(format ?? 'DD-MMM-YYYY');
+  return dayjs(date ?? new Date()).format(format ?? 'DD MMM YYYY');
 };
 
 const getStartEndDates = () => {

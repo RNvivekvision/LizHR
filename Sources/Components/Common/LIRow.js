@@ -17,7 +17,7 @@ const useStyles = ({ isTitle }) => {
   return StyleSheet.create({
     rowContainer: {
       ...RNStyles.flexRow,
-      paddingVertical: hp(0.3),
+      paddingVertical: hp(0.4),
     },
     title: {
       fontSize: isTitle ? FontSize.font12 : FontSize.font10,

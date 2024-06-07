@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { RNStyles, RNText, RNPopup, RNImage } from '../../../Common';
+import { RNStyles, RNImage, RNButton } from '../../../Common';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../../Theme';
 import { Images } from '../../../Constants';
 import { Functions } from '../../../Utils';
@@ -19,22 +19,32 @@ import {
   }
 */
 
-const LIApplication = ({ item, type, refresh }) => {
+const LIApplication = ({ item, type, refresh, isRequested }) => {
+  console.log('item -> ', JSON.stringify(item, null, 2));
   const [State, setState] = useState({ showPopup: false, isApproved: null });
   const empName = item?.employee?.displayName;
   const fromDate = Functions.formatDate(item?.fromDateTime);
   const toDate = Functions.formatDate(item?.toDateTime);
+  const showApproveButtons = typeof State.isApproved === 'boolean';
+  const showButtons = isRequested && !showApproveButtons;
   const types = {
     0: {
       key: 'Fuel',
       value: item?.fuelAllowanceStatusType,
       func: onUpdateFuel,
+      isAccepted: item?.fuelAllowanceStatusType == 'Approved',
     },
-    1: { key: 'Leave', value: item?.leaveType?.leaveName, func: onUpdateLeave },
+    1: {
+      key: 'Leave',
+      value: item?.leaveType?.leaveName,
+      func: onUpdateLeave,
+      isAccepted: item?.leaveStatusType == 'Approved',
+    },
     2: {
       key: 'Compansation',
       value: item?.compensationType?.compensationName,
       func: onUpdateCompansation,
+      isAccepted: item?.compensationStatusType == 'Approved',
     },
   };
 
@@ -54,11 +64,10 @@ const LIApplication = ({ item, type, refresh }) => {
         typeof response.responseData === 'boolean' &&
         response?.responseData
       ) {
-        setTimeout(() => {
-          setState(p => ({ ...p, isApproved: true }));
-        }, 400);
+        setState(p => ({ ...p, isApproved: true }));
       }
     } catch (e) {
+      setState(p => ({ ...p, isApproved: null }));
       console.log('Error onDisapprovedPress -> ', e);
     } finally {
       closePopUp();
@@ -75,9 +84,7 @@ const LIApplication = ({ item, type, refresh }) => {
         typeof response.responseData === 'boolean' &&
         response?.responseData
       ) {
-        setTimeout(() => {
-          setState(p => ({ ...p, isApproved: false }));
-        }, 400);
+        setState(p => ({ ...p, isApproved: false }));
       }
     } catch (e) {
       console.log('Error onDisapprovedPress -> ', e);
@@ -90,19 +97,38 @@ const LIApplication = ({ item, type, refresh }) => {
     <View style={styles.container}>
       <View style={RNStyles.container}>
         <LIRow
-          title={'Employee  :  '}
+          title={'Employee   :  '}
           text={empName ?? item.name}
           isTitle={true}
         />
         <LIRow
-          title={`${types[type].key} Type  :  `}
+          title={`${types[type].key} Type     :  `}
           text={types[type].value ?? item.type}
         />
-        <LIRow title={'From Date  :  '} text={fromDate ?? item.fromDate} />
-        <LIRow title={'To Date  :  '} text={toDate ?? item.toDate} />
+        <LIRow title={'From Date     :  '} text={fromDate ?? item.fromDate} />
+        <LIRow title={'To Date          :  '} text={toDate ?? item.toDate} />
       </View>
 
-      {State.isApproved === null && (
+      {showButtons ? (
+        <View style={styles.buttonContainer}>
+          <RNButton
+            title={'Approve'}
+            style={styles.button}
+            textStyle={styles.buttonText}
+            onPress={onApprovedPress}
+          />
+          <RNButton
+            title={'Reject'}
+            style={[styles.button, styles.rejectButton]}
+            textStyle={[styles.buttonText, { color: Colors.reject }]}
+            onPress={onDisapprovedPress}
+          />
+        </View>
+      ) : (
+        !isRequested && <Icon isApproved={types[type].isAccepted} />
+      )}
+
+      {/* {State.isApproved === null && (
         <RNPopup
           visible={State.showPopup}
           position={'left'}
@@ -119,32 +145,39 @@ const LIApplication = ({ item, type, refresh }) => {
             <PopupButton title={'Disapproved'} onPress={onDisapprovedPress} />
           </View>
         </RNPopup>
-      )}
+      )} */}
 
-      {typeof State.isApproved === 'boolean' && (
-        <TouchableOpacity
+      {showApproveButtons && (
+        <Icon
+          isApproved={State.isApproved}
           onPress={() => setState(p => ({ ...p, showPopup: true }))}
-          style={styles.iconContainer}>
-          <RNImage
-            source={State.isApproved ? Images.approveThumb : Images.missThumb}
-            style={RNStyles.image60}
-          />
-        </TouchableOpacity>
+        />
       )}
     </View>
   );
 };
 
-const PopupButton = ({ title, onPress }) => {
+const Icon = ({ isApproved, onPress }) => {
   return (
-    <TouchableOpacity
-      activeOpacity={0.6}
-      onPress={onPress}
-      style={styles.buttonContainer}>
-      <RNText style={styles.buttonText}>{title}</RNText>
+    <TouchableOpacity onPress={onPress} style={styles.iconContainer}>
+      <RNImage
+        source={isApproved ? Images.approveThumb : Images.missThumb}
+        style={RNStyles.image60}
+      />
     </TouchableOpacity>
   );
 };
+
+// const PopupButton = ({ title, onPress }) => {
+//   return (
+//     <TouchableOpacity
+//       activeOpacity={0.6}
+//       onPress={onPress}
+//       style={styles.buttonContainer}>
+//       <RNText style={styles.buttonText}>{title}</RNText>
+//     </TouchableOpacity>
+//   );
+// };
 
 const styles = StyleSheet.create({
   container: {
@@ -169,12 +202,22 @@ const styles = StyleSheet.create({
     paddingVertical: hp(1),
   },
   buttonContainer: {
-    paddingHorizontal: wp(4),
+    position: 'absolute',
+    right: wp(4),
+    top: hp(2),
+  },
+  button: {
+    borderRadius: wp(2),
+    marginTop: 0,
+    paddingHorizontal: wp(3),
     paddingVertical: hp(1),
   },
   buttonText: {
     fontSize: FontSize.font12,
     fontFamily: FontFamily.Medium,
+  },
+  rejectButton: {
+    backgroundColor: Colors.reject + '20',
   },
 });
 

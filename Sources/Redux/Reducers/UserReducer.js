@@ -49,7 +49,7 @@ const UserReducer = createSlice({
     });
     b.addCase(getAllLocationWise.fulfilled, (s, a) => {
       s.locationWiseLoading = false;
-      s.locationWise = typeof a.payload == 'object' ? [] : a.payload;
+      s.locationWise = a.payload;
     });
     b.addCase(getAllLocationWise.rejected, (s, a) => {
       s.locationWiseLoading = false;

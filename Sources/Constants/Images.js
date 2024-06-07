@@ -30,7 +30,6 @@ const Images = {
   outTime: require(ImagePath + 'outTime' + png),
   more: require(ImagePath + 'more' + png),
   defaultUser: require(ImagePath + 'defaultUser' + png),
-  dummy_user: require(ImagePath + 'dummy_user' + png),
 };
 
 export default Images;

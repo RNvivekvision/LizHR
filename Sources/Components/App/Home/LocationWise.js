@@ -13,6 +13,7 @@ const LocationWise = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (!locationWise?.length > 0) return;
     const labels = locationWise?.map(v => v?.locationName);
     const data = locationWise?.map(v => [
       v?.totalPresent === 0 ? null : v?.totalPresent,

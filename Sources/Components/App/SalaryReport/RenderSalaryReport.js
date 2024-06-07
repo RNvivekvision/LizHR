@@ -17,10 +17,10 @@ const RenderSalaryReport = ({ item, onPress }) => {
         </RNText>
         <View style={RNStyles.flexRowBetween}>
           <View style={{ width: '45%' }}>
-            <LIRow title={'Gross : '} text={item?.finalSalary} />
+            <LIRow title={'Gross : '} text={`${item?.finalSalary} Rs.`} />
             <LIRow
               title={'Absent : '}
-              text={`${item?.absentSalary} (${item?.absentDays})`}
+              text={`${item?.absentSalary} (${item?.absentDays} Leave)`}
             />
           </View>
           <View style={styles.devider} />
@@ -29,7 +29,7 @@ const RenderSalaryReport = ({ item, onPress }) => {
               pBottom={hp(0.5)}
               color={Colors.employee}
               align={'center'}
-              size={FontSize.font10}>
+              size={FontSize.font11}>
               {'Final Salary'}
             </RNText>
             <RNText

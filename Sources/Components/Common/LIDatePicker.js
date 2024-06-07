@@ -76,11 +76,12 @@ const styles = StyleSheet.create({
     ...RNStyles.shadow,
     backgroundColor: Colors.White,
     marginHorizontal: wp(4),
-    marginVertical: hp(3),
+    marginVertical: hp(2),
     paddingLeft: wp(4),
     paddingRight: wp(2),
     paddingVertical: hp(1),
     borderRadius: wp(4),
+    marginTop: hp(3),
   },
   iconContainer: {
     ...RNStyles.center,

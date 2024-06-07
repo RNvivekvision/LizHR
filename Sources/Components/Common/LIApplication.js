@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
-import { RNContainer, RNHeader } from '../../Common';
+import { useEffect, useState } from 'react';
+import { FlatList, RefreshControl, View } from 'react-native';
+import { RNContainer, RNHeader, RNSegment } from '../../Common';
 import { LIDatePicker, RenderApplication } from '../../Components';
 import { Functions } from '../../Utils';
 import { useFlatlistStyles } from '../../Hooks';
@@ -12,6 +12,7 @@ const LIApplication = ({ title, apiCallFunc, type }) => {
   const [State, setState] = useState({
     isLoading: false,
     refreshing: false,
+    appStatus: 0,
     start: start,
     end: end,
     data: [],
@@ -19,12 +20,13 @@ const LIApplication = ({ title, apiCallFunc, type }) => {
 
   useEffect(() => {
     getData();
-  }, [State.start, State.end]);
+  }, [State.start, State.end, State.appStatus]);
 
   const getData = async isRefreshing => {
     !isRefreshing && setState(p => ({ ...p, isLoading: true }));
     try {
       const response = await apiCallFunc({
+        appStatus: State.appStatus, //  0 = Request & 1 = Approve
         fromDate: State.start,
         toDate: State.end,
       });
@@ -56,14 +58,11 @@ const LIApplication = ({ title, apiCallFunc, type }) => {
             item={item}
             type={type}
             refresh={State.refreshing}
+            isRequested={State.appStatus === 0}
           />
         )}
         ListHeaderComponent={
-          <LIDatePicker
-            onDateChange={d =>
-              setState(p => ({ ...p, start: d.start, end: d.end }))
-            }
-          />
+          <ListHeaderComponent State={State} setState={setState} />
         }
         refreshControl={
           <RefreshControl
@@ -75,6 +74,35 @@ const LIApplication = ({ title, apiCallFunc, type }) => {
         }
       />
     </RNContainer>
+  );
+};
+
+const ListHeaderComponent = ({ State, setState }) => {
+  const isRequested = State.appStatus === 0;
+  const requestLength =
+    isRequested && State.data?.length > 0 ? State.data?.length : '';
+  const approveLength =
+    !isRequested && State.data?.length > 0 ? State.data?.length : '';
+
+  const onChange = i => {
+    if (State.appStatus === i) return;
+    setState(p => ({ ...p, appStatus: i, data: [] }));
+  };
+
+  return (
+    <View>
+      <LIDatePicker
+        onDateChange={d =>
+          setState(p => ({ ...p, start: d.start, end: d.end }))
+        }
+      />
+
+      <RNSegment
+        segments={[`Request ${requestLength}`, `Approve ${approveLength}`]}
+        selected={State.appStatus}
+        onChange={onChange}
+      />
+    </View>
   );
 };
 

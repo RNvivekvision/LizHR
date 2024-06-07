@@ -1,7 +1,14 @@
 import { FontFamily, FontSize } from './Fonts';
 import { hp, wp } from './Responsive';
 
+const chart = {
+  present: '#2c73e6',
+  absent: '#de663e',
+  leave: '#f4b812',
+  total: '#dbd9d1',
+};
 const Colors = {
+  chart,
   Black: '#262626',
   White: '#ffffff',
   Transparent: 'transparent',
@@ -18,12 +25,7 @@ const Colors = {
   absent: '#9F0101',
   halfLeave: '#f7a504',
   nointernet: '#f43e35',
-  chart: {
-    present: '#2c73e6',
-    absent: '#de663e',
-    leave: '#f4b812',
-    total: '#dbd9d1',
-  },
+  reject: '#F70101',
 };
 
 export const otpTheme = {

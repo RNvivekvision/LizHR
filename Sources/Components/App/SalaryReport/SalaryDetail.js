@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Modal,
   StyleSheet,
@@ -9,9 +9,21 @@ import { RNStyles, RNText } from '../../../Common';
 import { Colors, FontSize, hp, wp } from '../../../Theme';
 import { useInset } from '../../../Hooks';
 import { LIRow } from '../../Common';
+import Reanimated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from 'react-native-reanimated';
 
 const SalaryDetail = ({ visible, onClose, data }) => {
+  const opacity = useSharedValue(0);
   const styles = useStyles();
+
+  useEffect(() => {
+    visible && (opacity.value = withDelay(200, withTiming(1)));
+  }, [visible]);
 
   const values = {
     Gross: data?.basicSalary,
@@ -24,14 +36,31 @@ const SalaryDetail = ({ visible, onClose, data }) => {
     TDS: data?.totalTDSAmount,
   };
 
+  const closeModal = () => {
+    opacity.value = withTiming(0);
+    setTimeout(onClose, 50);
+  };
+
+  const overlayAnimatedStyles = useAnimatedStyle(() => {
+    const bgColor = interpolateColor(
+      opacity.value,
+      [0, 1],
+      [Colors.Transparent, Colors.Black + '80'],
+    );
+
+    return {
+      backgroundColor: bgColor,
+    };
+  }, []);
+
   return (
     <Modal
       visible={visible}
       animationType={'slide'}
-      onRequestClose={onClose}
+      onRequestClose={closeModal}
       transparent={true}>
-      <TouchableWithoutFeedback onPress={onClose}>
-        <View style={styles.overlay}>
+      <TouchableWithoutFeedback onPress={closeModal}>
+        <Reanimated.View style={[styles.overlay, overlayAnimatedStyles]}>
           <View style={styles.content}>
             <LIRow
               title={'Employee : '}
@@ -48,7 +77,7 @@ const SalaryDetail = ({ visible, onClose, data }) => {
 
             <Row title={'Final Salary'} text={data?.payableSalary} />
           </View>
-        </View>
+        </Reanimated.View>
       </TouchableWithoutFeedback>
     </Modal>
   );
@@ -74,7 +103,7 @@ const useStyles = () => {
     overlay: {
       ...RNStyles.container,
       justifyContent: 'flex-end',
-      backgroundColor: Colors.Black + '40',
+      backgroundColor: Colors.Black + '80',
     },
     content: {
       width: wp(92),
