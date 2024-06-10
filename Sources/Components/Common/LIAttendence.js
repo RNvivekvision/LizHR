@@ -6,6 +6,7 @@ import { Images } from '../../Constants';
 import { Functions } from '../../Utils';
 
 const LIAttendence = ({ item }) => {
+  // console.log('Attendence Item -> ', JSON.stringify(item, null, 2));
   const [State, setState] = useState({ profilePic: Images.defaultUser });
   const regular = {
     A: { key: 'A', color: Colors.absent },
@@ -19,19 +20,10 @@ const LIAttendence = ({ item }) => {
   const outTime = Functions.formatDate(item?.thumbOutTime, 'hh:mm A');
 
   useEffect(() => {
-    getProfilePic();
-  }, []);
-
-  const getProfilePic = useCallback(async () => {
-    try {
-      const { status } = await fetch(item?.profileImageUrl);
-      const pic =
-        status === 200 ? { uri: item?.profileImageUrl } : Images.defaultUser;
+    (async () => {
+      const pic = await Functions.getProfilePic(item?.profileImageUrl);
       setState(p => ({ ...p, profilePic: pic }));
-    } catch (e) {
-      console.log('Error profile pic -> ', e);
-      setState(p => ({ ...p, profilePic: Images.defaultUser }));
-    }
+    })();
   }, []);
 
   return (

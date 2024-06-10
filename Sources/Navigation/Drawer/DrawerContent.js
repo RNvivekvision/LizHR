@@ -20,7 +20,7 @@ const DrawerContent = ({ navigation }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const username = userData?.user?.UserName;
-  const profilePic = userData?.user?.ProfileImageUri || Images.defaultUser;
+  const profilePic = userData?.user?.ProfileImageUri;
 
   const onItemPress = item => {
     if (item.navigate) {

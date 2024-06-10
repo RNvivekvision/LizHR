@@ -1,16 +1,27 @@
+import { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Colors, FontFamily, FontSize, hp, wp } from '../../../Theme';
 import { RNImage, RNStyles, RNText } from '../../../Common';
 import { Images } from '../../../Constants';
+import { Functions } from '../../../Utils';
 import { LIRow } from '../../Common';
 
 const RenderSalaryReport = ({ item, onPress }) => {
+  const [State, setState] = useState({ profilePic: Images.defaultUser });
+
+  useEffect(() => {
+    (async () => {
+      const pic = await Functions.getProfilePic(item?.profileImageUrl);
+      setState(p => ({ ...p, profilePic: pic }));
+    })();
+  }, []);
+
   return (
     <TouchableOpacity
       activeOpacity={0.6}
       onPress={() => onPress?.(item)}
       style={styles.container}>
-      <RNImage source={Images.defaultUser} style={styles.userImage} />
+      <RNImage source={State.profilePic} style={styles.userImage} />
       <View style={{ flex: 1 }}>
         <RNText pBottom={hp(0.5)} size={FontSize.font12} color={Colors.Primary}>
           {item?.displayName}

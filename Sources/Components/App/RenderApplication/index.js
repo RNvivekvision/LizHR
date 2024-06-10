@@ -20,7 +20,6 @@ import {
 */
 
 const LIApplication = ({ item, type, refresh, isRequested }) => {
-  console.log('item -> ', JSON.stringify(item, null, 2));
   const [State, setState] = useState({ showPopup: false, isApproved: null });
   const empName = item?.employee?.displayName;
   const fromDate = Functions.formatDate(item?.fromDateTime);

@@ -4,14 +4,25 @@ import { RNImage, RNStyles, RNText } from '../../../Common';
 import { LIRow } from '../../Common';
 import { Functions } from '../../../Utils';
 import { Images } from '../../../Constants';
+import { useEffect, useState } from 'react';
 
 const RenderUpcomingLeave = ({ item }) => {
+  const [State, setState] = useState({ proiflePic: Images.defaultUser });
   const fromDate = Functions.formatDate(item?.fromDate);
   const toDate = Functions.formatDate(item?.toDate);
 
+  useEffect(() => {
+    (async () => {
+      const pic = await Functions.getProfilePic(
+        item?.employee?.profileImageUrl,
+      );
+      setState(p => ({ ...p, proiflePic: pic }));
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <RNImage source={Images.defaultUser} style={styles.img} />
+      <RNImage source={State.proiflePic} style={styles.img} />
       <View>
         <LIRow
           title={'Employee :  '}

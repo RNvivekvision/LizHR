@@ -66,9 +66,9 @@ const Login = ({ navigation }) => {
         password: State.password,
       });
       if (response) {
-        const { status } = await fetch(response?.ProfileImageUri);
-        const ProfileImageUri =
-          status === 200 ? response?.ProfileImageUri : null;
+        const ProfileImageUri = await Functions.getProfilePic(
+          response?.ProfileImageUri,
+        );
         const user = {
           user: { ...response, ProfileImageUri },
           auth: { username: State.username, password: State.password },

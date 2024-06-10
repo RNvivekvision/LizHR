@@ -1,6 +1,7 @@
 import { Alert, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import dayjs from 'dayjs';
+import { Images } from '../Constants';
 
 const ALERT = ({ Title, Text, Buttons }) => Alert.alert(Title, Text, Buttons);
 
@@ -50,6 +51,17 @@ const handleResponse = response => {
   }
 };
 
+const getProfilePic = async profilePic => {
+  try {
+    const { status } = await fetch(profilePic);
+    const pic = status === 200 ? { uri: profilePic } : Images.defaultUser;
+    return pic;
+  } catch (e) {
+    console.log('Error Functions getProfilePic -> ', e);
+    return Images.defaultUser;
+  }
+};
+
 const Functions = {
   ALERT,
   OpenUrl,
@@ -58,6 +70,7 @@ const Functions = {
   formatDate,
   getStartEndDates,
   handleResponse,
+  getProfilePic,
 };
 
 export default Functions;

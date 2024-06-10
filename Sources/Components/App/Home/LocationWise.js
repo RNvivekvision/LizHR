@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react';
-import { Colors } from '../../../Theme';
-import { StackChart } from '../Charts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllLocationWise } from '../../../Redux/ExtraReducers';
+import { Colors } from '../../../Theme';
+import { StackChart } from '../Charts';
 import { LIChart } from '../../Common';
 
 const LocationWise = () => {
+  const dispatch = useDispatch();
   const [State, setState] = useState({ labels: [], data: [[], []] });
   const { locationWiseLoading, locationWise } = useSelector(
     ({ UserReducer }) => UserReducer,
   );
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!locationWise?.length > 0) return;
+    if (!locationWise?.length > 0) {
+      setState(p => ({ ...p, labels: [], data: [[], []] }));
+      return;
+    }
     const labels = locationWise?.map(v => v?.locationName);
     const data = locationWise?.map(v => [
       v?.totalPresent === 0 ? null : v?.totalPresent,
