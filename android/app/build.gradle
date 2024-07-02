@@ -74,14 +74,14 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.lizhr"
+    namespace "com.lizhr.admin"
     defaultConfig {
-        applicationId "com.lizhr"
+        applicationId "com.lizhr.admin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        setProperty("archivesBaseName", "LizHR")
+        setProperty("archivesBaseName", "LizHR Admin")
     }
     signingConfigs {
         debug {

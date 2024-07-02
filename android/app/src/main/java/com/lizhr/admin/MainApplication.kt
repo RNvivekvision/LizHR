@@ -1,4 +1,4 @@
-package com.lizhr
+package com.lizhr.admin
 
 import android.app.Application
 import com.facebook.react.PackageList
