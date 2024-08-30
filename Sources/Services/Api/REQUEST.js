@@ -2,7 +2,6 @@
 import { Functions } from '../../Utils';
 import URL from './URL';
 import NetInfo from '@react-native-community/netinfo';
-
 const REQUEST = async ({
   Method,
   EndPoint,
@@ -12,7 +11,6 @@ const REQUEST = async ({
 }) => {
   const { isConnected } = await NetInfo.fetch();
   if (!isConnected) return nointernetResponse;
-
   const appData = await Functions.getAppData();
   const Headers = Header(NeedToken, appData?.user?.token, IsformData);
   const payload = {
@@ -21,11 +19,7 @@ const REQUEST = async ({
     data: Params,
     url: URL.UserUrl + EndPoint,
   };
-  // console.log('payload -> ', JSON.stringify(payload, null, 2));
-  // const response = await Axios(payload);
-  // return response.data;
-
-  // fetch method......
+  console.log('payload -> ', JSON.stringify(payload, null, 2));
   const responseJson = await Promise.race([
     fetch(payload.url, {
       method: Method,
@@ -34,10 +28,7 @@ const REQUEST = async ({
     }),
     new Promise(res => setTimeout(() => res(resolving), 10000)),
   ]);
-  // console.log('responseJson -> ', JSON.stringify(responseJson, null, 2));
-  const response = await responseJson?.json();
-  // console.log('response -> ', JSON.stringify(response, null, 2));
-  return response;
+  return Functions.handleResponse(responseJson);
 };
 const Header = (NeedToken, Token, IsformData) => {
   let apiHeaders = {

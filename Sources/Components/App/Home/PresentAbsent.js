@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
-import { DummyData } from '../../../Utils';
+import { DummyData, Functions } from '../../../Utils';
 import { PieChart } from '../Charts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPresentAbsent } from '../../../Redux/ExtraReducers';
 import { LIChart } from '../../Common';
+import { useNavigation } from '@react-navigation/native';
+import { setUser } from '../../../Redux/Actions';
+import { NavRoutes } from '../../../Navigation';
 
 const { pieChartData } = DummyData.Home;
 
 const PresentAbsent = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [State, setState] = useState({ data: pieChartData });
   const { presentAbsent, presentAbsentLoading } = useSelector(
     ({ UserReducer }) => UserReducer,
   );
-  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (presentAbsent?.status === 401) return unauthorized();
+  }, [presentAbsent?.status]);
 
   useEffect(() => {
     const update = State.data.map(v => {
@@ -21,6 +29,15 @@ const PresentAbsent = () => {
     });
     setState(p => ({ ...p, data: update }));
   }, [presentAbsent]);
+
+  const unauthorized = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: NavRoutes.Login }],
+    });
+    Functions.setAppData({ user: null });
+    dispatch(setUser({}));
+  };
 
   return (
     <LIChart

@@ -1,5 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen';
+import { Toasts } from '@backpackapp-io/react-native-toast';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -80,11 +82,14 @@ const Routes = () => {
   }, [hasUser]);
 
   return (
-    <SafeAreaProvider style={{ flex: 1 }}>
-      <RNNoInternet />
-      <NavigationContainer>
-        <Screens />
-      </NavigationContainer>
+    <SafeAreaProvider>
+      <GestureHandlerRootView>
+        <NavigationContainer>
+          <Screens />
+        </NavigationContainer>
+        <RNNoInternet />
+        <Toasts />
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 };

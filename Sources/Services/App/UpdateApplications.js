@@ -1,4 +1,3 @@
-import { Functions } from '../../Utils';
 import { FetchMethod, URL } from '../Api';
 
 const onUpdateFuel = async ({ ids, status }) => {
@@ -9,7 +8,7 @@ const onUpdateFuel = async ({ ids, status }) => {
       updateTransactionStatus: status,
     },
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 const onUpdateLeave = async ({ ids, status }) => {
@@ -20,7 +19,7 @@ const onUpdateLeave = async ({ ids, status }) => {
       updateTransactionStatus: status,
     },
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 const onUpdateCompansation = async ({ ids, status }) => {
@@ -31,7 +30,7 @@ const onUpdateCompansation = async ({ ids, status }) => {
       updateTransactionStatus: status,
     },
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 export { onUpdateFuel, onUpdateLeave, onUpdateCompansation };

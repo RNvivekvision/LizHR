@@ -1,4 +1,3 @@
-import { Functions } from '../../Utils';
 import { FetchMethod, URL } from '../Api';
 
 const onGetBranches = async () => {
@@ -6,7 +5,7 @@ const onGetBranches = async () => {
     EndPoint: URL.branches,
     Params: {},
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 const getTotalPresentAbsent = async ({ toDate }) => {
@@ -15,7 +14,6 @@ const getTotalPresentAbsent = async ({ toDate }) => {
     EndPoint: `${URL.totalPresentAbsent}?ToDate=` + formattedDate,
   });
   return response;
-  // return Functions.handleResponse(response);
 };
 
 const getAllLocationWiseData = async ({ toDate }) => {
@@ -24,7 +22,6 @@ const getAllLocationWiseData = async ({ toDate }) => {
     EndPoint: `${URL.LocationWise}?ToDate=` + formattedDate,
   });
   return response;
-  // return Functions.handleResponse(response);
 };
 
 const getAllLateEarlyData = async ({ toDate }) => {
@@ -33,7 +30,6 @@ const getAllLateEarlyData = async ({ toDate }) => {
     EndPoint: `${URL.LateEarly}?ToDate=` + formattedDate,
   });
   return response;
-  // return Functions.handleResponse(response);
 };
 
 export {

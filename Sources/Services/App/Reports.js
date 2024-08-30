@@ -6,7 +6,7 @@ const onInOut = async ({ fromDate, toDate }) => {
     EndPoint: URL.inOutReport,
     Params: { employeeStatus: '-1', fromDate: fromDate, toDate: toDate },
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 const onSalary = async ({ fromMonth, toMonth }) => {
@@ -18,7 +18,7 @@ const onSalary = async ({ fromMonth, toMonth }) => {
       toMonth: Functions.formatDate(toMonth, 'YYYYMM'),
     },
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 const getAttendence = async ({ toDate }) => {
@@ -26,7 +26,7 @@ const getAttendence = async ({ toDate }) => {
   const response = await FetchMethod.GET({
     EndPoint: `${URL.attendenceReport}?ToDate=` + formattedDate,
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 export { onInOut, onSalary, getAttendence };

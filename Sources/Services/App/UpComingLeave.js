@@ -1,4 +1,3 @@
-import { Functions } from '../../Utils';
 import { FetchMethod, URL } from '../Api';
 
 const onUpcomingLeave = async ({ toDate }) => {
@@ -6,7 +5,7 @@ const onUpcomingLeave = async ({ toDate }) => {
   const response = await FetchMethod.GET({
     EndPoint: `${URL.upcomingLeave}?ToDate=` + formattedDate,
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 export { onUpcomingLeave };

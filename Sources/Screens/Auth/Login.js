@@ -48,10 +48,11 @@ const Login = ({ navigation }) => {
   }, [appData?.rememberMe]);
 
   const Errors = {
-    username: State.loginPressed && !Validation.isUsernameValid(State.username),
+    username:
+      State.loginPressed && !Validation.isUsernameValid(State.username?.trim()),
     password: State.loginPressed && !Validation.isPasswordValid(State.password),
     noError:
-      Validation.isUsernameValid(State.username) &&
+      Validation.isUsernameValid(State.username?.trim()) &&
       Validation.isPasswordValid(State.password),
   };
 
@@ -62,7 +63,7 @@ const Login = ({ navigation }) => {
     setState(p => ({ ...p, isLoading: true }));
     try {
       const response = await onLogin({
-        username: State.username,
+        username: State.username.trim(),
         password: State.password,
       });
       if (response) {
@@ -71,7 +72,7 @@ const Login = ({ navigation }) => {
         );
         const user = {
           user: { ...response, ProfileImageUri },
-          auth: { username: State.username, password: State.password },
+          auth: { username: State.username.trim(), password: State.password },
           rememberMe: State.rememberMe,
         };
         await Functions.setAppData(user);
@@ -105,7 +106,7 @@ const Login = ({ navigation }) => {
               placeholder={'Enter your username'}
               keyboardType={'email-address'}
               value={State.username}
-              onChangeText={v => setState(p => ({ ...p, username: v.trim() }))}
+              onChangeText={v => setState(p => ({ ...p, username: v }))}
               onSubmitEditing={() => passwordRef.current.focus()}
               error={Errors.username}
             />

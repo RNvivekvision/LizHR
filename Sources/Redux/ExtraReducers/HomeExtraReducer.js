@@ -20,9 +20,8 @@ const getAllPresentAbsent = createAsyncThunk(
   async ({ toDate }) => {
     try {
       const response = await getTotalPresentAbsent({ toDate: toDate });
-      return response?.responseData;
+      return response?.status === 401 ? response : response?.responseData;
     } catch (e) {
-      console.log('Error getAllPresentAbsent -> ', e);
       return { responseData: [] };
     }
   },

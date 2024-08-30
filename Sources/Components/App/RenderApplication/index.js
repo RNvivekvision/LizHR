@@ -20,6 +20,7 @@ import {
 */
 
 const LIApplication = ({ item, type, refresh, isRequested }) => {
+  // console.log('item -> ', JSON.stringify(item, null, 2));
   const [State, setState] = useState({ showPopup: false, isApproved: null });
   const empName = item?.employee?.displayName;
   const fromDate = Functions.formatDate(item?.fromDateTime);
@@ -104,8 +105,14 @@ const LIApplication = ({ item, type, refresh, isRequested }) => {
           title={`${types[type].key} Type     :  `}
           text={types[type].value ?? item.type}
         />
-        <LIRow title={'From Date     :  '} text={fromDate ?? item.fromDate} />
-        <LIRow title={'To Date          :  '} text={toDate ?? item.toDate} />
+        {!isRequested && (
+          <LIRow
+            title={`Approve by     :  `}
+            text={item?.approver?.displayName}
+          />
+        )}
+        <LIRow title={'From Date      :  '} text={fromDate ?? item.fromDate} />
+        <LIRow title={'To Date           :  '} text={toDate ?? item.toDate} />
       </View>
 
       {showButtons ? (
@@ -127,25 +134,6 @@ const LIApplication = ({ item, type, refresh, isRequested }) => {
         !isRequested && <Icon isApproved={types[type].isAccepted} />
       )}
 
-      {/* {State.isApproved === null && (
-        <RNPopup
-          visible={State.showPopup}
-          position={'left'}
-          onClose={closePopUp}
-          from={
-            <TouchableOpacity
-              onPress={() => setState(p => ({ ...p, showPopup: true }))}
-              style={styles.iconContainer}>
-              <RNImage source={Images.more} style={RNStyles.image60} />
-            </TouchableOpacity>
-          }>
-          <View style={styles.popContent}>
-            <PopupButton title={'Approved'} onPress={onApprovedPress} />
-            <PopupButton title={'Disapproved'} onPress={onDisapprovedPress} />
-          </View>
-        </RNPopup>
-      )} */}
-
       {showApproveButtons && (
         <Icon
           isApproved={State.isApproved}
@@ -166,17 +154,6 @@ const Icon = ({ isApproved, onPress }) => {
     </TouchableOpacity>
   );
 };
-
-// const PopupButton = ({ title, onPress }) => {
-//   return (
-//     <TouchableOpacity
-//       activeOpacity={0.6}
-//       onPress={onPress}
-//       style={styles.buttonContainer}>
-//       <RNText style={styles.buttonText}>{title}</RNText>
-//     </TouchableOpacity>
-//   );
-// };
 
 const styles = StyleSheet.create({
   container: {

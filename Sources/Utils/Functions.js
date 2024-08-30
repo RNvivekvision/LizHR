@@ -1,5 +1,6 @@
 import { Alert, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { toast } from '@backpackapp-io/react-native-toast';
 import dayjs from 'dayjs';
 import { Images } from '../Constants';
 
@@ -37,18 +38,32 @@ const getStartEndDates = () => {
   return { start, end };
 };
 
-const handleResponse = response => {
-  // console.log('response -> ', JSON.stringify(response, null, 2));
+const handleResponse = async resJson => {
+  const status = await resJson?.status;
+  if (status === 401) {
+    Toast.error('Unauthorized access! Please log in again.');
+    return { status: 401, responseData: [] };
+  }
+
+  const response = await resJson?.json();
   if (response?.isSuccess) {
     return response;
-  } else {
-    alert(
-      response?.errorMessage ??
-        response?.ErrorMessage ??
-        'Something went wrong. Please try again.',
-    );
-    return { responseData: [] };
   }
+
+  const errorMsg =
+    response?.errorMessage ??
+    response?.ErrorMessage ??
+    'Something went wrong. Please try again.';
+
+  console.log('errorMsg -> ', errorMsg);
+  Toast.error(errorMsg);
+  return { responseData: [] };
+};
+
+const Toast = {
+  success: msg => toast.success(msg, { id: 'success' }),
+  error: msg => toast.error(msg, { id: 'error' }),
+  message: msg => toast(msg, { id: 'message' }),
 };
 
 const getProfilePic = async profilePic => {

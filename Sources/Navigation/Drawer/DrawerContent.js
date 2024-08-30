@@ -36,7 +36,7 @@ const DrawerContent = ({ navigation }) => {
       Title: 'Logout',
       Text: 'Are you sure you want to logout?',
       Buttons: [
-        { text: 'Yes', onPress: logout },
+        { text: 'Yes', onPress: logout, style: 'destructive' },
         { text: 'No', onPress: () => null },
       ],
     });
@@ -49,7 +49,7 @@ const DrawerContent = ({ navigation }) => {
       await navigation.closeDrawer();
       setTimeout(() => {
         navigation.replace(NavRoutes.Login);
-      }, 500);
+      }, 800);
     } catch (e) {
       console.log('Error onLogoutPress -> ', e);
     }

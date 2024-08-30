@@ -1,4 +1,3 @@
-import { Functions } from '../../Utils';
 import { FetchMethod, URL } from '../Api';
 
 const onLeaveApplication = async ({ appStatus, fromDate, toDate }) => {
@@ -10,7 +9,7 @@ const onLeaveApplication = async ({ appStatus, fromDate, toDate }) => {
       toDate: toDate,
     },
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 const onCompansationApplication = async ({
@@ -30,7 +29,7 @@ const onCompansationApplication = async ({
       toDate: toDate,
     },
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 const onFuelApplication = async ({
@@ -50,7 +49,7 @@ const onFuelApplication = async ({
       toDate: toDate,
     },
   });
-  return Functions.handleResponse(response);
+  return response;
 };
 
 export { onLeaveApplication, onCompansationApplication, onFuelApplication };
